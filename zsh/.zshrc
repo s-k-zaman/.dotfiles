@@ -103,3 +103,5 @@ source ~/.zsh_profile
 
 # Where should I put you?
 bindkey -s ^f "tmux-sessionizer\n"
+bindkey -s ^t "tmux attach\n"
+bindkey -s ^n "tmux\n"
