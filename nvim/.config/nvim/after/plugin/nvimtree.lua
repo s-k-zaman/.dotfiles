@@ -3,7 +3,7 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 -- remap for toggle
-vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>")
+vim.keymap.set("n", "<leader>fm", "<cmd>NvimTreeToggle<CR>")
 
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true

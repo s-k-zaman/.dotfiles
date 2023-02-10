@@ -29,3 +29,8 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
+
+-- for python to active
+vim.g.python3_host_prog = '/usr/bin/python3'
+--for using vertual environment in python
+--TODO: setup pyenv [use :help provider-python for guidance]
