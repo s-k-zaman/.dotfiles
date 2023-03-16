@@ -20,7 +20,7 @@ autocmd('BufWinEnter', {
     callback = function()
         --running programs
         vim.keymap.set("n", "<F5>",
-            "<cmd>w<CR>:<cmd>silent !tmux neww bash -c \"python %;echo '';echo 'Done.';echo 'Ctrl+c to exit';while [ : ]; do sleep 1; done\"<CR>",
+            "<cmd>w<CR><cmd>silent !tmux neww bash -c \"python %;echo '';echo 'Done.';echo 'Ctrl+c to exit';while [ : ]; do sleep 1; done\"<CR>",
             {
                 silent = true,
             })

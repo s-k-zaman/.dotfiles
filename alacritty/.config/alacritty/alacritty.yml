@@ -2,9 +2,9 @@ window:
   padding:
     x: 10
     #y: 10
-  opacity: 0.8
+  opacity: 0.95
   decorations: none
-    
+
 font:
   #normal:
     #family: Iosevka

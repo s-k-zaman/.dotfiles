@@ -1,3 +1,4 @@
+-- fat curson on insert mode.
 -- vim.opt.guicursor = ""
 
 vim.opt.nu = true
@@ -29,6 +30,13 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
+
+-- Case insensitive searching UNLESS /C or capital in search
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = 'menuone,noselect'
 
 -- for python to active
 vim.g.python3_host_prog = '/usr/bin/python3'

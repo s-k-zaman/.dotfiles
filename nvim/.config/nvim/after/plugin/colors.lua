@@ -12,4 +12,6 @@ function ColorMyPencils(color)
 
 end
 
-ColorMyPencils()
+--ColorMyPencils()
+local colorschemeName = 'onedark'
+vim.cmd.colorscheme(colorschemeName)
