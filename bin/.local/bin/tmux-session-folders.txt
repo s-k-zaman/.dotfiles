@@ -1,0 +1,5 @@
+~/projects
+~/projects/personal
+~/projects/open-source
+~/work
+~/Courses

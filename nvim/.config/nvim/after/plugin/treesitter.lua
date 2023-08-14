@@ -1,6 +1,7 @@
-require 'nvim-treesitter.configs'.setup {
+require'nvim-treesitter.configs'.setup {
+    ignore_install = {"help"}, -- 'help' -> causing problem[its a bug] 
     -- A list of parser names, or "all"
-    ensure_installed = { "help", "javascript", "typescript", "tsx", "python", "vim", "cpp", "c", "lua", "rust" },
+    ensure_installed = {"javascript", "typescript", "tsx", "python", "vim", "cpp", "c", "lua", "rust"},
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
@@ -17,9 +18,12 @@ require 'nvim-treesitter.configs'.setup {
         -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
         -- Using this option may slow down your editor, and you may see some duplicate highlights.
         -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
+        additional_vim_regex_highlighting = false
     },
-    indent = { enable = true, disable = { 'python' } },
+    indent = {
+        enable = true,
+        disable = {'python'}
+    },
     incremental_selection = {
         enable = true,
         keymaps = {
@@ -27,7 +31,7 @@ require 'nvim-treesitter.configs'.setup {
             node_incremental = '<c-space>',
             scope_incremental = '<c-s>',
             node_decremental = '<C-q>'
-        },
+        }
     },
     textobjects = {
         select = {
@@ -40,37 +44,37 @@ require 'nvim-treesitter.configs'.setup {
                 ['af'] = '@function.outer',
                 ['if'] = '@function.inner',
                 ['ac'] = '@class.outer',
-                ['ic'] = '@class.inner',
-            },
+                ['ic'] = '@class.inner'
+            }
         },
         move = {
             enable = false,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
                 [']m'] = '@function.outer',
-                [']]'] = '@class.outer',
+                [']]'] = '@class.outer'
             },
             goto_next_end = {
                 [']M'] = '@function.outer',
-                [']['] = '@class.outer',
+                [']['] = '@class.outer'
             },
             goto_previous_start = {
                 ['[m'] = '@function.outer',
-                ['[['] = '@class.outer',
+                ['[['] = '@class.outer'
             },
             goto_previous_end = {
                 ['[M'] = '@function.outer',
-                ['[]'] = '@class.outer',
-            },
+                ['[]'] = '@class.outer'
+            }
         },
         swap = {
             enable = true,
             swap_next = {
-                ['<C-d>'] = '@parameter.inner',
+                ['<C-d>'] = '@parameter.inner'
             },
             swap_previous = {
-                ['<C-u>'] = '@parameter.inner',
-            },
-        },
-   },
+                ['<C-u>'] = '@parameter.inner'
+            }
+        }
+    }
 }

@@ -3,6 +3,10 @@ require('rose-pine').setup({
     disable_background = true
 })
 
+require('onedark').setup{
+    transparent = true,
+}
+
 function ColorMyPencils(color)
 	color = color or "rose-pine"
 	vim.cmd.colorscheme(color)

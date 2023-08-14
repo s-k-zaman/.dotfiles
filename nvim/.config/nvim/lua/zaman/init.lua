@@ -1,6 +1,6 @@
 require("zaman.set")
 require("zaman.remap")
-require("zaman.packer")
+require("zaman.lazy")
 
 local augroup = vim.api.nvim_create_augroup
 local ZamanGroup = augroup('Zaman', {})

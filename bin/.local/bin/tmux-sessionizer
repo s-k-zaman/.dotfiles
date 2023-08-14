@@ -1,9 +1,11 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/projects ~/projects/Simulation ~/projects/personal ~/projects/open-source ~/work -mindepth 1 -maxdepth 1 -type d | fzf)
+    folders=$(sed -e ':a;N;$!ba;s/\n/ /g' ~/.local/bin/tmux-session-folders.txt)
+    folders=`echo $folders | sed "s/~/${HOME//\//\\\/}/g"`
+    selected=$(find $folders -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 if [[ -z $selected ]]; then
@@ -12,6 +14,13 @@ fi
 
 selected_name=$(basename "$selected" | tr . _)
 tmux_running=$(pgrep tmux)
+
+if [[ "$selected_name" =~ \ |\' ]]; then
+    echo "folder name contains space->$selected_name"
+    echo "remove space to use in sessionizer"
+    exit 0
+fi
+
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
     tmux new-session -s $selected_name -c $selected
