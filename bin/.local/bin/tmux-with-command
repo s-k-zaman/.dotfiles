@@ -1,0 +1,44 @@
+#!/usr/bin/bash
+
+if [ -z "$1" ]; then
+    exit 0
+fi
+window_name=$1
+
+if [ -z "$2" ]; then
+    command_str='ls'
+else
+    command_str=$2
+fi
+echo "$command_str -> command"
+session_windows=`tmux lsw -F '#{window_name} #{window_index}'` #current session's window names and indexes
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+echo 'tmux not running :('
+    exit 0
+fi
+
+#------------------------------------------------------
+# Add `/bin/bash` or `$SHELL` at the end of your script to keep the terminal open.
+
+# You can also add a `&& sleep 10` to keep the terminal open 10 seconds and see what's going on.
+
+# Alternatively, add another line containing `read` at the end of the script to keep the 
+# terminal open until you press Enter.
+#------------------------------------------------------
+if echo "$session_windows" | grep -q -w "$window_name";then
+    # switch to this window sending command
+    found=$(echo "$session_windows" | grep -w "$window_name") # grep -w "OK" which will only match a whole word "OK", such as "1 OK" but won't match "1OK" or "OKFINE".
+    count=$(echo "$session_windows" | grep -wc "$window_name")
+    if [ $count -gt 1 ];then
+        echo 'duplicate windows found'
+        exit 0
+    fi
+    window_index=$(echo $found | grep -oE '[^ ]+$') #splittng in space, and getting last item
+    tmux select-window -t:$window_index
+    echo 'changing'
+else
+    # create this window 
+    tmux new-window -n "$window_name" bash -c "$command_str & $SHELL"
+    echo 'creating'
+fi

@@ -52,7 +52,7 @@ if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 export EDITOR=nvim
 export VISUAL=nvim
 alias vim='nvim'
-alias ed="nvim ."
+alias ed="nvim"
 alias pico='edit'
 alias spico='sedit'
 alias nano='edit'
@@ -218,6 +218,11 @@ alias kssh="kitty +kitten ssh"
 
 # Alias's for python
 alias srve="source ./venv/bin/activate"
+# alias srpe="source $(poetry env info --path)/bin/activate"
+srpe ()
+{
+  source $(poetry env info --path)/bin/activate
+}
 
 #######################################################
 # SPECIAL FUNCTIONS
@@ -641,3 +646,6 @@ export NVM_DIR="$HOME/.nvm"
 bind -x '"\C-f":tmux-sessionizer'
 bind -x '"\C-j":tmux attach'
 bind -x '"\C-n":tmux'
+
+#doom emacs
+#export PATH="$HOME/.config/emacs/bin:$PATH"
