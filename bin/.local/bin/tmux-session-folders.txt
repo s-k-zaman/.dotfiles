@@ -3,3 +3,4 @@
 ~/projects/Open-source
 ~/work
 ~/Courses
+~/Courses/python-advance+scraping-course/

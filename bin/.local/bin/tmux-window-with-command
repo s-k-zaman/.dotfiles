@@ -36,9 +36,7 @@ if echo "$session_windows" | grep -q -w "$window_name";then
     fi
     window_index=$(echo $found | grep -oE '[^ ]+$') #splittng in space, and getting last item
     tmux select-window -t:$window_index
-    echo 'changing'
 else
     # create this window 
-    tmux new-window -n "$window_name" bash -c "$command_str & $SHELL"
-    echo 'creating'
+    tmux new-window -n "$window_name" bash -c "$command_str & while [ : ]; do sleep 1; done & $SHELL"
 fi
