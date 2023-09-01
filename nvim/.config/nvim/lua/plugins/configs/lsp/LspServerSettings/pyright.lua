@@ -1,12 +1,12 @@
 return {
-    python = {
-      analysis = {
-        typeCheckingMode = "basic",
-        diagnosticMode = "workspace",
-        inlayHints = {
-          variableTypes = true,
-          functionReturnTypes = true,
-        },
-      },
-  },
+	python = {
+		analysis = {
+			typeCheckingMode = "off", -- "off", "basic" and "strict"
+			diagnosticMode = "workspace",
+			inlayHints = {
+				variableTypes = true,
+				functionReturnTypes = true,
+			},
+		},
+	},
 }

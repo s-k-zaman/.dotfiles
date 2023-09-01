@@ -2,6 +2,7 @@
 -- catppuccin
 -- tokyonight : FIX: lualine custom module problem
 -- rose-pine : FIX: lualine custom module problem
+-- neosolarized :FIX: colorbuddy not working.
 local colorschemeName = "catppuccin"
 Colorscheme_transparent = true
 

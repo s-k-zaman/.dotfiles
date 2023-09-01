@@ -17,7 +17,7 @@ M.on_attach = function(client, bufnr)
 		naviac.attach(client, bufnr) -- attcing naviac.
 	end
 
-    -- NOTE: Remember that lua is a real programming language, and as such it is possible
+	-- NOTE: Remember that lua is a real programming language, and as such it is possible
 	-- to define small helper and utility functions so you don't have to repeat yourself
 	-- many times.
 	--
@@ -40,7 +40,7 @@ M.on_attach = function(client, bufnr)
 	nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 	nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
 	nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
-    -- symbols using telescope
+	-- symbols using telescope
 	nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument/current buffer [S]ymbols") --
 	nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols") --
 	-- See `:help K` for why this keymap
@@ -69,23 +69,23 @@ M.on_attach = function(client, bufnr)
 	end, {
 		desc = "Goto next diagnostic",
 	})
-	------- Formattings ----------
-	-- Create a command `:Format` local to the LSP buffer
-	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-		vim.lsp.buf.format()
-	end, {
-		desc = "Format current buffer with LSP",
-	})
-	-- auto formattting options
-	local autoformat = false
-
-	vim.api.nvim_create_autocmd("BufWritePre", {
-		group = vim.api.nvim_create_augroup("LspFormat", {}),
-		callback = function()
-			if autoformat then
-				vim.lsp.buf.format()
-			end
-		end,
-	})
 end
+------- Formattings ----------
+-- Create a command `:Format` local to the LSP buffer
+vim.api.nvim_create_user_command("Format", function(_)
+	vim.lsp.buf.format()
+end, {
+	desc = "Format current buffer with LSP",
+})
+-- auto formattting options
+local autoformat = false
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = vim.api.nvim_create_augroup("LspFormat", {}),
+	callback = function()
+		if autoformat then
+			vim.lsp.buf.format()
+		end
+	end,
+})
 return M

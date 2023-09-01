@@ -7,13 +7,14 @@ local sources = {
 
   -- webdev stuff
   -- formatting.deno_fmt, -- choosed deno for ts/js files cuz its very fast!
-  formatting.prettier.with { filetypes = { "html", "markdown", "css" } }, -- so prettier works only on these filetypes
+  -- formatting.prettier.with { filetypes = { "html", "markdown", "css" } }, -- so prettier works only on these filetypes
+  formatting.prettier,
 
   -- Lua
   formatting.stylua,
 
   -- python
-  -- diagnostics.mypy,
+  -- diagnostics.mypy, -- for type checking in python.
   diagnostics.ruff,
   formatting.black,
 

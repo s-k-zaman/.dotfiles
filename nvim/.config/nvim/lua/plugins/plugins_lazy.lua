@@ -15,6 +15,8 @@ local plugins = {
 		opts = {},
 	},
 	-- colorschemes
+	{ "tjdevries/colorbuddy.nvim" },
+	{ "svrana/neosolarized.nvim" },
 	{ "navarasu/onedark.nvim" },
 	{ "rose-pine/neovim", name = "rose-pine" },
 	{
@@ -24,6 +26,7 @@ local plugins = {
 		opts = {},
 	},
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	-- colorschemes ends
 
 	{
 		"nvim-treesitter/nvim-treesitter",

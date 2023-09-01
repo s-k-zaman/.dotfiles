@@ -16,7 +16,7 @@ vim.opt.wrap = false -- Disable line wrap
 vim.g.transparency = true
 
 vim.opt.pumblend = 10 -- Popup blend
-vim.opt.conceallevel = 3 -- Hide * markup for bold and italic
+-- vim.opt.conceallevel = 3 -- Hide * markup for bold and italic
 vim.opt.pumheight = 10 -- Maximum number of entries in a popup
 vim.opt.splitbelow = true -- Put new windows below current
 vim.opt.splitright = true -- Put new windows right of current

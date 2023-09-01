@@ -42,6 +42,7 @@ autocmd("BufWinEnter", {
             .. "echo 'python-> "
             .. python_path
             .. "';"
+                    .. "echo '________________________';"
             .. python_path
             .. " %;echo '';echo 'Done.';echo 'Ctrl+c to exit';while [ : ]; do sleep 1; done\""
         )
