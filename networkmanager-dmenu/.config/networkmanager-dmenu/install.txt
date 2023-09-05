@@ -1,0 +1,2 @@
+git clone https://github.com/firecat53/networkmanager-dmenu.git ~/.config/networkmanager-dmenu/
+stow networkmanager-dmenu/

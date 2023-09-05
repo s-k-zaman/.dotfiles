@@ -224,6 +224,8 @@ srpe ()
   source $(poetry env info --path)/bin/activate
 }
 
+# networkmanager-dmenu
+alias networkmanager-dmenu="~/.config/networkmanager-dmenu/networkmanager_dmenu"
 #######################################################
 # SPECIAL FUNCTIONS
 #######################################################
