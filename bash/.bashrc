@@ -635,9 +635,9 @@ else
 fi
 
 #Use nala
-if [ -f "/home/zaman/.use-nala" ]; then
-        . "/home/zaman/.use-nala"
-fi
+# if [ -f "/home/zaman/.use-nala" ]; then
+#         . "/home/zaman/.use-nala"
+# fi
 
 # nvm- node version manager.
 export NVM_DIR="$HOME/.nvm"

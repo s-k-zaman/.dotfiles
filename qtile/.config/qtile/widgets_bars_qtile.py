@@ -135,7 +135,7 @@ bar_main_widgets = [
         update_interval=1,
         padding=0,
         format="{hour:d}:{min:02d}Hr",
-        foreground=colors["highlight2"],
+        foreground=colors["highlight4"],
     ),
     widget.Battery(
         battery="BAT1",
@@ -149,7 +149,7 @@ bar_main_widgets = [
         update_interval=1,
         format="{char}󰁹{percent:2.0%}",
         fmt="{}",
-        foreground=colors["highlight1"],
+        foreground=colors["highlight3"],
         fontsize=14,
     ),
     widget.Spacer(length=4),
@@ -164,13 +164,13 @@ bar_main_widgets = [
     ),
     widget.Clock(
         format="    %a, %b %d",
-        foreground=colors["highlight4"],
+        foreground=colors["highlight2"],
     ),
     widget.Clock(
         padding=0,
         fontsize=14,
         format="%I:%M %p    ",  # %H-> 24 hr, %I -> 12 hr
-        foreground=colors["highlight3"],
+        foreground=colors["highlight1"],
     ),
     widget.TextBox(
         text=" ⏻ ",
