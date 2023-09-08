@@ -4,6 +4,7 @@
 variety &
 # script-wifi.sh & #enables nm-applet [no need if using networkmanager-dmenu]
 sleep 0.50
+dunst &
 # urxvtc &
 lxpolkit &
 # picom --config "$HOME/.config/bspwm/picom.conf" &

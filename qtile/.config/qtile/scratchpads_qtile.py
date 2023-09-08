@@ -9,7 +9,8 @@ from utils_qtile import mod, whatsapp, thunderbird, terminal
 #########################################
 # brave-browser dont work with scratchpads, thus using chrome.
 chatgpt = "chromium --app=https://chat.openai.com"
-text_editor_for_storing = "mousepad"
+# chatgpt = "firefox --new-window https://chat.openai.com"
+text_editor_for_storing = "mousepad Documents/personal/scratchpad.txt"
 
 scratchpad_group_name = "scratchpad"
 scratchpads_to_show = [
@@ -18,9 +19,9 @@ scratchpads_to_show = [
             chatgpt,
             chatgpt,
             # to the right side
-            x=0.58,
+            x=0.62,
             y=0.05,
-            width=0.40,
+            width=0.35,
             height=0.6,
             on_focus_lost_hide=False,
         ),
@@ -69,7 +70,7 @@ scratchpads_to_show = [
             on_focus_lost_hide=False,
         ),
         key=Key(
-            [mod], "F1", lazy.group[scratchpad_group_name].dropdown_toggle(terminal)
+            [mod], "F10", lazy.group[scratchpad_group_name].dropdown_toggle(terminal)
         ),
     ),
     dict(

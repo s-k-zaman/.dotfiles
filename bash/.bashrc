@@ -634,10 +634,10 @@ else
 	echo "can't found the autojump script"
 fi
 
-#Use nala
-# if [ -f "/home/zaman/.use-nala" ]; then
-#         . "/home/zaman/.use-nala"
-# fi
+# Use nala
+if [ -f "/home/zaman/.use-nala" ]; then
+       . "/home/zaman/.use-nala"
+fi
 
 # nvm- node version manager.
 export NVM_DIR="$HOME/.nvm"
@@ -652,3 +652,7 @@ bind -x '"\C-n":tmux'
 
 #doom emacs
 #export PATH="$HOME/.config/emacs/bin:$PATH"
+
+# Set locale -- tmux to display glyphs in utf8
+LANG="en_IN.utf8"
+export LANG

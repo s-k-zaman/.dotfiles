@@ -106,7 +106,7 @@ bar_main_widgets = [
         foreground=colors["highlight6"],
     ),
     widget.Wlan(
-        interface="wlp0s20f3",
+        # interface="wlp0s20f3",
         format="{essid} {percent:2.0%}",
         fmt="    {} ",
         mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(access_network_menu())},
