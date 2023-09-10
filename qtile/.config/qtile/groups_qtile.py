@@ -8,10 +8,8 @@ from utils_qtile import mod
 #   WINDOWS and GROUPS
 #########################################
 #### var sets
-group_label_symbol_text = False
-group_label_symbol_only = False
-group_label_text_only = False
-group_label_number_only = True
+# can be: number, text, symbol, symbol_text
+group_label = "number"
 
 all_groups = [
     # super + name to access that workspace.
@@ -82,25 +80,24 @@ all_groups = [
         "name": "0",
         "label-symbol": "",
         "label-text": "DB",
-        "layout": "",
+        "layout": "max",
     },
 ]
+
 # creating label
-group_label_text_only = False if group_label_symbol_text else group_label_text_only
-group_label_symbol_only = False if group_label_symbol_text else group_label_symbol_only
-if group_label_symbol_text:
+if group_label == "symbol_text":
     for g in all_groups:
         label = f'{g["label-symbol"]}  : {g["label-text"]}'
         g["label"] = label
-if group_label_text_only:
+if group_label == "text":
     for g in all_groups:
         label = g["label-text"]
         g["label"] = label
-if group_label_symbol_only:
+if group_label == "symbol":
     for g in all_groups:
         label = f'{g["label-symbol"]}'
         g["label"] = label
-if group_label_number_only:
+if group_label == "number":
     for g in all_groups:
         label = f'{g["name"]}'
         g["label"] = label

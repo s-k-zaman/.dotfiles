@@ -131,6 +131,7 @@ bar_main_widgets = [
     widget.Battery(
         battery="BAT1",
         low_percentage=0.15,
+        notify_below=15,
         low_foreground=colors["red"],
         update_interval=1,
         padding=0,

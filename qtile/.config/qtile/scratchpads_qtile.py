@@ -7,9 +7,9 @@ from utils_qtile import mod, whatsapp, thunderbird, terminal
 #########################################
 # Scratchpads
 #########################################
-# brave-browser dont work with scratchpads, thus using chrome.
-chatgpt = "chromium --app=https://chat.openai.com"
-# chatgpt = "firefox --new-window https://chat.openai.com"
+# brave-browser dont work with scratchpads, thus using chromium or vivladi.
+# chatgpt = "chromium --app=https://chat.openai.com"
+chatgpt = "vivaldi --app=https://chat.openai.com"
 text_editor_for_storing = "mousepad Documents/personal/scratchpad.txt"
 
 scratchpad_group_name = "scratchpad"
@@ -88,6 +88,7 @@ scratchpads_to_show = [
         ),
     ),
 ]
+
 # DropDown(
 #     "scrcpy",
 #     "scrcpy -d",

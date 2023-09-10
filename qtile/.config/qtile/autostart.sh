@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-
+battery-status.sh &
+mpv --no-video ~/.config/autostart_files/start-computeraif-14572.mp3 &
 variety &
 # script-wifi.sh & #enables nm-applet [no need if using networkmanager-dmenu]
 sleep 0.50

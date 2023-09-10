@@ -1,6 +1,7 @@
 from libqtile.config import Key
 from libqtile.lazy import lazy
 from libqtile import qtile
+import subprocess
 
 # file
 from utils_qtile import (
@@ -16,6 +17,8 @@ from utils_qtile import (
     wallpaper_next,
     screenshot_full_screen,
     screenshot,
+    funny_mood,
+    funny_mood_cmd,
 )
 
 
@@ -33,6 +36,10 @@ def minimize_all(qtile):
     for win in qtile.current_group.windows:
         if hasattr(win, "toggle_minimize"):
             win.toggle_minimize()
+
+
+def run_funny():
+    subprocess.call([funny_mood_cmd])
 
 
 #########################################
@@ -193,3 +200,10 @@ keys = [
     ),
     ##################### windows, layouts, groups etc. ENDS #####################
 ]
+
+if funny_mood:
+    keys.append(
+        Key(
+            [mod, "control"], "F2", lazy.spawn(funny_mood_cmd), desc="play funny mood."
+        ),
+    )

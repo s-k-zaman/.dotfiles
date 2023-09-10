@@ -35,5 +35,7 @@ autostart = os.path.expanduser("~/.config/qtile/autostart.sh")
 networkmanager = os.path.expanduser(
     "~/.config/networkmanager-dmenu/networkmanager_dmenu"
 )
+funny_mood = True
+funny_mood_cmd = "script-run-funny.sh"
 # theme/color to use
 colors = colors
