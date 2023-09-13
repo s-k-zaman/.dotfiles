@@ -601,12 +601,13 @@ trim()
 	var="${var%"${var##*[![:space:]]}"}"  # remove trailing whitespace characters
 	echo -n "$var"
 }
-# GitHub Titus Additions
+# GitHub copied from Titustech
 
 gcom() {
 	git add .
 	git commit -m "$1"
-	}
+}
+
 lazyg() {
 	git add .
 	git commit -m "$1"
