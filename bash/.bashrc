@@ -603,12 +603,12 @@ trim()
 }
 # GitHub copied from Titustech
 
-gcom() {
+gitcommit() {
 	git add .
 	git commit -m "$1"
 }
 
-lazyg() {
+gitlazy() {
 	git add .
 	git commit -m "$1"
 	git push
