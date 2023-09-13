@@ -8,7 +8,7 @@ vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", {desc = "toggle file exp
 require("nvim-tree").setup({
     -- on_attach = on_attach,
     filters = {
-        dotfiles = true
+        dotfiles = true,
     },
     disable_netrw = true,
     hijack_netrw = true,

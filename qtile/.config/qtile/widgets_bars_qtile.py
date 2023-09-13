@@ -6,7 +6,14 @@ from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
 
 # file
-from utils_qtile import colors, terminal, powermenu, networkmanager, launcher
+from utils_qtile import (
+    colors,
+    terminal,
+    connect_phone_cmd,
+    powermenu,
+    networkmanager,
+    launcher,
+)
 
 #########################################
 #   BAR AND WIDGETS/EXTENSIONS
@@ -83,7 +90,12 @@ bar_main_widgets = [
         other_screen_border=colors["green"],
         decorations=get_rounded_decoration(groupbox_decoration_color),
     ),
-    widget.Spacer(length=8),
+    widget.TextBox(
+        text="",
+        fontsize=20,
+        mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(connect_phone_cmd)},
+        foreground=colors['highlight3']
+    ),
     widget.CurrentLayout(fmt="{} "),
     widget.CurrentLayoutIcon(
         # custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
@@ -94,7 +106,7 @@ bar_main_widgets = [
     widget.PulseVolume(
         fmt="   {}  ",
         decorations=get_rounded_decoration(colors["shade1"]),
-        foreground=colors['highlight1']
+        foreground=colors["highlight1"],
     ),
     widget.Spacer(length=10),
     widget.WindowName(max_chars=70),
