@@ -2,7 +2,7 @@ local opts = {
 	-- A list of parser names, or "all"
 	ensure_installed = {
 		"javascript", -- 'help', -> causing problem[its a bug]
-        "json",
+		"json",
 		"typescript",
 		"tsx",
 		"python",
@@ -89,17 +89,17 @@ local opts = {
 require("nvim-treesitter.configs").setup(opts)
 
 -- dont know what it does but copied from lazynvim
-if load_textobjects then
-	-- PERF: no need to load the plugin, if we only need its queries for mini.ai
-	if opts.textobjects then
-		for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
-			if opts.textobjects[mod] and opts.textobjects[mod].enable then
-				local Loader = require("lazy.core.loader")
-				Loader.disabled_rtp_plugins["nvim-treesitter-textobjects"] = nil
-				local plugin = require("lazy.core.config").plugins["nvim-treesitter-textobjects"]
-				require("lazy.core.loader").source_runtime(plugin.dir, "plugin")
-				break
-			end
-		end
-	end
-end
+--if load_textobjects then
+-- PERF: no need to load the plugin, if we only need its queries for mini.ai
+--if opts.textobjects then
+--for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
+--if opts.textobjects[mod] and opts.textobjects[mod].enable then
+--local Loader = require("lazy.core.loader")
+--Loader.disabled_rtp_plugins["nvim-treesitter-textobjects"] = nil
+--local plugin = require("lazy.core.config").plugins["nvim-treesitter-textobjects"]
+--require("lazy.core.loader").source_runtime(plugin.dir, "plugin")
+--break
+--end
+--end
+--end
+--end

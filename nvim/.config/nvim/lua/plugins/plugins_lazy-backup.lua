@@ -103,7 +103,7 @@ local plugins = {
 		end,
 	},
 	{ "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
-	-- Mini.ai: many plugins together
+	-- many plugins together
 	{
 		"echasnovski/mini.nvim",
 		version = "*",
@@ -116,16 +116,6 @@ local plugins = {
 			require("plugins.configs.mini-pairs")
 		end,
 	},
-	{
-		"echasnovski/mini.indentscope",
-		version = false, -- wait till new 0.7.0 release to put it back on semver
-		event = { "BufReadPre", "BufNewFile" },
-		opts = require("plugins.configs.mini-indentscope"),
-		init = function()
-			require("autocmds.mini-indentscope")
-		end,
-	},
-	-- Mini.ai ends
 	-- window movement along with tmux.
 	{ "christoomey/vim-tmux-navigator", lazy = false },
 	-- file management and searching.
@@ -179,8 +169,21 @@ local plugins = {
 			require("plugins.configs.dressing")
 		end,
 	},
+	-- {
+	-- 	"lukas-reineke/indent-blankline.nvim",
+	-- 	event = { "BufReadPost", "BufNewFile" },
+	-- 	opts = require("plugins.configs.indent-blankline"),
+	-- },
 	{
-		-- highlights matched words
+		"echasnovski/mini.indentscope",
+		version = false, -- wait till new 0.7.0 release to put it back on semver
+		event = { "BufReadPre", "BufNewFile" },
+		opts = require("plugins.configs.mini-indentscope"),
+		init = function()
+			require("autocmds.mini-indentscope")
+		end,
+	},
+	{
 		"RRethy/vim-illuminate",
 		event = { "BufReadPost", "BufNewFile" },
 		config = function()

@@ -139,9 +139,14 @@ alias bd='cd "$OLDPWD"'
 # Remove a directory and all files
 alias rmd='/bin/rm  --recursive --force --verbose '
 
-# Alias's for multiple directory listing commands
+## Alias's for multiple directory listing commands
+# alias ls='ls -aFh --color=always' # add colors and file type extensions
+# alias ll='ls -Fls' # long listing format
+# eza(exa) commands
+alias ls='eza -aFH --icons=auto --group-directories-first --git'
+alias ll='ls -Fls name' # long listing format
+# other directory commands
 alias la='ls -Alh' # show hidden files
-alias ls='ls -aFh --color=always' # add colors and file type extensions
 alias lx='ls -lXBh' # sort by extension
 alias lk='ls -lSrh' # sort by size
 alias lc='ls -lcrh' # sort by change time
@@ -150,7 +155,6 @@ alias lr='ls -lRh' # recursive ls
 alias lt='ls -ltrh' # sort by date
 alias lm='ls -alh |more' # pipe through 'more'
 alias lw='ls -xAh' # wide listing format
-alias ll='ls -Fls' # long listing format
 alias labc='ls -lap' #alphabetical sort
 alias lsf="ls -l | egrep -v '^d'" # files only
 alias ldir="ls -l | egrep '^d'" # directories only
@@ -217,8 +221,8 @@ alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
 alias kssh="kitty +kitten ssh"
 
 # Alias's for python
+alias pythonvenv="python3 -m venv venv"
 alias srve="source ./venv/bin/activate"
-# alias srpe="source $(poetry env info --path)/bin/activate"
 srpe ()
 {
   source $(poetry env info --path)/bin/activate
@@ -623,6 +627,9 @@ alias hug="hugo server -F --bind=10.0.0.210 --baseURL=http://10.0.0.210"
 
 export PATH=$PATH:"$HOME/.local/bin:$HOME/.cargo/bin"
 
+# Rofi
+alias rofi-apps="~/.config/rofi/launchers/type-2/launcher.sh"
+
 # Install Starship - curl -sS https://starship.rs/install.sh | sh
 eval "$(starship init bash)"
 
@@ -647,9 +654,13 @@ export NVM_DIR="$HOME/.nvm"
 
 # Where should I put you?
 # tmux sessionizer
-bind -x '"\C-f":tmux-sessionizer'
-bind -x '"\C-o":tmux attach'
-bind -x '"\C-n":tmux'
+if [ -t 1 ]; then
+    # "C-":ctrl, "e":alt
+    bind -x '"\C-n":tmux'
+    bind -x '"\C-o":tmux attach'
+    bind -x '"\C-f":tmux-sessionizer'
+    bind -x '"\C-y":tmux-ssh-sessionizer'
+fi
 
 #doom emacs
 #export PATH="$HOME/.config/emacs/bin:$PATH"
@@ -657,3 +668,6 @@ bind -x '"\C-n":tmux'
 # Set locale -- tmux to display glyphs in utf8
 LANG="en_IN.utf8"
 export LANG
+if [ -f "/home/zaman/.use-nala" ]; then
+        . "/home/zaman/.use-nala"
+fi

@@ -5,7 +5,7 @@ if [[ $# -eq 1 ]]; then
 else
     folders=$(sed -e ':a;N;$!ba;s/\n/ /g' ~/.local/bin/tmux-session-folders.txt)
     folders=`echo $folders | sed "s/~/${HOME//\//\\\/}/g"`
-    selected=$(find $folders -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$(find $folders -mindepth 1 -maxdepth 1 -type d | fzf --prompt="Select a folder: ")
 fi
 
 if [[ -z $selected ]]; then
@@ -21,13 +21,7 @@ if [[ "$selected_name" =~ \ |\' ]]; then
     exit 0
 fi
 
-
 # inside tmux and tmux running
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s $selected_name -c $selected
-    exit 0
-fi
-
 if ! tmux has-session -t=$selected_name 2> /dev/null; then
     tmux new-session -ds $selected_name -c $selected
 fi

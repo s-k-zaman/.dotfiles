@@ -23,7 +23,7 @@ fi
 
 # You can also add a `&& sleep 10` to keep the terminal open 10 seconds and see what's going on.
 
-# Alternatively, add another line containing `read` at the end of the script to keep the 
+# Alternatively, add another line containing `read` at the end of the script to keep the
 # terminal open until you press Enter.
 #------------------------------------------------------
 if echo "$session_windows" | grep -q -w "$window_name";then
@@ -37,6 +37,7 @@ if echo "$session_windows" | grep -q -w "$window_name";then
     window_index=$(echo $found | grep -oE '[^ ]+$') #splittng in space, and getting last item
     tmux select-window -t:$window_index
 else
-    # create this window 
+    # create this window
     tmux new-window -n "$window_name" bash -c "$command_str & while [ : ]; do sleep 1; done & $SHELL"
+    # tmux new-window -n $window_name\; send "$command_str" Enter
 fi

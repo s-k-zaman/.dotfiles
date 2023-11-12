@@ -3,8 +3,8 @@
 -- tokyonight : FIX: lualine custom module problem
 -- rose-pine : FIX: lualine custom module problem
 -- neosolarized :FIX: colorbuddy not working.
-local colorschemeName = "catppuccin"
-Colorscheme_transparent = true
+local colorschemeName = "onedark"
+Colorscheme_transparent = false
 
 -- comments are not becoming italic. -> i think due to fonts.
 require("plugins.configs.colorschemes." .. colorschemeName)

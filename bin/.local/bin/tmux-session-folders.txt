@@ -2,5 +2,8 @@
 ~/projects/personal
 ~/projects/Open-source
 ~/work
+~/work/Dressme
+~/work/shahajadaDa
+~/pont
 ~/Courses
 ~/Courses/python-advance+scraping-course/
