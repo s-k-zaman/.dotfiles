@@ -38,7 +38,10 @@ command_to_execute="${ssh_commands[$selected_index]}"
 
 # inside tmux and tmux running
 if ! tmux has-session -t=$selected_name 2> /dev/null; then
-    tmux new-session -ds $selected_name\; send "$command_to_execute" Enter
+    # creating session
+    tmux new-session -ds $selected_name
+    # sending keys to session:window commands
+    tmux send-keys -t=$selected_name:{start} "$command_to_execute" Enter
 fi
 
 # if not in tmux then attach to that session.
