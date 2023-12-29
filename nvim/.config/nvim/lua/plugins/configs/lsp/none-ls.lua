@@ -9,6 +9,7 @@ local sources = {
 	-- formatting.deno_fmt, -- choosed deno for ts/js files cuz its very fast!
 	-- formatting.prettier.with { filetypes = { "html", "markdown", "css" } }, -- so prettier works only on these filetypes
 	formatting.prettier,
+	diagnostics.eslint_d,
 
 	-- Lua
 	formatting.stylua,
@@ -17,6 +18,7 @@ local sources = {
 	-- diagnostics.mypy, -- for type checking in python.
 	diagnostics.ruff,
 	formatting.black,
+	formatting.isort, -- for sorting imports alphabetically
 }
 
 null_ls.setup({

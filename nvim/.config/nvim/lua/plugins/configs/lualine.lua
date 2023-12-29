@@ -1,6 +1,6 @@
 -- require('lualine').setup(require('ui_modules.evil_lualine'))
-local icons = require("utils.icons_lazynvim").icons
 
+local icons = require("utils.icons_lazynvim").icons
 require("lualine").setup({
 	options = {
 		theme = "auto",

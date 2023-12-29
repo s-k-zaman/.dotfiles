@@ -21,5 +21,8 @@ function ColorMyPencils(color)
 	})
 end
 
--- ColorMyPencils()
-vim.cmd.colorscheme(colorschemeName)
+if Colorscheme_transparent then
+	ColorMyPencils()
+else
+	vim.cmd.colorscheme(colorschemeName)
+end

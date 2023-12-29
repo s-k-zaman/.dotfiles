@@ -1,5 +1,3 @@
-require('mappings.utility-based')
+require("mappings.utility-based")
 -- INFO: require only those plugin mappings, which are not loaded by configuration.
 require("mappings.telescope")
-require("mappings.nvimtree")
-require("mappings.nvim-spectre")

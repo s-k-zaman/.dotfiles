@@ -70,6 +70,7 @@ M.on_attach = function(client, bufnr)
 		desc = "Goto next diagnostic",
 	})
 end
+
 ------- Formattings ----------
 -- Create a command `:Format` local to the LSP buffer
 vim.api.nvim_create_user_command("Format", function(_)
@@ -79,7 +80,6 @@ end, {
 })
 -- auto formattting options
 local autoformat = false
-
 vim.api.nvim_create_autocmd("BufWritePre", {
 	group = vim.api.nvim_create_augroup("LspFormat", {}),
 	callback = function()
