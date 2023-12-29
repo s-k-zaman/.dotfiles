@@ -36,7 +36,16 @@ local plugins = {
 			require("plugins.configs.treesitter")
 		end,
 		dependencies = {
-			{ "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
+			{
+				"JoosepAlviste/nvim-ts-context-commentstring",
+				lazy = true,
+				init = function()
+					vim.g.skip_ts_context_commentstring_module = true
+				end,
+				config = function()
+					require("ts_context_commentstring").setup({})
+				end,
+			},
 			{
 				"nvim-treesitter/nvim-treesitter-textobjects",
 				init = function()
@@ -94,9 +103,9 @@ local plugins = {
 				"folke/neodev.nvim", -- Additional lua configuration, makes nvim stuff amazing!
 			},
 			{
-				"jose-elias-alvarez/null-ls.nvim",
+				"nvimtools/none-ls.nvim",
 				config = function()
-					require("plugins.configs.lsp.null-ls")
+					require("plugins.configs.lsp.none-ls")
 				end,
 			},
 			{ "williamboman/mason-lspconfig.nvim" },
