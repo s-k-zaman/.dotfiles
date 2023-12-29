@@ -62,6 +62,12 @@ local plugins = {
 					require("plugins.configs.lsp.luasnip")
 				end,
 			},
+			{
+				"roobert/tailwindcss-colorizer-cmp.nvim",
+				config = function()
+					require("plugins.configs.lsp.tailwind-colorizer")
+				end,
+			},
 			-- cmp sources plugins
 			{
 				"saadparwaiz1/cmp_luasnip",

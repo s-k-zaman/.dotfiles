@@ -671,3 +671,11 @@ export LANG
 if [ -f "/home/zaman/.use-nala" ]; then
         . "/home/zaman/.use-nala"
 fi
+
+# Added by Amplify CLI binary installer
+export PATH="$HOME/.amplify/bin:$PATH"
+
+## LOADING OTHER ALIASES
+if [ -f ~/.game_alias_bash ]; then
+    . ~/.game_alias_bash
+fi

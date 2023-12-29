@@ -39,7 +39,7 @@ require("lualine").setup({
 		},
 		lualine_c = {
 
-			"diff",
+			-- "diff",
 			{
 				"diagnostics",
 				symbols = {

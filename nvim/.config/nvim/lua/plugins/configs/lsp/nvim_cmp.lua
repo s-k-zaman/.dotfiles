@@ -20,7 +20,7 @@ local formatting_style = {
 			item.kind = icons[item.kind] .. item.kind
 		end
 		item.menu = source_table_representation[entry.source.name] or entry.source.name
-		return item
+		return require("tailwindcss-colorizer-cmp").formatter(entry, item)
 	end,
 }
 local function border(hl_name)
