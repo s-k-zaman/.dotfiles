@@ -57,10 +57,10 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- wrap and check for spell in text filetypes
+-- line-wrap in filetypes
 vim.api.nvim_create_autocmd("FileType", {
 	group = augroup("wrap_spell"),
-	pattern = { "gitcommit", "markdown" },
+	pattern = { "gitcommit", "markdown", "text" },
 	callback = function()
 		vim.opt_local.wrap = true
 	end,
