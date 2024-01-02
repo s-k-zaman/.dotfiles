@@ -48,6 +48,7 @@ local formatters_linters_servers = {
 	"eslint_d",
 	"stylua", -- "deno",
 	"ruff",
+	"pyright",
 	"mypy",
 	"black",
 	"isort",
@@ -63,7 +64,7 @@ vim.g.mason_binaries_list = formatters_linters_servers
 -- TODO: check what is does.
 require("neodev").setup()
 
--- Manage LSP server using mason_lspconfig.
+------ Manage LSP server using mason_lspconfig -----
 local mason_lspconfig = require("mason-lspconfig")
 local lspconfig = require("lspconfig")
 

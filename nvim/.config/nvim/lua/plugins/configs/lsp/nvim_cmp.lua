@@ -23,6 +23,7 @@ local formatting_style = {
 		return require("tailwindcss-colorizer-cmp").formatter(entry, item)
 	end,
 }
+
 local function border(hl_name)
 	return {
 		{ "╭", hl_name },
@@ -85,6 +86,7 @@ cmp.setup({
 		{ name = "buffer" },
 		{ name = "nvim_lua" },
 		{ name = "path" },
+		{ name = "emoji" }, -- start with :(colon) to get emoji suggestions
 	},
 	experimental = {
 		ghost_text = {

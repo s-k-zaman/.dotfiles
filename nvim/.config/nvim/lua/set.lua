@@ -56,7 +56,7 @@ vim.opt.fillchars = { eob = " " }
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = "menu,menuone,noselect"
 
-vim.opt.winbar = "%=%m %f" -- shows file name in top right corner
+-- vim.opt.winbar = "%=%m %f" -- shows filename in top right corner
 vim.o.lazyredraw = false
 
 -- disable some default providers
@@ -66,3 +66,10 @@ end
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
+
+vim.opt.wrap = true
+vim.opt.spell = true
+
+-- Undercurl
+vim.cmd([[let &t_Cs = "\e[4:3m"]])
+vim.cmd([[let &t_Ce = "\e[4:0m"]])

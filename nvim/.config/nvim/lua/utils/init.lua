@@ -61,4 +61,14 @@ U.remove_duplicate_from_table = function(data_table)
 	return res
 end
 
+U.has_value = function(tab, val)
+	for _, value in ipairs(tab) do
+		if value == val then
+			return true
+		end
+	end
+
+	return false
+end
+
 return U

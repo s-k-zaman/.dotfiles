@@ -9,7 +9,7 @@
 -- init: init functions are always executed during startup
 
 return {
-	-- here goes all the helper plugins/miscs.
+	-- here goes all the helper plugins/misc.
 	-- others plugins are in lua/plugins directory...
 	{ "nvim-lua/plenary.nvim" },
 	{

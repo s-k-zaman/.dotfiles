@@ -22,6 +22,16 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]]) -- don't loose what i am pasting.
 
+-- reload neovim
+-- re-source nvim configs
+function Reload()
+	vim.cmd(":source $NVIM_CONFIG")
+	print("re-sourced configs")
+end
+vim.keymap.set("n", "<leader>rr", function()
+	Reload()
+end, { desc = "re-source configs" })
+
 -- next greatest remap ever : asbjornHaland
 -- not using as my clipboard is synced through set.lua file.
 -- vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]]) -- same as y sync to system clipboard.
@@ -35,3 +45,6 @@ vim.keymap.set(
 	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
 	{ desc = "change current word in full document." }
 )
+
+-- call the disciplines
+require("utils.discipline").cowboy()

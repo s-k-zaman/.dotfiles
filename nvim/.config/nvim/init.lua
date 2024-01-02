@@ -7,3 +7,4 @@ require("autocmds")
 
 -- other plugins settings, not configuring directly from plugins section.
 require("plugins.configs.lualine")
+

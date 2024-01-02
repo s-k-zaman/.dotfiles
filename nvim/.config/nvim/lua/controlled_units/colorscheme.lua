@@ -1,13 +1,21 @@
+local utils = require("utils")
 -- onedark :FIX: which key bg is not transparent.
 -- catppuccin
 -- tokyonight : FIX: lualine custom module problem
 -- rose-pine : FIX: lualine custom module problem
--- neosolarized :FIX: colorbuddy not working.
+-- neosolarized :FIX: colorbuddy not working, colors are not in place.
+-- solarized-osaka
+-- xcode
+-- xcodehc
 local colorschemeName = "onedark"
 Colorscheme_transparent = false
 
 -- comments are not becoming italic. -> i think due to fonts.
-require("plugins.configs.colorschemes." .. colorschemeName)
+
+local skip_configuration_for = { "xcode", "xcodehc" }
+if not utils.has_value(skip_configuration_for, colorschemeName) then
+	require("plugins.configs.colorschemes." .. colorschemeName)
+end
 
 function ColorMyPencils(color)
 	color = color or "onedark"

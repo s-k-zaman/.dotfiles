@@ -3,6 +3,7 @@ return {
 	{ "christoomey/vim-tmux-navigator", lazy = false },
 	{
 		"folke/flash.nvim",
+		enabled = false,
 		event = "VeryLazy",
 		vscode = true,
 		---@type Flash.Config

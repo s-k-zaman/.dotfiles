@@ -3,7 +3,7 @@
 local icons = require("utils.icons_lazynvim").icons
 require("lualine").setup({
 	options = {
-		theme = "auto",
+		theme = "auto", -- `auto` for auto selecting
 		globalstatus = true,
 		disabled_filetypes = {
 			statusline = { "dashboard", "alpha" },
@@ -50,7 +50,7 @@ require("lualine").setup({
 				},
 			},
 			-- { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-			{ "filename", path = 0, symbols = { modified = "󰛓", readonly = "", unnamed = "" } },
+			{ "filename", path = 1, symbols = { modified = "󰛓", readonly = "", unnamed = "[No Name]" } },
 			-- for nvim-navic
 			-- stylua: ignore
 			-- {

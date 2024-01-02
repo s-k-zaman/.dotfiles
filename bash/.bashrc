@@ -51,6 +51,7 @@ if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 # Set the default editor
 export EDITOR=nvim
 export VISUAL=nvim
+export NVIM_CONFIG="~/.config/nvim/init.lua"
 alias vim='nvim'
 alias ed="nvim"
 alias pico='edit'
@@ -678,4 +679,9 @@ export PATH="$HOME/.amplify/bin:$PATH"
 ## LOADING OTHER ALIASES
 if [ -f ~/.game_alias_bash ]; then
     . ~/.game_alias_bash
+fi
+
+## LOADING DOCKER IMAGES
+if [ -f ~/.docker_alias_bash ]; then
+    . ~/.docker_alias_bash
 fi
