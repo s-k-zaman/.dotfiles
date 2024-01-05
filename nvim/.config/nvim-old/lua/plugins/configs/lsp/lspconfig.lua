@@ -78,34 +78,34 @@ mason_lspconfig.setup_handlers({
 	function(server_name)
 		if server_name == "pyright" then -- Pyright or other python LSPs
 			lspconfig[server_name].setup({
-				before_init = function(_, config)
-					-- to auto enable venv
-					local venv_selector_python = require("modules.venv_selector_python")
-					-- check venv to enable status chosen by user
-					if venv_selector_python.get_venv_status() ~= true then
-						-- fallback to system path
-						config.settings.python.pythonPath = vim.fn.exepath("python3")
-							or vim.fn.exepath("python")
-							or "python"
-						return
-					end
-					-- Use activated virtualenv.
-					if vim.env.VIRTUAL_ENV then
-						config.settings.python.pythonPath = path.join(vim.env.VIRTUAL_ENV, "bin", "python")
-					else
-						-- if no activeated Virtual_Env, auto setting in folder venv
-						local venv = venv_selector_python.try_set_in_folder_venv()
-						if venv ~= false or venv ~= nil then
-							config.settings.python.pythonPath = venv.python_path
-						else
-							-- if fails then,
-							-- reset current venv, if present
-							if venv_selector_python.get_current_venv() ~= nil then
-								venv_selector_python.set_current_venv(nil)
-							end
-						end
-					end
-				end,
+				-- before_init = function(_, config)
+				-- 	-- to auto enable venv
+				-- 	local venv_selector_python = require("modules.venv_selector_python")
+				-- 	-- check venv to enable status chosen by user
+				-- 	if venv_selector_python.get_venv_status() ~= true then
+				-- 		-- fallback to system path
+				-- 		config.settings.python.pythonPath = vim.fn.exepath("python3")
+				-- 			or vim.fn.exepath("python")
+				-- 			or "python"
+				-- 		return
+				-- 	end
+				-- 	-- Use activated virtualenv.
+				-- 	if vim.env.VIRTUAL_ENV then
+				-- 		config.settings.python.pythonPath = path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+				-- 	else
+				-- 		-- if no activeated Virtual_Env, auto setting in folder venv
+				-- 		local venv = venv_selector_python.try_set_in_folder_venv()
+				-- 		if venv ~= false or venv ~= nil then
+				-- 			config.settings.python.pythonPath = venv.python_path
+				-- 		else
+				-- 			-- if fails then,
+				-- 			-- reset current venv, if present
+				-- 			if venv_selector_python.get_current_venv() ~= nil then
+				-- 				venv_selector_python.set_current_venv(nil)
+				-- 			end
+				-- 		end
+				-- 	end
+				-- end,
 				capabilities = capabilities,
 				on_attach = on_attach,
 				settings = servers_list[server_name],

@@ -52,7 +52,7 @@ autocmd("BufWinEnter", {
     })
 
     vim.keymap.set("n", "<F6>", function()
-      -- TODO: this is not working properly for infinty loops, ctrl+c is not cacelling loop.
+      -- TODO: this is not working properly for infinity loops, ctrl+c is not cancelling loop.
       -- works if tmux is installed
 
       --save file

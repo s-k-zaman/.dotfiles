@@ -4,6 +4,6 @@
 ~/work
 ~/work/Dressme
 ~/work/shahajadaDa
-~/pont
+~/Prac+misc
 ~/Courses
 ~/Courses/python-advance+scraping-course/

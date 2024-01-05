@@ -83,9 +83,9 @@ cmp.setup({
 	sources = {
 		{ name = "nvim_lsp" }, -- this extension gives lsp suggestions.
 		{ name = "luasnip" },
+		{ name = "path" },
 		{ name = "buffer" },
 		{ name = "nvim_lua" },
-		{ name = "path" },
 		{ name = "emoji" }, -- start with :(colon) to get emoji suggestions
 	},
 	experimental = {
