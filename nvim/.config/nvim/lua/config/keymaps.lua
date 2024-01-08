@@ -1,80 +1,71 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
-local Util = require("lazyvim.util")
-local map = vim.keymap.set
-local opts = { noremap = true, silent = true }
---------------------- DELETE KEYMAPS--------------
-vim.keymap.del("n", "<leader>qq")
+local map = require("utils.keymapper").keymap
 
--------------- windows --------------
-map("n", "<leader>-", "<C-W>s", { desc = "Split window below" })
-map("n", "<leader>\\", "<C-W>v", { desc = "Split window right" })
-
--------------- tabs --------------
-if Util.has("bufferline.nvim") then -- for any bufferline plugin.
-  map("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next Tab" })
-  map("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous Tab" })
-else
-  map("n", "<Tab>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
-  map("n", "<S-Tab>", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
-end
-
--- lazygit
--- keymap("n", "<leader>gg", function()
---   Util.terminal({ "gitlazy" }, { cwd = Util.root(), esc_esc = false, ctrl_hjkl = false })
--- end, { desc = "Lazygit (root dir)" })
--- keymap("n", "<leader>gG", function()
---   Util.terminal({ "gitlazy" }, { esc_esc = false, ctrl_hjkl = false })
--- end, { desc = "Lazygit (cwd)" })
-
------- terminal -------------
-map("n", "<space>`", function()
-  Util.terminal()
-end, { desc = "Terminal (cwd)" })
-map("t", "<space>`", "<cmd>close<cr>", { desc = "Hide Terminal" })
---------------------- my keymaps ------------------------------
--- Select all
-map("n", "<C-a>", "gg<S-v>G", { desc = "select all" })
-
+vim.keymap.set("n", "<C-a>", "gg<S-v>G", { desc = "select all" })
 -- scrolling page
-map("n", "<C-w>", "<C-u>zz", { desc = "scroll up" })
-map("n", "<C-s>", "<C-d>zz", { desc = "scroll down" })
+-- vim.keymap.set("n", "<C->", "<C-u>zz", { desc = "scroll up" })
+-- vim.keymap.set("n", "<C->", "<C-d>zz", { desc = "scroll down" })
 
--- This is going to get me cancelled(the primegean)
-map("i", "<C-c>", "<Esc>")
-
+-- This is going to get me cancelled
+vim.keymap.set("i", "<C-c>", "<Esc>")
 -- greatest remap ever
-map("x", "<leader>p", [["_dP]]) -- don't loose what i am pasting.
-
--- next greatest remap ever : asbjornHaland
--- not using as my clipboard is synced through set.lua file.
--- vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]]) -- same as y sync to system clipboard.
--- vim.keymap.set("n", "<leader>Y", [["+Y]]) -- same as yy, sync to system clipboard.
--- vim.keymap.set({ "n", "v" }, "<leadr>d", [["_d]]) -- same as d, sync to system clipboard.
-
--- leader + s does the same thing as below but with delay of few secs.
-map(
-  "n",
-  "<leader>cw",
-  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { desc = "change current word in full document." }
+vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "paste[keep content]" }) -- don't loose what i am pasting.
+vim.keymap.set(
+	"n",
+	"<leader>rw",
+	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+	{ desc = "change word (buf)" }
 )
 
--------------other useful shortcuts--------------
-map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-map("n", "<leader>I", function()
-  Util.format({ force = true })
-end, { desc = "Fomat file(conform|lsp)" })
-
--- make bash script executable
-map("n", "<leader>mx", "<cmd>!chmod +x %<CR>", {
-  silent = true,
-  desc = "make bash script executable",
-})
-
+-- Move Lines
+map("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
+map("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
+map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move line down" })
+map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })
+map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move line down" })
+map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move line up" })
+-- do indenting
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
+vim.keymap.set("n", "J", "mzJ`z")
 ---- search word silently ---------
-map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
--- vim.keymap.set("n", "n", "nzzzv")
--- vim.keymap.set("n", "N", "Nzzzv")
---------------------------------------------------
+vim.keymap.set({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
+-- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
+vim.keymap.set("n", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
+vim.keymap.set("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
+vim.keymap.set("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
+vim.keymap.set("n", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
+vim.keymap.set("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
+vim.keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
+-- Clear search with <esc>
+map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
+map("n", "Q", "<nop>")
+-- quickfix and location.
+map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
+map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
+-- Inspect position of cursor
+if vim.fn.has("nvim-0.9.0") == 1 then
+	vim.keymap.set("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
+end
+-------------- windows --------------
+vim.keymap.set("n", "<leader>ww", "<C-W>p", { desc = "Other window" })
+vim.keymap.set("n", "<leader>wd", "<C-W>c", { desc = "Delete window" })
+vim.keymap.set("n", "<leader>w-", "<C-W>s", { desc = "Split window below" })
+vim.keymap.set("n", "<leader>w\\", "<C-W>v", { desc = "Split window right" })
+-- Resize window using <ctrl> arrow keys
+map("n", "<C-Up>", "resize +2", { desc = "Increase window height" })
+map("n", "<C-Down>", "resize -2", { desc = "Decrease window height" })
+map("n", "<C-Left>", "vertical resize -2", { desc = "Decrease window width" })
+map("n", "<C-Right>", "vertical resize +2", { desc = "Increase window width" })
+-------------- tabs --------------
+map("n", "<leader><tab>l", "tablast", { desc = "Last Tab" })
+map("n", "<leader><tab>f", "tabfirst", { desc = "First Tab" })
+map("n", "<leader><tab><tab>", "tabnew", { desc = "New Tab" })
+map("n", "<leader><tab>n", "tabnext", { desc = "Next Tab" })
+map("n", "<leader><tab>p", "tabprevious", { desc = "Previous Tab" })
+map("n", "<leader><tab>d", "tabclose", { desc = "Close Tab" })
+--------------buffers--------------
+map("n", "<S-h>", "bprevious", { desc = "Prev buffer", noremap = false, remap = true })
+map("n", "<S-l>", "bnext", { desc = "Next buffer", noremap = false, remap = true })
+map("n", "<tab>", "e #", { desc = "Switch to Other Buffer" })
+
+map("n", "<leader>I", "Format", { desc = "Format File (conform|lsp)" })

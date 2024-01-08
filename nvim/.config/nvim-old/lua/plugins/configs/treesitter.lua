@@ -1,6 +1,6 @@
 local opts = {
 	-- A list of parser names, or "all"
-	ensure_installed = {
+	esure_installed = {
 		"javascript", -- 'help', -> causing problem[its a bug]
 		"json",
 		"typescript",

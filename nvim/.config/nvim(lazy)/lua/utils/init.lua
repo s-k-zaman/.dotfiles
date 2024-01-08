@@ -1,10 +1,5 @@
-local M = {}
-
-M.augroup = function(name)
-  return vim.api.nvim_create_augroup("zaman_nvim" .. name, { clear = true })
-end
-
-M.mysplit = function(inputstr, sep)
+local U = {}
+U.mysplit = function(inputstr, sep)
 	if sep == nil then
 		sep = "%s"
 	end
@@ -15,15 +10,15 @@ M.mysplit = function(inputstr, sep)
 	return t
 end
 
-M.reload_module = function(name)
+U.reload_module = function(name)
 	require("plenary.reload").reload_module(name)
 end
 
-M.replace_string = function(str, replace_string, replace_with)
+U.replace_string = function(str, replace_string, replace_with)
 	return str:gsub("%" .. replace_string, replace_with)
 end
 
-M.clean_regex_from_string = function(str)
+U.clean_regex_from_string = function(str)
 	local regex_strings = {
 		"^",
 		"$",
@@ -40,19 +35,19 @@ M.clean_regex_from_string = function(str)
 		")",
 	}
 	for _, sym in ipairs(regex_strings) do
-		str = M.replace_string(str, sym, "")
+		str = U.replace_string(str, sym, "")
 	end
 	return str
 end
-M.starts_with = function(str, start)
+U.starts_with = function(str, start)
 	return str:sub(1, #start) == start
 end
 
-M.ends_with = function(str, ending)
+U.ends_with = function(str, ending)
 	return ending == "" or str:sub(-#ending) == ending
 end
 
-M.remove_duplicate_from_table = function(data_table)
+U.remove_duplicate_from_table = function(data_table)
 	local hash = {}
 	local res = {}
 
@@ -66,7 +61,7 @@ M.remove_duplicate_from_table = function(data_table)
 	return res
 end
 
-M.has_value = function(tab, val)
+U.has_value = function(tab, val)
 	for _, value in ipairs(tab) do
 		if value == val then
 			return true
@@ -76,11 +71,4 @@ M.has_value = function(tab, val)
 	return false
 end
 
-M.tableConcat= function(t1,t2)
-   for i=1,#t2 do
-      t1[#t1+1] = t2[i]
-   end
-   return t1
-end
-
-return M
+return U

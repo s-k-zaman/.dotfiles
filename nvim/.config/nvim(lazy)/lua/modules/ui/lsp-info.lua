@@ -37,11 +37,11 @@ M.get_lsps = function()
 	end
 
 	if #lsps == 0 then
-		return_str = "%#lualine_c_diagnostics_error_normal#" .. "🚭LSP"
+		return_str = "%#Exception#" .. " LSP"
 	elseif #lsps > 3 then
-		return_str = "%#lualine_c_diagnostics_hint_normal#" .. "(" .. table.concat(lsps, ", ", 1, 3) .. "..." .. ")"
+		return_str = "%#Label#" .. "(" .. table.concat(lsps, ", ", 1, 3) .. "..." .. ")"
 	else
-		return_str = "%#lualine_c_diagnostics_hint_normal#" .. "(" .. table.concat(lsps, ", ") .. ")"
+		return_str = "%#Label#" .. "(" .. table.concat(lsps, ", ") .. ")"
 	end
 	return return_str
 end
