@@ -5,15 +5,16 @@ vim.keymap.set("n", "<C-a>", "gg<S-v>G", { desc = "select all" })
 -- vim.keymap.set("n", "<C->", "<C-u>zz", { desc = "scroll up" })
 -- vim.keymap.set("n", "<C->", "<C-d>zz", { desc = "scroll down" })
 
+-- INFO: I think i don't need this[swapped esc with caps]
 -- This is going to get me cancelled
-vim.keymap.set("i", "<C-c>", "<Esc>")
+-- vim.keymap.set("i", "<C-c>", "<Esc>")
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "paste[keep content]" }) -- don't loose what i am pasting.
 vim.keymap.set(
-	"n",
-	"<leader>rw",
-	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-	{ desc = "change word (buf)" }
+    "n",
+    "<leader>rw",
+    [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+    { desc = "change word (buf)" }
 )
 
 -- Move Lines
@@ -44,7 +45,7 @@ map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
 map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
 -- Inspect position of cursor
 if vim.fn.has("nvim-0.9.0") == 1 then
-	vim.keymap.set("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
+    vim.keymap.set("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 end
 -------------- windows --------------
 vim.keymap.set("n", "<leader>ww", "<C-W>p", { desc = "Other window" })
@@ -69,3 +70,11 @@ map("n", "<S-l>", "bnext", { desc = "Next buffer", noremap = false, remap = true
 map("n", "<tab>", "e #", { desc = "Switch to Other Buffer" })
 
 map("n", "<leader>I", "Format", { desc = "Format File (conform|lsp)" })
+
+------------- Toggles -----------------
+vim.api.nvim_set_keymap(
+    "n",
+    "<leader>tz",
+    ":set wrap!<CR>",
+    { desc = "toggle: word wrap", noremap = true }
+)

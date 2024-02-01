@@ -2,7 +2,7 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", {
-	silent = true,
+    silent = true,
 })
 
 local opt = vim.opt
@@ -47,11 +47,11 @@ opt.backspace = "indent,eol,start"
 opt.splitbelow = true -- Put new windows below current
 opt.splitright = true -- Put new windows right of current
 if vim.fn.has("nvim-0.9.0") == 1 then
-	opt.splitkeep = "screen"
-	opt.shortmess:append({ C = true })
+    opt.splitkeep = "screen"
+    opt.shortmess:append({ C = true })
 end
 opt.autochdir = false
-opt.iskeyword:append("-")
+-- opt.iskeyword:append("-") -- will treat 'this-word' as a single word
 opt.mouse:append("a")
 opt.fillchars = { eob = " " }
 opt.clipboard:append("unnamedplus")
@@ -66,7 +66,7 @@ vim.g.autoformat = false
 
 -- disable some default providers
 for _, provider in ipairs({ "node", "perl", "python3", "ruby" }) do
-	vim.g["loaded_" .. provider .. "_provider"] = 0
+    vim.g["loaded_" .. provider .. "_provider"] = 0
 end
 
 -- Fix markdown indentation settings

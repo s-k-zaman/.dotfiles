@@ -685,3 +685,9 @@ fi
 if [ -f ~/.docker_alias_bash ]; then
     . ~/.docker_alias_bash
 fi
+
+PATH="/home/zaman/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/zaman/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/zaman/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/zaman/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/zaman/perl5"; export PERL_MM_OPT;

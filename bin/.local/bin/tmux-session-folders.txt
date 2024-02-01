@@ -1,5 +1,6 @@
 ~/projects
 ~/projects/personal
+~/projects/luaPlugins
 ~/projects/Open-source
 ~/work
 ~/work/Dressme
