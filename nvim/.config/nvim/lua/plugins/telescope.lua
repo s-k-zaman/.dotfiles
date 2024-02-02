@@ -20,6 +20,13 @@ local config = function()
                     prompt_position = "top",
                 },
             },
+            file_ignore_patterns = {
+                -- gif file [No need as using gitfiles if git directory.]
+                -- ".git/",
+                -- python venv folders
+                "venv/",
+                ".venv/",
+            },
             -- open files in the first window that is an actual file.
             -- use the current window if no other window is available.
             get_selection_window = function()
