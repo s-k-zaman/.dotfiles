@@ -2,15 +2,15 @@ local augroup = require("utils").augroup
 local venv_selctor_python = require("modules.venv_selector_python")
 
 vim.api.nvim_create_autocmd("BufWinEnter", {
-	group = augroup("python_venv"),
-	pattern = "*.py",
-	callback = function()
-		local current_venv = require("venv-selector").get_active_venv()
-   		if current_venv == nil then
-			-- venv_selctor_python.try_set_in_folder_venv(false)
-             require("venv-selector").retrieve_from_cache()
-		end
-	end,
+    group = augroup("python_venv"),
+    pattern = "*.py",
+    callback = function()
+        local current_venv = require("venv-selector").get_active_venv()
+        if current_venv == nil then
+            -- venv_selctor_python.try_set_in_folder_venv(false)
+            require("venv-selector").retrieve_from_cache()
+        end
+    end,
 })
 
 -- vim.api.nvim_create_autocmd("VimEnter", {
@@ -161,7 +161,7 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
                 return
             end
 
-            vim.cmd("exec '!" .. python_path .. "' shellescape(@%, 1)")
+            vim.cmd("exec '!printf \"\\n\\n\";" .. python_path .. "' shellescape(@%, 1)")
         end, {
             silent = true,
         })
