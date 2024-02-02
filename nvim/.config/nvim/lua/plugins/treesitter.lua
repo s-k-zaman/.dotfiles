@@ -59,12 +59,38 @@ local config = function()
                     ["<C-u>"] = "@parameter.inner",
                 },
             },
+            -- nvim treesitter textobjects options
+            select = {
+                enable = true,
+
+                -- Automatically jump forward to textobj, similar to targets.vim
+                lookahead = true,
+
+                keymaps = {
+                    -- You can use the capture groups defined in textobjects.scm
+                    -- You can optionally set descriptions to the mappings (used in the desc parameter of
+                    -- nvim_buf_set_keymap) which plugins like which-key display
+                    -- ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+                    ["af"] = "@function.outer",
+                    ["if"] = "@function.inner",
+                    ["ac"] = "@class.outer",
+                    ["ic"] = "@class.inner",
+                },
+                -- You can choose the select mode (default is charwise 'v')
+                selection_modes = {
+                    ["@parameter.outer"] = "v", -- charwise
+                    ["@function.outer"] = "V", -- linewise
+                    -- ["@class.outer"] = "<c-v>", -- blockwise
+                },
+                include_surrounding_whitespace = false,
+            },
         },
     })
 end
 
 return {
-    "nvim-treesitter/nvim-treesitter",
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    dependencies = "nvim-treesitter/nvim-treesitter",
     lazy = false,
     config = config,
 }
