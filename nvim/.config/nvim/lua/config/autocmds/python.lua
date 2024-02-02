@@ -161,7 +161,7 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
                 return
             end
 
-            vim.cmd("exec '!printf \"\\n\\n\";" .. python_path .. "' shellescape(@%, 1)")
+            vim.cmd('exec \'!printf "\\n\\n";' .. python_path .. "' shellescape(@%, 1)")
         end, {
             silent = true,
         })
