@@ -35,6 +35,14 @@ opt.cmdheight = 1
 opt.pumblend = 10 -- Popup blend
 opt.pumheight = 10 -- Maximum number of entries in a popup
 -- vim.opt.winbar = "%=%m %f" -- shows filename in top right corner
+if TRANSPARENT then
+    vim.api.nvim_set_hl(0, "Normal", {
+        bg = "none",
+    })
+    vim.api.nvim_set_hl(0, "NormalFloat", {
+        bg = "none",
+    })
+end
 
 -- behavior
 opt.hidden = true
