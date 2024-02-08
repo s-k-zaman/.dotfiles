@@ -15,7 +15,7 @@ return {
                 },
                 -- `f`, `F`, `t`, `T`, `;` and `,` motions
                 char = {
-                    enabled = true,
+                    enabled = false,
                     highlight = { backdrop = false },
                 },
             },
