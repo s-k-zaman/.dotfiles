@@ -147,11 +147,11 @@ return {
         end,
         config = function(_, opts)
             local cmp = require("cmp")
-            local cmp_autopairs = require("nvim-autopairs.completion.cmp")
             for _, source in ipairs(opts.sources) do
                 source.group_index = source.group_index or 1
             end
             if PluginUtils.has("nvim-autopairs") then
+                local cmp_autopairs = require("nvim-autopairs.completion.cmp")
                 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
             end
             cmp.setup(opts)
