@@ -34,9 +34,12 @@ return {
                     )
 
                     -- rebase always
-                    vim.keymap.set("n", "<leader>gr", function()
-                        vim.cmd.Git({ "pull", "--rebase" })
-                    end, { buffer = bufnr, remap = false, desc = "fugitive: git pull[rebase]" })
+                    vim.keymap.set(
+                        "n",
+                        "<leader>gr",
+                        ":Git pull --rebase<CR>",
+                        { buffer = bufnr, remap = false, desc = "fugitive: git pull[rebase]" }
+                    )
                 end,
             })
         end,
