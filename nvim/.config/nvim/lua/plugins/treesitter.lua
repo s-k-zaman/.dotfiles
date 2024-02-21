@@ -28,6 +28,8 @@ local config = function()
             "python",
             "query",
             "regex",
+            "ron",
+            "rust",
             "toml",
             "tsx",
             "typescript",

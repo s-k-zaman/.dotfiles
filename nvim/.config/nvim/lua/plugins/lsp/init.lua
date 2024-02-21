@@ -31,7 +31,9 @@ return {
                 "tsserver",
                 "jsonls",
                 "tailwindcss",
-                "emmet_ls"
+                "emmet_ls",
+                "rust_analyzer",
+                "taplo",
             },
         },
         config = function(_, opts)

@@ -32,8 +32,8 @@ local server_settings = {
     -- html = {},
     -- cssls = {},
     -- gopls = {},
-    -- rust_analyzer = {},
     -- denols = {},
+    rust_analyzer = require("plugins.lsp.LspServerSettings.rust_analyzer"),
     eslint = require("plugins.lsp.LspServerSettings.eslint"),
     tsserver = require("plugins.lsp.LspServerSettings.tsserver"),
     yamlls = require("plugins.lsp.LspServerSettings.yamlls"),
@@ -78,6 +78,16 @@ mason_lspconfig.setup_handlers({
                 on_attach = on_attach,
                 settings = server_settings[server_name] or {},
                 single_file_support = true,
+            })
+            return
+        end
+        if server_name == "rust_analyzer" then
+            lspconfig[server_name].setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+                settings = server_settings[server_name] or {},
+                filetypes = { "rust" },
+                root_dir = require("lspconfig.util").root_pattern("Cargo.toml"),
             })
             return
         end

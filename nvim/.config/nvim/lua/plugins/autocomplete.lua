@@ -139,6 +139,7 @@ return {
                     { name = "luasnip" },
                     { name = "nvim_lua" },
                     { name = "path" },
+                    { name = "crates" },
                     { name = "emoji" },
                 }, {
                     { name = "buffer" },

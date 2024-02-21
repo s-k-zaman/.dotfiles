@@ -23,7 +23,7 @@ M.on_attach = function(client, bufnr)
         vim.keymap.set("n", keys, func, {
             buffer = bufnr,
             desc = desc,
-            noremap = true,
+            -- noremap = true,
         })
     end
     local nmap_saga = function(keys, func, desc)
@@ -33,7 +33,7 @@ M.on_attach = function(client, bufnr)
         vim.keymap.set("n", keys, func, {
             buffer = bufnr,
             desc = desc,
-            noremap = true,
+            -- noremap = true,
         })
     end
 
@@ -110,6 +110,48 @@ M.on_attach = function(client, bufnr)
     if client.name == "ruff_lsp" then
         -- Disable hover in favor of Pyright
         client.server_capabilities.hoverProvider = false
+    end
+
+    -- TOML file specific keymaps or modifications
+    if client.name == "taplo" then
+        if PluginUtil.has("crates.nvim") then
+            vim.keymap.set("n", "K", function()
+                if vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
+                    -- FIX: not using this, using lspsaga
+                    require("crates").show_popup()
+                elseif PluginUtil.has("lspsaga.nvim") then
+                    nmap_saga("K", "<cmd>Lspsaga hover_doc<cr>", "Hover Doc")
+                else
+                    vim.lsp.buf.hover()
+                end
+            end, { desc = "Hover Doc (Crate)" })
+        end
+    end
+
+    -- IMPORTANT: rust-tools specific behavior/mappings here...
+    -- along with lsp mappings
+    if client.name == "rust_analyzer" then
+        client.server_capabilities.documentFormattingProvider = true
+        client.server_capabilities.documentRangeFormattingProvider = true
+
+        local nmap_rust = function(keys, func, desc)
+            if desc then
+                desc = desc .. " (rust)"
+            end
+            vim.keymap.set("n", keys, func, {
+                buffer = bufnr,
+                desc = desc,
+                -- noremap = true,
+            })
+        end
+        nmap_rust("<F5>", "<cmd>RustRun<cr>", "run program")
+        if PluginUtil.has("rust-tools.nvim") then
+            local rt = require("rust-tools")
+
+            nmap_rust("K", "<cmd>RustHoverActions<cr>", "Hover Doc")
+            nmap_rust("<leader>A", "<cmd>RustCodeAction<cr>", "Code [A]ction")
+            nmap_rust("<leader>ag", rt.code_action_group.code_action_group, "Code [A]ction groups")
+        end
     end
 end
 
