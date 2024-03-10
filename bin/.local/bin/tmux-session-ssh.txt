@@ -1,2 +1,3 @@
 dressme_tweet_bot cd ~/work/Dressme/important_files && ssh -i ./machine-v100-1_key.pem dressme-twitterbot@20.193.140.122
 dressme_aws cd ~/work/Dressme/important_files && ssh -i ./dressme-aws.pem -L 8502:localhost:8502 ubuntu@13.126.101.118
+dressme_zara_bot cd ~/work/Dressme/important_files && ssh -i ./zaman.pem ubuntu@ec2-3-109-4-231.ap-south-1.compute.amazonaws.com

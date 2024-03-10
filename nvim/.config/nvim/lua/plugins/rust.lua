@@ -20,6 +20,7 @@ return {
                 server = {
                     -- rust tools commands are controlled in on_attach of lsp_mappings
                     on_attach = require("plugins.lsp.lsp_mappings").on_attach,
+                    standalone = true,
                 },
                 tools = {
                     hover_actions = {
