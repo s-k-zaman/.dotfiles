@@ -20,7 +20,7 @@
   "inc-rename.nvim": { "branch": "main", "commit": "6f9b5f9cb237e12935144cdc535322b8c93c1b25" },
   "incline.nvim": { "branch": "main", "commit": "a6971a5c0a7b8ec1a2f9caf92b1a497c5eb31dac" },
   "indent-blankline.nvim": { "branch": "master", "commit": "821a7acd88587d966f7e464b0b3031dfe7f5680c" },
-  "lazy.nvim": { "branch": "main", "commit": "aedcd79811d491b60d0a6577a9c1701063c2a609" },
+  "lazy.nvim": { "branch": "main", "commit": "83493db50a434a4c5c648faf41e2ead80f96e478" },
   "lspsaga.nvim": { "branch": "main", "commit": "b1b140aa20a0cf353cd3e282870429b48b30a169" },
   "lualine.nvim": { "branch": "master", "commit": "7d131a8d3ba5016229e8a1d08bf8782acea98852" },
   "mason-lspconfig.nvim": { "branch": "main", "commit": "60f6805b12a12e8a912aeb2f975dec1794a8994e" },

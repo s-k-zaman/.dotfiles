@@ -695,3 +695,6 @@ PERL_LOCAL_LIB_ROOT="/home/zaman/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_R
 PERL_MB_OPT="--install_base \"/home/zaman/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/zaman/perl5"; export PERL_MM_OPT;
 . "$HOME/.cargo/env"
+if [ -f "/home/zaman/.use-nala" ]; then
+        . "/home/zaman/.use-nala"
+fi
