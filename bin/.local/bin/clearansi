@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+string=$1
+string=$(sed -r 's/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g' <<< "$string")
+echo "$string"

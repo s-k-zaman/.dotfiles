@@ -1,0 +1,79 @@
+#!/usr/bin/bash
+
+nb_current_notebook=$(nb notebooks current)
+use_selected_notebook=false
+nb-list() {
+    local notebook="$1"
+
+    if $use_selected_notebook; then
+        nb use $notebook
+    fi
+
+    local output=$(nb list "$notebook:" --all -t note --no-indicator --no-color | sed -r 's/\[//' | sed -r 's/\]//')
+    if [[ $output == *"0 note items."* ]]; then
+        echo $output
+        echo "Exiting."
+        exit 1  # Exit with a non-zero status code indicating failure
+    fi
+    note_number=$(echo "$output" |
+        #fzf: can add --height 50% \
+        fzf --preview "nb show -p {1} | head -n 200 | bat -l md" \
+            --bind "alt-j:preview-down,alt-k:preview-up,alt-d:preview-page-down,alt-u:preview-page-up" \
+            --preview-window=right:70% |
+            cut -d$' ' -f1)
+
+    if [[ -z $note_number ]]; then
+        exit 0
+    fi
+
+    nb edit $note_number
+}
+
+
+# running from here
+if [[ $# -gt 0 ]]; then
+    if [[ $# -eq 1 ]]; then
+        selected=$1
+        case "$1" in
+            --use)
+                use_selected_notebook=true
+                selected=""
+                ;;
+        esac
+    elif [[ $# -eq 2 ]]; then
+        case "$1" in
+            --use)
+                use_selected_notebook=true
+                selected=$2
+                ;;
+        esac
+        case "$2" in
+            --use)
+                use_selected_notebook=true
+                selected=$1
+                ;;
+        esac
+    fi
+fi
+
+if [[ -z $selected ]]; then
+    notebooks=$(nb notebooks --no-color)
+    def_text="__default($nb_current_notebook)"
+    prompt="Select a Notebook: " 
+    if $use_selected_notebook; then
+        prompt="Select[USE] a Notebook: " 
+    fi
+    notebooks=$(echo "$notebooks" | tr ' ' '\n')
+    notebooks="$notebooks\n$def_text"
+    selected=$(echo -e "$notebooks" | fzf --prompt="$prompt" --tac)
+    if [[ "$selected" = "$def_text" ]]; then
+        selected=$(echo "$nb_current_notebook")
+    fi
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+nb-list $selected
+
