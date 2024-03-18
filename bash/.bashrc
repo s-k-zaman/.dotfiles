@@ -145,7 +145,7 @@ alias rmd='/bin/rm  --recursive --force --verbose '
 # alias ll='ls -Fls' # long listing format
 # eza(exa) commands
 alias ls='eza -aHF --icons=auto --group-directories-first --git'
-alias ll='ls -Fls name' # long listing format
+alias ll='ls -F -ls name' # long listing format
 # other directory commands
 alias la='ls -Alh' # show hidden files
 alias lx='ls -lXBh' # sort by extension

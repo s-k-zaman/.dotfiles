@@ -72,9 +72,13 @@ map("n", "<tab>", "e #", { desc = "Switch to Other Buffer" })
 map("n", "<leader>I", "Format", { desc = "Format File (conform|lsp)" })
 
 ------------- Toggles -----------------
-vim.api.nvim_set_keymap(
+vim.api.nvim_set_keymap("n", "<leader>tz", ":set wrap!<CR>", { desc = "toggle: word wrap", noremap = true })
+
+------------- nb Note -----------------
+map("n", "<leader>nr", "<cmd>!nb sync<cr>", { desc = "nb sync" })
+map(
     "n",
-    "<leader>tz",
-    ":set wrap!<CR>",
-    { desc = "toggle: word wrap", noremap = true }
+    "<leader>na",
+    '<cmd>!tmux neww -c "#{pane_current_path}" "note-accessor"<cr>',
+    { desc = "note-accessor", silent = true }
 )

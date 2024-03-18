@@ -1,1 +1,6 @@
 ﻿personal/
+bin/.local/bin/LICENSE
+bin/.local/bin/README.md
+bin/.local/bin/completions/
+bin/.local/bin/glow
+bin/.local/bin/manpages/

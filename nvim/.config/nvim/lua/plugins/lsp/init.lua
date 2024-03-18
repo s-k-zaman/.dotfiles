@@ -25,6 +25,8 @@ return {
             ensure_installed = {
                 -- ONLY LSP HERE
                 "lua_ls",
+                "cssls",
+                "marksman",
                 "pyright",
                 "ruff_lsp",
                 "eslint",
