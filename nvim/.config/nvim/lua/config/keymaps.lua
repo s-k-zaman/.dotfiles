@@ -8,6 +8,8 @@ vim.keymap.set("n", "<C-a>", "gg<S-v>G", { desc = "select all" })
 -- INFO: I think i don't need this[swapped esc with caps]
 -- This is going to get me cancelled
 -- vim.keymap.set("i", "<C-c>", "<Esc>")
+vim.keymap.set("n", "k", "gk", { desc = "move up" })
+vim.keymap.set("n", "j", "gj", { desc = "move down" })
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "paste[keep content]" }) -- don't loose what i am pasting.
 vim.keymap.set(
@@ -76,6 +78,7 @@ vim.api.nvim_set_keymap("n", "<leader>tz", ":set wrap!<CR>", { desc = "toggle: w
 
 ------------- nb Note -----------------
 map("n", "<leader>nr", "<cmd>!nb sync<cr>", { desc = "nb sync" })
+--  TODO: escape # symbol
 map(
     "n",
     "<leader>na",

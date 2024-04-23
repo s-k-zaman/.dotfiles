@@ -71,7 +71,9 @@ local config = function()
 
     if Utils.is_git_repository() then
         -- git
-        map("n", "<leader><space>", builtin.git_files, {
+        map("n", "<leader><space>", function()
+            builtin.git_files({ show_untracked = true })
+        end, {
             desc = "Find git files",
         })
         map("n", "<leader>gc", "Telescope git_commits", {

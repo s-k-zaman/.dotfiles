@@ -26,7 +26,8 @@ return {
             require("nvim-tree").setup({
                 on_attach = my_on_attach,
                 filters = {
-                    dotfiles = true,
+                    -- dotfiles = true,
+                    git_ignored = false,
                 },
                 view = {
                     adaptive_size = false,

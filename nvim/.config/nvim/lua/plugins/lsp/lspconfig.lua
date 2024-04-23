@@ -81,6 +81,27 @@ mason_lspconfig.setup_handlers({
             })
             return
         end
+        if server_name == "emmet_ls" then
+            lspconfig[server_name].setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+                filetypes = {
+                    -- "css",
+                    "eruby",
+                    "html",
+                    "javascript",
+                    "javascriptreact",
+                    "less",
+                    -- "sass",
+                    -- "scss",
+                    "svelte",
+                    "pug",
+                    "typescriptreact",
+                    "vue",
+                },
+            })
+            return
+        end
         if server_name == "rust_analyzer" then
             lspconfig[server_name].setup({
                 capabilities = capabilities,
