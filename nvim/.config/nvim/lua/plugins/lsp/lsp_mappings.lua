@@ -54,7 +54,7 @@ M.on_attach = function(client, bufnr)
     end
 
     if PluginUtil.has("lspsaga.nvim") then
-        nmap_saga("<leader>A", "<cmd>Lspsaga code_action<cr>", "Code [A]ctions")
+        nmap_saga("<leader>a", "<cmd>Lspsaga code_action<cr>", "Code [A]ctions")
 
         nmap_saga("gd", "<cmd>Lspsaga goto_definition<cr>", "[g]oto [d]efinition")
         nmap_saga("gh", "<cmd>Lspsaga peek_definition<cr>", "[g]et definition [h]ere")
@@ -67,7 +67,7 @@ M.on_attach = function(client, bufnr)
         nmap_saga("[d", "<cmd>Lspsaga diagnostic_jump_next<cr>", "Goto next [d]iagnostic")
         nmap_saga("]d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Goto prev [d]iagnostic")
     else
-        nmap("<leader>A", vim.lsp.buf.code_action, "Code [A]ctions")
+        nmap("<leader>a", vim.lsp.buf.code_action, "Code [A]ctions")
 
         nmap("gd", vim.lsp.buf.definition, "[g]oto [d]efinition")
 

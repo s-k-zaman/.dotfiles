@@ -1,0 +1,4 @@
+#!/bin/bash
+
+alias mongodockercontainer="docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest"
+alias mongodocker="docker start mongodb"
