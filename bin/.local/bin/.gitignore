@@ -8,4 +8,5 @@ dotenv
 f2py
 jp.py
 normalizer
+dictionary_words_*
 
