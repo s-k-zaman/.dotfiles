@@ -6,6 +6,7 @@
 # https://web.archive.org/web/20200702000038/http://download.huzheng.org/
 #
 # 2. EXTRACT THEM INTO /usr/share/stardict/dic/
+# 3. USE konsole terminal (renders Bengali best so far, use Hack Nerd Font)
 # -----------------------------------------------------
 
 # ---------------- styling -------------
