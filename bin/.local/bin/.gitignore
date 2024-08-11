@@ -1,0 +1,11 @@
+﻿LICENSE
+README.md
+completions/
+glow
+manpages/
+__pycache__/
+dotenv
+f2py
+jp.py
+normalizer
+

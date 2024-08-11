@@ -1,0 +1,76 @@
+#!/usr/bin/bash
+# 1. GET DICTIONARIES FROM 👇
+# https://github.com/indic-dict/stardict-index
+# file -> dictionaryIndices.md
+#               OR
+# https://web.archive.org/web/20200702000038/http://download.huzheng.org/
+#
+# 2. EXTRACT THEM INTO /usr/share/stardict/dic/
+# -----------------------------------------------------
+
+# List all dictionaries
+all_dictionaries=$(sdcv -l)
+
+# Function to process Bangla dictionaries
+process_bangla_dictionaries() {
+	local search_term="$1"
+	local bangla_dictionaries="$2"
+
+	local bangla_results=""
+	IFS=',' read -ra dict_array <<<"$bangla_dictionaries"
+	for dict in "${dict_array[@]}"; do
+		trimmed_dict=$(echo "$dict" | sed 's/^ *//;s/ *$//')
+		result=$(sdcv -c -n -u "$trimmed_dict" "$search_term" 2>/dev/null)
+		# result=$(echo "$result" | sed -n '/^[^-->]/p' | sed -n '/^[^Enter]/p' | sed -n '/^[^Found]/p')
+		bangla_results+="$result"$', '
+	done
+
+	# Remove trailing ", "
+	bangla_results=$(echo "$bangla_results" | sed 's/, *$//')
+
+	echo "$bangla_results"
+}
+
+# Function to process English dictionaries
+process_english_dictionaries() {
+	local search_term="$1"
+	local english_dictionaries="$2"
+
+	local english_results=""
+	IFS=',' read -ra dict_array <<<"$english_dictionaries"
+	for dict in "${dict_array[@]}"; do
+		trimmed_dict=$(echo "$dict" | sed 's/^ *//;s/ *$//')
+		result=$(sdcv -c -n -u "$trimmed_dict" "$search_term" 2>/dev/null)
+		# result=$(echo "$result" | sed -n '/^[^-->]/p' | sed -n '/^[^Enter]/p' | sed -n '/^[^Found]/p')
+		english_results+="$result"$'\n'
+	done
+
+	echo "$english_results"
+}
+
+# Term to search for
+if [[ $# -eq 1 ]]; then
+	search_term=$1
+else
+	search_term="this"
+fi
+
+if [[ -z $search_term ]]; then
+	exit 0
+fi
+
+bangla_dictionaries=$(echo "$all_dictionaries" | grep -Ei "bangla|bengali" | awk -F ' - ' '{print $1}' | sed 's/ [0-9]*$//' | tr '\n' ',' | sed 's/,$//')
+english_dictionaries=$(echo "$all_dictionaries" | grep -Ei "WordNet" | awk -F ' - ' '{print $1}' | sed 's/ [0-9]*$//' | tr '\n' ',' | sed 's/,$//')
+
+bangla_results=$(process_bangla_dictionaries "$search_term" "$bangla_dictionaries")
+english_results=$(process_english_dictionaries "$search_term" "$english_dictionaries")
+
+# Output results
+process_output() {
+	echo -e "  --> $search_term"
+	echo
+	echo -e "\t $bangla_results"
+	echo
+	echo -e "$english_results"
+}
+process_output
