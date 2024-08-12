@@ -1,12 +1,14 @@
 #!/usr/bin/bash
 # 1. GET DICTIONARIES FROM 👇
-# https://github.com/indic-dict/stardict-index
-# file -> dictionaryIndices.md
+#    https://github.com/indic-dict/stardict-index
+#    file -> dictionaryIndices.md
 #               OR
-# https://web.archive.org/web/20200702000038/http://download.huzheng.org/
+#    https://web.archive.org/web/20200702000038/http://download.huzheng.org/
 #
 # 2. EXTRACT THEM INTO /usr/share/stardict/dic/
-# 3. USE konsole terminal (renders Bengali best so far, use Nimbus Mono ps Font)
+# 3. USE konsole terminal (renders Bengali best so far)
+#    use lohit bengali/sans serif font.
+#    profile setting -> font -> show all fonts
 # -----------------------------------------------------
 
 # ---------------- styling -------------
