@@ -13,7 +13,7 @@
 
 # ---------------- styling -------------
 # Define color codes
-NC='\033[0m' # No Color (reset to default)
+NO_COLOR='\033[0m' # No Color (reset to default)
 # Regular Colors
 BLACK='\033[0;30m'  # Black
 RED='\033[0;31m'    # Red
@@ -50,44 +50,43 @@ process_bangla_dictionaries() {
 	local bangla_dictionaries=$(echo "$all_dictionaries" | grep -Ei "bangla|bengali" | awk -F ' - ' '{print $1}' | sed 's/ [0-9]*$//' | tr '\n' ',' | sed 's/,$//')
 
 	local bangla_results=""
+	local exact_match=""
+	local non_exact_matches=""
+
 	IFS=',' read -ra dict_array <<<"$bangla_dictionaries"
 	for dict in "${dict_array[@]}"; do
-		# bangla_results+="  $dict"$'\n'
-
 		trimmed_dict=$(echo "$dict" | sed 's/^ *//;s/ *$//')
 		result=$(sdcv -n -u "$trimmed_dict" "$search_term" 2>/dev/null)
-		result=$(echo "$result" | sed -n "/^[^Found]/p")
-		result=$(echo "$result" | sed -n "/^[^Enter]/p")
-		result=$(echo "$result" | sed "/^-->.*$trimmed_dict$/d")
+		result=$(echo "$result" | sed -n "/^[^Found]/p" | sed -n "/^[^Enter]/p" | sed "/^-->.*$trimmed_dict$/d")
 
 		# Process the result into -->word: result format
-		formatted_result=$(echo "$result" | awk '
-		BEGIN { RS="-->"; FS="\n"; ORS="" }
-		NR > 1 {
-		    word = $1
-		    result = ""
-		    for (i = 2; i <= NF; i++) {
-		        result = result (result ? " " : "") $i
-		    }
-		    print "    " word ": " result "\n"
-		}')
-
-		# Append the formatted result to the final output
-		bangla_results+="$formatted_result"$'\n'
+		while IFS= read -r line; do
+			word=$(echo "$line" | awk -F ': ' '{print $1}' | tr -d '[:space:]')
+			if [[ "${word,,}" == "${search_term,,}" ]]; then
+				# set color for matched words
+				colored_word="$(echo -e "${BRIGHT_CYAN}$word${NO_COLOR}")"
+				line=$(echo "$line" | sed "s/$word/$colored_word/")
+				exact_match+="$line"$'\n'
+			else
+				non_exact_matches+="$line"$'\n'
+			fi
+		done <<<"$(echo "$result" | awk '
+        BEGIN { RS="-->"; FS="\n"; ORS="" }
+        NR > 1 {
+            word = $1
+            result = ""
+            for (i = 2; i <= NF; i++) {
+                result = result (result ? " " : "") $i
+            }
+            print "  " word ": " result "\n"
+        }')"
 	done
 
-	bangla_results=$(echo "$bangla_results" | awk -F': ' '
-        {
-            word[tolower($1)] = word[tolower($1)] ? word[tolower($1)] ", " $2 : $2
-        }
-        END {
-            for (w in word) {
-                print w ": " word[w]
-            }
-        }')
-	bangla_results=$(echo "$bangla_results" | sed 's/ ,/,/g' | sed '/^ *:/d' | sed 's/^ *//;s/ *$//' | awk NF)
+	# Combine the exact match and non-exact matches
+	bangla_results="$exact_match$non_exact_matches"
 
-	echo "$bangla_results"
+	# Clean and print results
+	echo "$bangla_results" | awk NF
 }
 
 # Function to process English dictionaries
@@ -117,7 +116,7 @@ dict_main() {
 
 	# Output results
 	process_output() {
-		echo -e "Result for: ${UNDERLINE}${BOLD}${BRIGHT_CYAN}${search_term}${NC}" | sed 's/^/  /'
+		echo -e "Result for: ${UNDERLINE}${BOLD}${BRIGHT_CYAN}${search_term}${NO_COLOR}" | sed 's/^/  /'
 		echo
 		echo -e "$bangla_results" | sed 's/^/    /'
 		echo
