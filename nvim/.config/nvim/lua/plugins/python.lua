@@ -6,10 +6,13 @@ return {
             "nvim-telescope/telescope.nvim",
             -- "mfussenegger/nvim-dap-python"
         },
+        branch = "regexp", -- This is the regexp branch, use this for the new version
+        lazy = false,
         config = function()
             local opts = {
+                -- stay_on_this_version=true,
                 -- Your options go here
-                -- auto_refresh = false
+                -- auto_refresh = false,
                 search_venv_managers = false,
                 name = {
                     "venv",

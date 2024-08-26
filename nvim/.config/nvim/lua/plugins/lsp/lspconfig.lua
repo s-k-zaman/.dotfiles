@@ -49,108 +49,93 @@ local lspconfig = require("lspconfig")
 mason_lspconfig.setup_handlers({
     -- TODO: make better server handling
     function(server_name)
-        local util = require("lspconfig/util")
-        -- conditional settings can be done using server_name(eg: pyright, tsserver etc.)
-        -- remember to use if-else or return statement while using if statement.
-        if server_name == "ruff_lsp" then
-            lspconfig[server_name].setup({
-                enabled = false,
-                capabilities = capabilities,
-                on_attach = on_attach,
-                settings = server_settings[server_name] or {},
-            })
-            return
-        end
-        if server_name == "tailwindcss" then
-            lspconfig[server_name].setup({
-                capabilities = capabilities,
-                on_attach = on_attach,
-                settings = server_settings[server_name] or {},
-                root_dir = function(...)
-                    return require("lspconfig.util").root_pattern(".git")(...)
-                end,
-            })
-            return
-        end
-        if server_name == "lua_ls" then
-            lspconfig[server_name].setup({
-                capabilities = capabilities,
-                on_attach = on_attach,
-                settings = server_settings[server_name] or {},
-                single_file_support = true,
-            })
-            return
-        end
-        if server_name == "emmet_ls" then
-            lspconfig[server_name].setup({
-                capabilities = capabilities,
-                on_attach = on_attach,
-                filetypes = {
-                    -- "css",
-                    "eruby",
-                    "html",
-                    "javascript",
-                    "javascriptreact",
-                    "less",
-                    -- "sass",
-                    -- "scss",
-                    "svelte",
-                    "pug",
-                    "typescriptreact",
-                    "vue",
-                },
-            })
-            return
-        end
-        if server_name == "rust_analyzer" then
-            lspconfig[server_name].setup({
-                capabilities = capabilities,
-                on_attach = on_attach,
-                settings = server_settings[server_name] or {},
-                filetypes = { "rust" },
-                root_dir = require("lspconfig.util").root_pattern("Cargo.toml"),
-            })
-            return
-        end
-        if server_name == "pyright" then
-            lspconfig[server_name].setup({
-                capabilities = capabilities,
-                on_attach = on_attach,
-                settings = server_settings[server_name] or {},
-                root_dir = function(...)
-                    local root_patterns = {
-                        ".git",
-                        "main.py",
-                    }
-                    -- return require("lspconfig.util").root_pattern(table.unpack(root_patterns))(...) -- INFO: not working
-                    return vim.loop.cwd()
-                end,
-                single_file_support = true,
-            })
-            return
-        end
-        if server_name == "tailwindcss" then
-            local tw = require("lspconfig.server_configurations.tailwindcss")
-            local filetypes = {}
-            local filetypes_exclude = { "markdown" }
-            vim.list_extend(filetypes, tw.default_config.filetypes)
-            -- Remove excluded filetypes
-            filetypes = vim.tbl_filter(function(ft)
-                return not vim.tbl_contains(filetypes_exclude or {}, ft)
-            end, filetypes)
-
-            lspconfig[server_name].setup({
-                capabilities = capabilities,
-                on_attach = on_attach,
-                settings = server_settings[server_name] or {},
-                filetypes = filetypes,
-            })
-            return
-        end
+        -- local util = require("lspconfig/util")
         lspconfig[server_name].setup({
             capabilities = capabilities,
             on_attach = on_attach,
             settings = server_settings[server_name] or {},
+        })
+    end,
+
+    -- conditional settings can be done using server_name(eg: pyright, tsserver etc.)
+    ["ruff_lsp"] = function()
+        lspconfig["ruff_lsp"].setup({
+            enabled = false,
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = server_settings["ruff_lsp"] or {},
+        })
+    end,
+    ["lua_ls"] = function()
+        lspconfig["lua_ls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = server_settings["lua_ls"] or {},
+            single_file_support = true,
+        })
+    end,
+    ["emmet_ls"] = function()
+        lspconfig["emmet_ls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = {
+                -- "css",
+                "eruby",
+                "html",
+                "javascript",
+                "javascriptreact",
+                "less",
+                -- "sass",
+                -- "scss",
+                "svelte",
+                "pug",
+                "typescriptreact",
+                "vue",
+            },
+        })
+    end,
+    ["rust_analyzer"] = function()
+        lspconfig["rust_analyzer"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = server_settings["rust_analyzer"] or {},
+            filetypes = { "rust" },
+            root_dir = require("lspconfig.util").root_pattern("Cargo.toml"),
+        })
+    end,
+    ["pyright"] = function()
+        lspconfig["pyright"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = server_settings["pyright"] or {},
+            root_dir = function(...)
+                local root_patterns = {
+                    ".git",
+                    "main.py",
+                }
+                -- return require("lspconfig.util").root_pattern(table.unpack(root_patterns))(...) -- INFO: not working
+                return vim.loop.cwd()
+            end,
+            single_file_support = true,
+        })
+    end,
+    ["tailwindcss"] = function()
+        local tw = require("lspconfig.server_configurations.tailwindcss")
+        local filetypes = {}
+        local filetypes_exclude = { "markdown" }
+        vim.list_extend(filetypes, tw.default_config.filetypes)
+        -- Remove excluded filetypes
+        filetypes = vim.tbl_filter(function(ft)
+            return not vim.tbl_contains(filetypes_exclude or {}, ft)
+        end, filetypes)
+        lspconfig["tailwindcss"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = server_settings["tailwindcss"] or {},
+            filetypes = filetypes,
+            root_dir = function(...)
+                return require("lspconfig.util").root_pattern(".git")(...)
+            end,
         })
     end,
 })
