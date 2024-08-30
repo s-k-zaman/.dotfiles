@@ -16,6 +16,7 @@ M.on_attach = function(client, bufnr)
     end
 
     -- MAPPING FUNCTIONS
+    local use_saga = vim.fn.has("nvim-0.11") == 0
     local nmap = function(keys, func, desc)
         if desc then
             desc = desc .. " (lsp)"
@@ -46,14 +47,14 @@ M.on_attach = function(client, bufnr)
             return ":IncRename " .. vim.fn.expand("<cword>")
         end, { desc = "[R]e[n]ame (inc_rename)", expr = true })
     else
-        if PluginUtil.has("lspsaga.nvim") then
+        if PluginUtil.has("lspsaga.nvim") and use_saga then
             nmap_saga("<leader>rn", "<cmd>Lspsaga rename<cr>", "[R]e[n]ame -> c-k:quit")
         else
             nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
         end
     end
 
-    if PluginUtil.has("lspsaga.nvim") then
+    if PluginUtil.has("lspsaga.nvim") and use_saga then
         nmap_saga("<leader>a", "<cmd>Lspsaga code_action<cr>", "Code [A]ctions")
 
         nmap_saga("gd", "<cmd>Lspsaga goto_definition<cr>", "[g]oto [d]efinition")
@@ -75,20 +76,14 @@ M.on_attach = function(client, bufnr)
 
         nmap("<leader>p", function()
             vim.diagnostic.open_float()
-        end, {
-            desc = "Show Diagnostics/[p]roblems",
-        })
+        end, "Show Diagnostics/[p]roblems")
 
         nmap("[d", function()
             vim.diagnostic.goto_next()
-        end, {
-            desc = "Goto next [d]iagnostic",
-        })
+        end, "Goto next [d]iagnostic")
         nmap("]d", function()
             vim.diagnostic.goto_prev()
-        end, {
-            desc = "Goto prev [d]iagnostic",
-        })
+        end, "Goto prev [d]iagnostic")
     end
     -- nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation") -- INFO: not working/know more
     -- nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition") -- INFO: not working/know more

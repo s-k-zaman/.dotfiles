@@ -1,14 +1,17 @@
+local PluginUtils = require("utils.plugins")
+
 return {
-    {
-        { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
-    },
     {
         "NvChad/nvim-colorizer.lua",
         lazy = false,
         config = function()
+            local enable_tailwind = true
+            if PluginUtils.has("tailwind-tools") and USE_LSPKIND then
+                enable_tailwind = false
+            end
             require("colorizer").setup({
                 user_default_options = {
-                    tailwind = true,
+                    tailwind = enable_tailwind,
                 },
             })
             -- execute colorizer as soon as possible

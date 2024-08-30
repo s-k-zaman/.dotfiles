@@ -17,6 +17,7 @@ local additionl_capabilities = {
         },
     },
 }
+
 local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 local capabilities = vim.tbl_deep_extend(
     "force",
@@ -39,6 +40,7 @@ local server_settings = {
     yamlls = require("plugins.lsp.LspServerSettings.yamlls"),
     pyright = require("plugins.lsp.LspServerSettings.pyright"),
     lua_ls = require("plugins.lsp.LspServerSettings.lua_ls"),
+    tailwindcss = require("plugins.lsp.LspServerSettings.tailwindcss"),
 }
 
 ------ Manage LSP server using mason_lspconfig -----
@@ -49,6 +51,9 @@ local lspconfig = require("lspconfig")
 mason_lspconfig.setup_handlers({
     -- TODO: make better server handling
     function(server_name)
+        if PluginUtil.has("tailwind-tools") and server_name == "tailwindcss" then
+            return
+        end
         -- local util = require("lspconfig/util")
         lspconfig[server_name].setup({
             capabilities = capabilities,
@@ -120,15 +125,20 @@ mason_lspconfig.setup_handlers({
         })
     end,
     ["tailwindcss"] = function()
+        if PluginUtil.has("tailwind-tools") then
+            return
+        end
+        -- difine filetypes to exclude
+        local filetypes_exclude = { "markdown" }
         local tw = require("lspconfig.server_configurations.tailwindcss")
         local filetypes = {}
-        local filetypes_exclude = { "markdown" }
         vim.list_extend(filetypes, tw.default_config.filetypes)
-        -- Remove excluded filetypes
         filetypes = vim.tbl_filter(function(ft)
             return not vim.tbl_contains(filetypes_exclude or {}, ft)
         end, filetypes)
+
         lspconfig["tailwindcss"].setup({
+            -- enabled = false,
             capabilities = capabilities,
             on_attach = on_attach,
             settings = server_settings["tailwindcss"] or {},

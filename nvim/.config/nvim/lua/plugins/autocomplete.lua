@@ -53,6 +53,8 @@ return {
                 "hrsh7th/cmp-buffer",
                 "hrsh7th/cmp-path",
                 "hrsh7th/cmp-emoji",
+
+                "onsails/lspkind-nvim", --vscode like
             },
         },
         opts = function()
@@ -112,6 +114,23 @@ return {
                 formatting = {
                     fields = { "abbr", "kind", "menu" },
                     format = function(entry, item)
+                        -- VSCODE LIKE SETUP
+                        if PluginUtils.has("lspkind-nvim") and USE_LSPKIND then
+                            item = require("lspkind").cmp_format({
+                                mode = "symbol_text",
+                                before = function(kind_entry, kind_item)
+                                    if PluginUtils.has("tailwind-tools") then
+                                        kind_item = require("tailwind-tools.cmp").lspkind_format(kind_entry, kind_item)
+                                    elseif PluginUtils.has("tailwindcss-colorizer-cmp.nvim") then
+                                        kind_item = require("tailwindcss-colorizer-cmp").formatter(entry, item)
+                                    end
+                                    return kind_item
+                                end,
+                            })(entry, item)
+                            return item
+                        end
+
+                        -- NORMAL SETUP
                         local icons = require("utils.glyphs").icons.kinds
                         local source_table_representation = {
                             nvim_lsp = "LSP",

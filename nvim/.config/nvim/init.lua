@@ -3,6 +3,7 @@
 -- COLORSCHEME = "nightfox"
 -- COLORSCHEME = "onedark"
 COLORSCHEME = "rose-pine"
-TRANSPARENT=true
+TRANSPARENT = true
 Disable_Lsp_Server_Formatting = true
+USE_LSPKIND = true -- vs-Code like autocompletion
 require("config")
