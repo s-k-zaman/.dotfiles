@@ -19,11 +19,26 @@ return {
         "folke/todo-comments.nvim",
         event = "BufReadPre",
         dependencies = { "nvim-lua/plenary.nvim" },
-        -- TODO: add some commands accessing the lists
         opts = {
             -- your configuration comes here
             -- or leave it empty to use the default settings
             -- refer to the configuration section below
         },
+        config = function(_, opts)
+            local todo_comments = require("todo-comments")
+            todo_comments.setup(opts)
+            local map = require("utils.keymapper").keymap
+            local keywords = { "TODO", "FIX", "FIXME" }
+
+            map("n", "<leader>ft", "TodoTelescope", { desc = "[F]ind all [T]odos Telescope" })
+
+            map("n", "]t", function()
+                todo_comments.jump_next({ keywords = keywords })
+            end, { desc = "Next todo comment(file)" })
+
+            map("n", "[t", function()
+                todo_comments.jump_prev({ keywords = keywords })
+            end, { desc = "Previous todo comment(file)" })
+        end,
     },
 }

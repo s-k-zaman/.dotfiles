@@ -67,9 +67,9 @@ map("n", "<leader><tab>n", "tabnext", { desc = "Next Tab" })
 map("n", "<leader><tab>p", "tabprevious", { desc = "Previous Tab" })
 map("n", "<leader><tab>d", "tabclose", { desc = "Close Tab" })
 --------------buffers--------------
-map("n", "<S-h>", "bprevious", { desc = "Prev buffer", noremap = false, remap = true })
-map("n", "<S-l>", "bnext", { desc = "Next buffer", noremap = false, remap = true })
-map("n", "<tab>", "e #", { desc = "Switch to Other Buffer" })
+map("n", "<tab>l", "bnext", { desc = "Next buffer", noremap = false, remap = true })
+map("n", "<tab>h", "bprevious", { desc = "Prev buffer", noremap = false, remap = true })
+map("n", "<tab><tab>", "e #", { desc = "Switch to Other Buffer" })
 
 map("n", "<leader>I", "Format", { desc = "Format File (conform|lsp)" })
 

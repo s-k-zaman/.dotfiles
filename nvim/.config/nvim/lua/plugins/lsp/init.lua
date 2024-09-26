@@ -30,7 +30,7 @@ return {
                 "pyright",
                 "ruff_lsp",
                 "eslint",
-                "tsserver",
+                "ts_ls",
                 "jsonls",
                 "tailwindcss",
                 "emmet_ls",

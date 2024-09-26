@@ -82,6 +82,29 @@ M.tableConcat = function(t1, t2)
     end
     return t1
 end
+M.print_table = function(t, indent)
+    -- Check if the variable is a table
+    if type(t) ~= "table" then
+        print("Not a table")
+        return
+    end
+
+    -- If no indentation is provided, start with an empty string
+    indent = indent or ""
+
+    -- Loop through the table and print its key-value pairs
+    for key, value in pairs(t) do
+        -- If the value is a table, recursively print its contents
+        if type(value) == "table" then
+            print(indent .. tostring(key) .. ": {")
+            M.print_table(value, indent .. "  ") -- increase the indent for nested tables
+            print(indent .. "}")
+        else
+            print(indent .. tostring(key) .. ": " .. tostring(value))
+        end
+    end
+end
+
 M.is_git_repository = function()
     local is_git_repo = os.execute("git rev-parse --is-inside-work-tree > /dev/null 2>&1")
     return is_git_repo == 0

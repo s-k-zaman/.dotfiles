@@ -45,10 +45,10 @@ local config = function()
         incremental_selection = {
             enable = true,
             keymaps = {
-                init_selection = "<leader>h",
-                node_incremental = "<leader>h",
+                init_selection = "<S-h>",
+                node_incremental = "<S-h>",
                 scope_incremental = false,
-                node_decremental = "<leader>j",
+                node_decremental = "<S-l>",
             },
         },
         textobjects = {

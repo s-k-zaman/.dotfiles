@@ -1,4 +1,5 @@
 local PluginUtil = require("utils.plugins")
+local utils = require("utils")
 
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = require("plugins.lsp.lsp_mappings").on_attach
@@ -31,9 +32,9 @@ local capabilities = vim.tbl_deep_extend(
 local server_settings = {
     -- clangd = {},
     -- html = {},
-    -- cssls = {},
     -- gopls = {},
     -- denols = {},
+    cssls = require("plugins.lsp.LspServerSettings.cssls"),
     rust_analyzer = require("plugins.lsp.LspServerSettings.rust_analyzer"),
     eslint = require("plugins.lsp.LspServerSettings.eslint"),
     tsserver = require("plugins.lsp.LspServerSettings.tsserver"),
@@ -125,7 +126,7 @@ mason_lspconfig.setup_handlers({
         })
     end,
     ["tailwindcss"] = function()
-        if PluginUtil.has("tailwind-tools") then
+        if PluginUtil.has("tailwind-tools") and not CONFIG_TAILWIND_IN_LSPCONFIG then
             return
         end
         -- difine filetypes to exclude

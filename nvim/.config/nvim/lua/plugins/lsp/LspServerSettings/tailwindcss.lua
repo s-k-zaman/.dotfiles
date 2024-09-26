@@ -1,3 +1,14 @@
 return {
-    tailwindCSS = {},
+    tailwindCSS = {
+        experimental = {
+            classRegex = {
+                {
+                    "classNames\\(([^)]*)\\)",
+                    "[\"'`]([^\"'`]*)[\"'`]",
+                },
+                { "(?:twMerge|twJoin)\\(([^;]*)[\\);]", "[`'\"`]([^'\"`;]*)[`'\"`]" }, --tailwind merge
+                { "tv\\(([^)]*)\\)", "{?\\s?[\\w].*:\\s*?[\"'`]([^\"'`]*).*?,?\\s?}?" }, --tailwind varint
+            },
+        },
+    },
 }
