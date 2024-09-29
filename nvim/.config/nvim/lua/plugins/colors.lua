@@ -20,4 +20,8 @@ return {
             end, 0)
         end,
     },
+    {
+        "amadeus/vim-convert-color-to",
+        lazy = false,
+    },
 }
