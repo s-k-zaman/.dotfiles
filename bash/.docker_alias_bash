@@ -1,4 +1,6 @@
 #!/bin/bash
 
-alias mongodockercontainer="docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest"
+alias mongodockercontainer="docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest mongod --replSet rs0"
 alias mongodocker="docker start mongodb"
+# alias mongodockercontainer-replSet="docker run --name mongodb-replset -p 27017:27017 -d mongodb/mongodb-community-server:latest mongod --replSet rs0"
+# alias mongodocker-replSet="docker start mongodb-replset"

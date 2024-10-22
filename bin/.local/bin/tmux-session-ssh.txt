@@ -3,3 +3,4 @@ dressme_aws cd ~/work/Dressme/important_files && ssh -i ./dressme-aws.pem -L 850
 dressme_tweet_scrape cd ~/work/Dressme/important_files && ssh -i ./twitter-feed-deepak-zaman_key.pem azureuser@52.160.89.174
 dressme_zara_bot cd ~/work/Dressme/important_files && ssh -i ./zaman.pem ubuntu@ec2-3-109-4-231.ap-south-1.compute.amazonaws.com
 readease_t2_micro_server cd ~/projects/personal/readease-important-files/ && ssh -i ./free-tier-readease.pem ubuntu@ec2-15-207-108-194.ap-south-1.compute.amazonaws.com
+casemine_machine cd ~/work/rahul_yadav-dressme/ecourt-casemine && ssh lawfax@0.tcp.in.ngrok.io -p 13276
