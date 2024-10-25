@@ -8,6 +8,8 @@ return {
             {
                 -- snippet engine plugin
                 "L3MON4D3/LuaSnip",
+                version = "v2.*",
+                build = "make install_jsregexp",
                 dependencies = "rafamadriz/friendly-snippets", -- adds many extra snippets.
                 config = function()
                     require("luasnip").config.set_config({

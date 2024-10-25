@@ -129,11 +129,64 @@ mason_lspconfig.setup_handlers({
         if PluginUtil.has("tailwind-tools") and not CONFIG_TAILWIND_IN_LSPCONFIG then
             return
         end
-        -- difine filetypes to exclude
+        -- define filetypes to exclude
         local filetypes_exclude = { "markdown" }
-        local tw = require("lspconfig.server_configurations.tailwindcss")
         local filetypes = {}
-        vim.list_extend(filetypes, tw.default_config.filetypes)
+        local default_ft = {
+            -- got this from
+            -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#tailwindcss
+            "aspnetcorerazor",
+            "astro",
+            "astro-markdown",
+            "blade",
+            "clojure",
+            "django-html",
+            "htmldjango",
+            "edge",
+            "eelixir",
+            "elixir",
+            "ejs",
+            "erb",
+            "eruby",
+            "gohtml",
+            "gohtmltmpl",
+            "haml",
+            "handlebars",
+            "hbs",
+            "html",
+            "htmlangular",
+            "html-eex",
+            "heex",
+            "jade",
+            "leaf",
+            "liquid",
+            "markdown",
+            "mdx",
+            "mustache",
+            "njk",
+            "nunjucks",
+            "php",
+            "razor",
+            "slim",
+            "twig",
+            "css",
+            "less",
+            "postcss",
+            "sass",
+            "scss",
+            "stylus",
+            "sugarss",
+            "javascript",
+            "javascriptreact",
+            "reason",
+            "rescript",
+            "typescript",
+            "typescriptreact",
+            "vue",
+            "svelte",
+            "templ",
+        }
+        vim.list_extend(filetypes, default_ft)
         filetypes = vim.tbl_filter(function(ft)
             return not vim.tbl_contains(filetypes_exclude or {}, ft)
         end, filetypes)

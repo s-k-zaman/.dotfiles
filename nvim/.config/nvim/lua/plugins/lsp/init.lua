@@ -47,6 +47,7 @@ return {
                 "prettier",
                 "isort",
                 "black",
+                "tree-sitter-cli",
             }
             vim.api.nvim_create_user_command("MasonInstallAll", function()
                 vim.cmd("MasonInstall " .. table.concat(formatters_linters_servers, " "))
