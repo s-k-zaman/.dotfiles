@@ -28,6 +28,10 @@ return {
                 filters = {
                     -- dotfiles = true,
                     git_ignored = false,
+                    custom = {
+                        -- exclude these
+                        -- "node_modules",
+                    },
                 },
                 view = {
                     adaptive_size = false,

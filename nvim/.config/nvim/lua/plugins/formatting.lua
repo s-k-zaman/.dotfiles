@@ -60,6 +60,8 @@ return {
                     scss = { "prettier" },
                     less = { "prettier" },
                     html = { "prettier" },
+                    -- xhtml = { "prettier" },
+                    xml = { "prettier" },
                     json = { "prettier" },
                     jsonc = { "prettier" },
                     yaml = { "prettier" },

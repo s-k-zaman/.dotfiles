@@ -26,7 +26,7 @@ return {
                 },
             },
             extension = {
-                queries = { "css", "scss" },
+                queries = { "css", "scss", "xhtml" },
             },
         },
     },

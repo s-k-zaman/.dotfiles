@@ -2,6 +2,7 @@
 ~/projects/personal
 ~/projects/luaPlugins
 ~/projects/Open-source
+~/projects/ebook-writings
 ~/work
 ~/work/Dressme
 ~/work/Opion

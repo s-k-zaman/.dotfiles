@@ -64,12 +64,12 @@ mason_lspconfig.setup_handlers({
     end,
 
     -- conditional settings can be done using server_name(eg: pyright, tsserver etc.)
-    ["ruff_lsp"] = function()
-        lspconfig["ruff_lsp"].setup({
+    ["ruff"] = function()
+        lspconfig["ruff"].setup({
             enabled = false,
             capabilities = capabilities,
             on_attach = on_attach,
-            settings = server_settings["ruff_lsp"] or {},
+            settings = server_settings["ruff"] or {},
         })
     end,
     ["lua_ls"] = function()
@@ -88,6 +88,7 @@ mason_lspconfig.setup_handlers({
                 -- "css",
                 "eruby",
                 "html",
+                "xhtml",
                 "javascript",
                 "javascriptreact",
                 "less",
@@ -154,6 +155,8 @@ mason_lspconfig.setup_handlers({
             "handlebars",
             "hbs",
             "html",
+            -- "xhtml",
+            "xml",
             "htmlangular",
             "html-eex",
             "heex",
@@ -197,9 +200,9 @@ mason_lspconfig.setup_handlers({
             on_attach = on_attach,
             settings = server_settings["tailwindcss"] or {},
             filetypes = filetypes,
-            root_dir = function(...)
-                return require("lspconfig.util").root_pattern(".git")(...)
-            end,
+            -- root_dir = function(...) -- only enabled when it is a git repository
+            --     return require("lspconfig.util").root_pattern(".git")(...)
+            -- end,
         })
     end,
 })

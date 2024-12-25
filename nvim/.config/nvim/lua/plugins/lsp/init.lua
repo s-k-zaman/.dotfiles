@@ -28,7 +28,7 @@ return {
                 "cssls",
                 "marksman",
                 "pyright",
-                "ruff_lsp",
+                "ruff",
                 "eslint",
                 "ts_ls",
                 "jsonls",
