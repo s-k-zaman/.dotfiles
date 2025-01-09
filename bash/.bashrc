@@ -617,15 +617,6 @@ alias rofi-apps="~/.config/rofi/launchers/type-2/launcher.sh"
 # Install Starship - curl -sS https://starship.rs/install.sh | sh
 eval "$(starship init bash)"
 
-#Autojump
-if [ -f "/usr/share/autojump/autojump.sh" ]; then
-    . /usr/share/autojump/autojump.sh
-elif [ -f "/usr/share/autojump/autojump.bash" ]; then
-    . /usr/share/autojump/autojump.bash
-else
-    echo "can't found the autojump script"
-fi
-
 # Use nala
 if [ -f "/home/zaman/.use-nala" ]; then
     . "/home/zaman/.use-nala"
@@ -639,36 +630,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-# Where should I put you?
-# tmux sessionizer
-if [ -t 1 ]; then
-    # "C-":ctrl, "e":alt
-    bind -x '"\C-n":tmux'
-    bind -x '"\C-o":tmux attach'
-    bind -x '"\C-f":tmux-sessionizer'
-    bind -x '"\C-y":tmux-ssh-sessionizer'
-fi
-
-#doom emacs
-#export PATH="$HOME/.config/emacs/bin:$PATH"
-
 # Set locale -- tmux to display glyphs in utf8
 LANG="en_IN.utf8"
 export LANG
 
 # Added by Amplify CLI binary installer
 export PATH="$HOME/.amplify/bin:$PATH"
-
-## LOADING OTHER ALIASES
-# Game aliases
-if [ -f ~/.game_alias_bash ]; then
-    . ~/.game_alias_bash
-fi
-
-# docker images
-if [ -f ~/.docker_alias_bash ]; then
-    . ~/.docker_alias_bash
-fi
 
 PATH="/home/zaman/perl5/bin${PATH:+:${PATH}}"
 export PATH
@@ -682,11 +649,41 @@ PERL_MM_OPT="INSTALL_BASE=/home/zaman/perl5"
 export PERL_MM_OPT
 . "$HOME/.cargo/env"
 
+## fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+## zoxide(instead of autoJump)
+eval "$(zoxide init --cmd cd bash)"
+
+## ZVM
+export ZVM_INSTALL="$HOME/.zvm/self"
+export PATH="$PATH:$HOME/.zvm/bin"
+export PATH="$PATH:$ZVM_INSTALL/"
+
+## tmux-sessionizer
+# Where should I put you?
+if [ -t 1 ]; then
+    # "C-":ctrl, "e":alt
+    bind -x '"\C-n":tmux'
+    bind -x '"\C-o":tmux attach'
+    bind -x '"\C-f":tmux-sessionizer'
+    bind -x '"\C-y":tmux-ssh-sessionizer'
+fi
+
+## lin-util(ChrisTitusTech)
+alias linutil="curl -fsSL https://christitus.com/linux | sh"
+alias linutil-dev="curl -fsSL https://christitus.com/linuxdev | sh"
+
+## LOADING OTHER ALIASES
+# Game aliases
+if [ -f ~/.game_alias_bash ]; then
+    . ~/.game_alias_bash
+fi
+# docker images
+if [ -f ~/.docker_alias_bash ]; then
+    . ~/.docker_alias_bash
+fi
+
 ## nb notes
 alias todos="nb tasks open"
-
-[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
-eval "$(atuin init bash)"
-
-# tools
+## Tools
 alias dictkonsole="konsole -e dict"
