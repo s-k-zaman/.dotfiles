@@ -2,9 +2,9 @@
 # key =
 
 # theme=carbonfox
-# theme=Atom
+theme=Atom
 # theme = catppuccin-mocha
-theme=rose-pine
+# theme=rose-pine
 
 font-size=14
 # font-family = "Ubuntu Mono"
