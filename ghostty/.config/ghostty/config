@@ -1,0 +1,27 @@
+# # Empty values are used to reset config keys to default.
+# key =
+
+# theme=carbonfox
+# theme=Atom
+# theme = catppuccin-mocha
+theme=rose-pine
+
+font-size=14
+# font-family = "Ubuntu Mono"
+# font-family = "Hack Nerd Font"
+font-family = "Mononoki Nerd Font"
+font-thicken = true
+cursor-style = block
+adjust-cell-height = 15%
+background-opacity = 0.95
+
+shell-integration-features = no-cursor,sudo,no-title
+mouse-hide-while-typing = true
+mouse-scroll-multiplier = 2
+
+window-padding-balance = true 
+window-save-state = always
+window-colorspace = "display-p3"
+window-decoration=false
+gtk-titlebar = false
+macos-titlebar-style = transparent
