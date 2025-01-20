@@ -1,17 +1,20 @@
 return {
     {
-        "lukas-reineke/headlines.nvim",
-        lazy = false,
-        dependencies = "nvim-treesitter/nvim-treesitter",
+        "MeanderingProgrammer/render-markdown.nvim",
+        ft = { "markdown" },
+        dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" }, -- if you prefer nvim-web-devicons
+        ---@module 'render-markdown'
+        ---@type render.md.UserConfig
         opts = {},
     },
     {
         "iamcco/markdown-preview.nvim",
         cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-        ft = { "markdown" },
-        build = function()
-            vim.fn["mkdp#util#install"]()
+        build = "cd app && yarn install",
+        init = function()
+            vim.g.mkdp_filetypes = { "markdown" }
         end,
+        ft = { "markdown" },
         config = function()
             vim.keymap.set("n", "<leader>ms", "<cmd>MarkdownPreview<cr>", { desc = "markdown preview: start" })
             vim.keymap.set("n", "<leader>mx", "<cmd>MarkdownPreviewStop<cr>", { desc = "markdown preview: stop" })

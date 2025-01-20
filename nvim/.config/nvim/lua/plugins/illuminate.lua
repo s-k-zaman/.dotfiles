@@ -4,8 +4,10 @@ return {
     config = function()
         require("illuminate").configure({
             delay = 200,
-            large_file_overrides = {
-                providers = { "lsp" },
+            providers = {
+                "lsp",
+                -- "treesitter",
+                -- "regex",
             },
         })
         local function map(key, dir, buffer)

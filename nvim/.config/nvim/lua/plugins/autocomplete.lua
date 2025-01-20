@@ -77,17 +77,17 @@ return {
                     ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
                     ["<C-w>"] = cmp.mapping.scroll_docs(4),
                     ["<C-s>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-Space>"] = cmp.mapping.complete(),
+                    -- ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-c>"] = cmp.mapping.abort(),
                     ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-                    ["<S-CR>"] = cmp.mapping.confirm({
-                        behavior = cmp.ConfirmBehavior.Replace,
-                        select = true,
-                    }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-                    ["<C-CR>"] = function(fallback)
-                        cmp.abort()
-                        fallback()
-                    end,
+                    -- ["<S-CR>"] = cmp.mapping.confirm({
+                    --     behavior = cmp.ConfirmBehavior.Replace,
+                    --     select = true,
+                    -- }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                    -- ["<C-CR>"] = function(fallback)
+                    --     cmp.abort()
+                    --     fallback()
+                    -- end,
                     ["<Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()

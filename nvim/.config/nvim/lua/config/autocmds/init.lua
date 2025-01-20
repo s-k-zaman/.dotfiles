@@ -3,6 +3,8 @@ local augroup = require("utils").augroup
 ----- Initiate Other Autocmds
 require("config.autocmds.bash")
 require("config.autocmds.python")
+require("config.autocmds.html")
+require("config.autocmds.markdown")
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -89,14 +91,5 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
         local current_tab = vim.fn.tabpagenr()
         vim.cmd("tabdo wincmd =")
         vim.cmd("tabnext " .. current_tab)
-    end,
-})
-
--- treat xhtml files as xml/html files, for better plugin support
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = "*.xhtml",
-    callback = function()
-        -- vim.bo.filetype = "xml"
-        vim.bo.filetype = "html" -- working best
     end,
 })

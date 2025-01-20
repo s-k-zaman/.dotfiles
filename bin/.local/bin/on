@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    read -rp "Please enter note name: " input_file_name
+    if [ -z "$input_file_name" ]; then
+        echo "Error: Note title must be provided [used for file name]."
+        echo "    Usage: on \"the effects of procrastination\"."
+        exit 1
+    fi
+else
+    input_file_name="$1"
+fi
+
+file_name=$(echo "$input_file_name" | tr ' ' '-')
+formatted_file_name=${file_name}_$(date "+%Y-%m-%d").md
+cd ~/Drive/Notes || exit
+touch "inbox/${formatted_file_name}"
+nvim "inbox/${formatted_file_name}"

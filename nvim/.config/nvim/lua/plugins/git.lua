@@ -2,6 +2,8 @@ local Utils = require("utils")
 return {
     {
         "tpope/vim-fugitive",
+        -- INFO: either use this or use lazygit
+        enabled = not USE_LAZYGIT,
         event = { "VeryLazy" },
         config = function()
             local augroup = require("utils").augroup
@@ -48,6 +50,7 @@ return {
         -- TODO: start using this plugin
         "lewis6991/gitsigns.nvim",
         event = { "VeryLazy" },
+        -- enabled = false,
         config = function()
             require("gitsigns").setup({
                 signs = {

@@ -2,11 +2,20 @@ local Utils = require("utils")
 
 local config = function()
     local actions = require("telescope.actions")
+    local action_state = require("telescope.actions.state")
     local open_with_trouble = function(...)
         return require("trouble.providers.telescope").open_with_trouble(...)
     end
     local open_selected_with_trouble = function(...)
         return require("trouble.providers.telescope").open_selected_with_trouble(...)
+    end
+
+    local function closePopup(prompt_bufnr)
+        if vim.env.NVIM_TMUX_KEY then -- If NVIM_TMUX_KEY env is set. i.e. -> coming from tmux
+            vim.cmd("qa!") -- Exit Neovim
+        else
+            actions.close(prompt_bufnr) -- Just close Telescope
+        end
     end
 
     require("telescope").load_extension("fzf")
@@ -28,6 +37,7 @@ local config = function()
                 ".venv/",
                 "__pycache__/",
                 "node_modules",
+                ".obsidian",
             },
             -- open files in the first window that is an actual file.
             -- use the current window if no other window is available.
@@ -50,9 +60,11 @@ local config = function()
                     ["<C-Up>"] = actions.cycle_history_prev,
                     ["<C-w>"] = actions.preview_scrolling_down,
                     ["<C-s>"] = actions.preview_scrolling_up,
+                    -- ["<CR>"] = closePopup,
                 },
                 n = {
-                    ["q"] = require("telescope.actions").close,
+                    ["q"] = closePopup,
+                    ["<ESC>"] = closePopup,
                 },
             },
             pickers = {
