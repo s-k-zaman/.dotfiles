@@ -1,0 +1,8 @@
+# modules
+node_modules/
+
+# files
+**/stage*.css
+**/stylesheet.css
+images/*
+fonts/*
