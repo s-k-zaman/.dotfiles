@@ -1,0 +1,8 @@
+# filename.ext -> include this, !filename.ext -> exclude this
+# folder/ -> include this, !folder/ -> exclude this
+# folder/*.css -> include all css files of folder.
+
+images/
+fonts/
+styles/
+*.xhtml

@@ -1,0 +1,187 @@
+#!/bin/bash
+
+# Function to check for the .bundleit file
+check_bundle_file() {
+    if [ ! -f .bundleit ]; then
+        echo "Error: .bundleit file not found in the current directory."
+        echo "       .bundleit file should contain the paths to the files or folders to include in the build directory."
+        exit 1
+    fi
+    echo "✔️  .bundleit file found in the current directory."
+}
+
+# Function to set the build directory
+set_build_directory() {
+    if [ -z "$1" ]; then
+        build_dir="$(basename "$PWD")"
+    else
+        build_dir="$1"
+    fi
+}
+
+# Function to clean and create the build directory
+prepare_build_directory() {
+    if [ -d "$build_dir" ]; then
+        echo "Cleaning existing '$build_dir/' directory..."
+        rm -rf "$build_dir"
+    fi
+    mkdir "$build_dir"
+}
+
+# Function to parse the .bundleit file and populate include and exclude patterns
+parse_bundle_file() {
+    include_patterns=()
+    exclude_patterns=()
+    while IFS= read -r line; do
+        [[ -z "$line" || "$line" =~ ^# ]] && continue
+        if [[ "$line" == '!'* ]]; then
+            exclude_patterns+=("${line:1}")
+        else
+            include_patterns+=("$line")
+        fi
+    done <.bundleit
+}
+
+# Function to copy files based on include patterns
+copy_files() {
+    for pattern in "${include_patterns[@]}"; do
+        echo "Adding: $pattern"
+        if [[ -d "$pattern" || "$pattern" == */ ]]; then
+            mkdir -p "$build_dir/$pattern"
+            rsync -a --prune-empty-dirs --include="$pattern/**" --exclude="*" ./ "$build_dir/"
+        else
+            rsync -a --prune-empty-dirs --include="$pattern" --exclude="*" ./ "$build_dir/"
+        fi
+    done
+}
+
+# Function to remove files based on exclude patterns
+remove_excluded_files() {
+    for pattern in "${exclude_patterns[@]}"; do
+        echo "Cleaning: $pattern"
+        find "$build_dir" -type f -path "$build_dir/$pattern" -exec rm -f {} \;
+    done
+}
+
+# Function to prompt for zipping and directory removal beforehand
+prompt_zip_and_remove_options() {
+    while true; do
+        read -rp "Create a zip file of '$build_dir/' directory? (Y/N, default: N): " create_zip
+        create_zip=${create_zip:-N}
+        if [[ "$create_zip" == "Y" || "$create_zip" == "y" ]]; then
+            zip_option=true
+            break
+        elif [[ "$create_zip" == "N" || "$create_zip" == "n" ]]; then
+            zip_option=false
+            remove_option=false
+            break
+        else
+            echo "Invalid option. Please enter 'Y/y' for yes or 'N/n' for no."
+        fi
+    done
+
+    if [ "$zip_option" = true ]; then
+        while true; do
+            read -rp "Remove '$build_dir/' directory after zipping? (Y/N, default: Y): " remove_dir
+            remove_dir=${remove_dir:-Y}
+            if [[ "$remove_dir" == "Y" || "$remove_dir" == "y" ]]; then
+                remove_option=true
+                break
+            elif [[ "$remove_dir" == "N" || "$remove_dir" == "n" ]]; then
+                remove_option=false
+                break
+            else
+                echo "Invalid option. Please enter 'Y/y' for yes or 'N/n' for no."
+            fi
+        done
+    fi
+}
+
+# Function to create a zip file
+create_zip_file() {
+    if [ "$zip_option" = true ]; then
+        echo "Creating zip file..."
+        if [ -f "${build_dir}.zip" ]; then
+            echo "removing existing zip file: ${build_dir}.zip"
+            rm -f "${build_dir}.zip"
+        fi
+        zip -r "${build_dir}.zip" "$build_dir"
+        echo "✔️  Zip file created: ${build_dir}.zip"
+    else
+        echo "Skipped making zip file."
+    fi
+}
+
+# Function to optionally remove the build directory after zipping
+remove_build_directory() {
+    if [ "$remove_option" = true ]; then
+        echo "Removing '$build_dir/' directory..."
+        rm -rf "$build_dir"
+        echo "🗑️ '$build_dir/' directory removed."
+    fi
+}
+
+display_help() {
+    echo "Usage: $(basename "$0") [build_dir]"
+    echo ""
+    echo "Description:"
+    echo "  This script bundles files and directories specified in the .bundleit file into a build directory."
+    echo "  Optionally, it can create a zip archive of the build directory and remove the directory after zipping."
+    echo ""
+    echo "Options:"
+    echo "  build_dir          Name of the directory to bundleit the files into (default: current directory name)."
+    echo "  --help             Show this help message and exit."
+    echo ""
+    echo "How it works:"
+    echo "  1. Checks for a .bundleit file in the current directory."
+    echo "  2. Reads include and exclude patterns from the .bundleit file."
+    echo "  3. Creates or cleans the specified build directory."
+    echo "  4. Copies files matching the include patterns to the build directory."
+    echo "  5. Removes files matching the exclude patterns from the build directory."
+    echo "  6. Optionally creates a zip file and removes the build directory after zipping."
+    echo ""
+    echo ".bundleit File Format:"
+    echo "  - Lines in the .bundleit file specify patterns for files or directories to include or exclude."
+    echo "  - Blank lines or lines starting with '#' are ignored."
+    echo "  - Patterns Example:"
+    echo "      * 'file.txt'           Includes a specific file named 'file.txt'."
+    echo "      * 'folder/'            Includes a directory named 'folder' and its contents."
+    echo "      * '*.ext'              Includes all files with the extension '.ext'."
+    echo "      * '!exclude_file.txt'  Excludes a specific file named 'exclude_file.txt'."
+    echo "      * '!folder_to_exclude/' Excludes a directory named 'folder_to_exclude' and its contents."
+    echo "      * also support * patterns like folder/*.css "
+    echo ""
+    echo "Examples:"
+    echo "  $(basename "$0")"
+    echo "      Bundles files into a directory named after the current directory."
+    echo ""
+    echo "  $(basename "$0") output_dir"
+    echo "      Bundles files into 'output_dir'."
+    echo ""
+    echo "  $(basename "$0") --help"
+    echo "      Displays this help message."
+    exit 0
+}
+
+## Main script execution
+if [[ "$1" == "--help" ]]; then
+    display_help
+fi
+
+check_bundle_file
+echo "Bundling..."
+set_build_directory "$1"
+prepare_build_directory
+parse_bundle_file
+copy_files
+remove_excluded_files
+echo "✔️  Done. Bundled in the '$build_dir/' directory."
+
+# Prompt for zipping and removal options before proceeding
+prompt_zip_and_remove_options
+# Execute zipping and directory removal based on earlier prompts
+create_zip_file
+remove_build_directory
+
+echo ""
+echo "All tasks completed."
