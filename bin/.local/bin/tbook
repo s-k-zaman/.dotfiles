@@ -13,7 +13,7 @@ fi
 
 folder_name=$(echo "$input_project_name" | tr ' ' '_')
 
-templates_dir="$HOME/.dotfiles/bin/.local/bin/templates"
+templates_dir="$HOME/.local/bin/templates"
 project_template_dir="$templates_dir/xhtml_epub_template"
 dest_dir="./$folder_name"
 

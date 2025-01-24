@@ -3,7 +3,8 @@
         "style:1": "postcss src/input.css -o src/stage1.css --watch --verbose",
         "style:2": "wait-on src/stage1.css && postcss src/stage1.css -o src/stage2.css --config postcss2 --watch --verbose",
         "style:3": "wait-on src/stage2.css && postcss src/stage2.css -o styles/stylesheet.css --config postcss3 --watch --verbose",
-        "style": "concurrently \"npm run style:1\" \"npm run style:2\" \"npm run style:3\""
+        "style": "concurrently \"npm run style:1\" \"npm run style:2\" \"npm run style:3\"",
+        "live": "live-server ."
     },
     "devDependencies": {
         "autoprefixer": "^10.4.20",
