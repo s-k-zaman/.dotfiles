@@ -1,17 +1,8 @@
-const autoprefixer = require("autoprefixer");
 const rgbaToHex = require("postcss-rgba-hex");
-const postcssPresetEnv = require("postcss-preset-env");
+const discardEmpty = require("postcss-discard-empty");
+const removeBlankLines = require("./removeBlankLines");
 
 //INFO: plugins for 2nd(final) line of processing. [Dependent on 1st line of processing]
 module.exports = {
-    plugins: [
-        rgbaToHex,
-        autoprefixer,
-        postcssPresetEnv({
-            features: {
-                "color-function": false, // Disable color-function (we don't need this here)
-                "custom-properties": false, // Disable custom-properties if not needed
-            },
-        }),
-    ],
+    plugins: [rgbaToHex, discardEmpty, removeBlankLines],
 };

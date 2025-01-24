@@ -26,7 +26,8 @@ fi
 rsync -a --exclude-from="$project_template_dir/.gitignore" --exclude=".gitignore" "$project_template_dir/" "$dest_dir/"
 
 echo ""
-echo "Template Created"
-echo "   folder: '$folder_name'"
-echo "   full path: '$folder_name'/'$dest_dir'"
+echo "🟢 Template Created"
+echo "   folder: './$folder_name/'"
 echo "INFO: excluded files mentioned in .gitignore and .gitignore file itself"
+echo ""
+echo "✔️  Done"

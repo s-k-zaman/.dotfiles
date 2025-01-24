@@ -1,2 +1,8 @@
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "./styling/heading-title.css";
+@import "./styling/highlights.css";
+@import "./styling/image.css";
+@import "./styling/misc.css";
+@import "./styling/page.css";
