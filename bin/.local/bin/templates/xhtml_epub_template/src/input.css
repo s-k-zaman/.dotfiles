@@ -1,8 +1,9 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@import "./styling/fonts.css";
 @import "./styling/heading-title.css";
-@import "./styling/highlights.css";
+@import "./styling/colors.css";
 @import "./styling/image.css";
-@import "./styling/misc.css";
 @import "./styling/page.css";
+@import "./styling/misc.css";
