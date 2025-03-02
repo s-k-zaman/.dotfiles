@@ -1,6 +1,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@import "./styling/resets.css";
 @import "./styling/fonts.css";
 @import "./styling/heading-title.css";
 @import "./styling/colors.css";

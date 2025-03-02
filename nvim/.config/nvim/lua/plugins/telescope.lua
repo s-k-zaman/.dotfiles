@@ -30,7 +30,7 @@ local config = function()
                 },
             },
             file_ignore_patterns = {
-                -- gif file [No need as using gitfiles if git directory.]
+                -- git file [No need as using gitfiles if git directory.]
                 -- ".git/",
                 -- python venv folders
                 "venv/",
@@ -135,6 +135,22 @@ local config = function()
     map("n", "<leader>fP", "Telescope diagnostics", {
         desc = "Diagnostics/[P]roblems[workspace]",
     })
+
+    -- LSP: SYMBOLS USING TELESCOPE
+    map(
+        "n",
+        "<leader>sr",
+        require("telescope.builtin").lsp_references,
+        { des = "[s]earch [r]eferences -> cur @parameter" }
+    )
+    map("n", "<leader>ss", require("telescope.builtin").lsp_document_symbols, { desc = "[s]earch [s]ymbols -> buffer" })
+    map(
+        "n",
+        "<leader>sw",
+        require("telescope.builtin").lsp_dynamic_workspace_symbols,
+        { desc = "[s]earch [S]ymbols -> workspace" }
+    )
+
     -- Other miscs
     map("n", '<leader>s"', "Telescope registers", { desc = "Registers" })
     map("n", "<leader>sa", "Telescope autocommands", { desc = "Auto Commands" })
@@ -155,6 +171,7 @@ return {
     cmd = "Telescope",
     lazy = false,
     version = false, -- telescope did only one release, so use HEAD for now
+    enabled = false,
     dependencies = {
         "nvim-lua/plenary.nvim",
         {

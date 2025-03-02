@@ -6,5 +6,6 @@
 ~/Drive/Work
 ~/Drive/Work/Dressme
 ~/Drive/Work/Rahul_Yadav
+~/Drive/Work/Asynq
 ~/Drive/Work/Third-Party
 ~/Drive/Work/E-book-writings

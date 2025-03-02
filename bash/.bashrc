@@ -601,6 +601,7 @@ gitlazy() {
     git commit -m "$1"
     git push
 }
+alias lg="lazygit"
 
 alias lookingglass="~/looking-glass-B5.0.1/client/build/looking-glass-client -F"
 #######################################################
@@ -687,3 +688,9 @@ fi
 alias todos="nb tasks open"
 ## Tools
 alias dictkonsole="konsole -e dict"
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+## api
+alias api="posting"

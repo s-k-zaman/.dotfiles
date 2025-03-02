@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Check if xbanish is running
+if pgrep -x "xbanish" >/dev/null; then
+    echo "Stopping xbanish..."
+    pkill xbanish
+else
+    echo "Starting xbanish..."
+    nohup xbanish >/dev/null 2>&1 &
+    disown
+fi

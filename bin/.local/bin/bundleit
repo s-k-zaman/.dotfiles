@@ -46,11 +46,15 @@ parse_bundle_file() {
 copy_files() {
     for pattern in "${include_patterns[@]}"; do
         echo "Adding: $pattern"
+        # Remove trailing '/*' if it exists
+        if [[ "$pattern" == */* ]]; then
+            pattern="${pattern%/*}/"
+        fi
         if [[ -d "$pattern" || "$pattern" == */ ]]; then
-            mkdir -p "$build_dir/$pattern"
-            rsync -a --prune-empty-dirs --include="$pattern/**" --exclude="*" ./ "$build_dir/"
+            rsync -a --include="*/*" --include="$pattern" --exclude="*" ./ "$build_dir/"
         else
-            rsync -a --prune-empty-dirs --include="$pattern" --exclude="*" ./ "$build_dir/"
+            # For files
+            rsync -a --include="$pattern" --exclude="*" ./ "$build_dir/"
         fi
     done
 }

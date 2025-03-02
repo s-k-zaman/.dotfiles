@@ -50,14 +50,14 @@ M.on_attach = function(client, bufnr)
         if PluginUtil.has("lspsaga.nvim") and use_saga then
             nmap_saga("<leader>rn", "<cmd>Lspsaga rename<cr>", "[R]e[n]ame -> c-k:quit")
         else
-            nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+            nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame buffer")
         end
     end
 
     if PluginUtil.has("lspsaga.nvim") and use_saga then
         nmap_saga("<leader>a", "<cmd>Lspsaga code_action<cr>", "Code [A]ctions")
 
-        nmap_saga("gd", "<cmd>Lspsaga goto_definition<cr>", "[g]oto [d]efinition")
+        -- nmap_saga("gd", "<cmd>Lspsaga goto_definition<cr>", "[g]oto [d]efinition") --INFO: using snacks picker for this
         nmap_saga("gh", "<cmd>Lspsaga peek_definition<cr>", "[g]et definition [h]ere")
 
         nmap_saga("K", "<cmd>Lspsaga hover_doc<cr>", "Hover Doc")
@@ -70,7 +70,7 @@ M.on_attach = function(client, bufnr)
     else
         nmap("<leader>a", vim.lsp.buf.code_action, "Code [A]ctions")
 
-        nmap("gd", vim.lsp.buf.definition, "[g]oto [d]efinition")
+        -- nmap("gd", vim.lsp.buf.definition, "[g]oto [d]efinition") --INFO: using snacks picker for this
 
         nmap("K", vim.lsp.buf.hover, "Hover Doc")
 
@@ -85,21 +85,16 @@ M.on_attach = function(client, bufnr)
             vim.diagnostic.goto_prev()
         end, "Goto prev [d]iagnostic")
     end
-    -- nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation") -- INFO: not working/know more
-    -- nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition") -- INFO: not working/know more
     nmap("<leader>K", vim.lsp.buf.signature_help, "Hover Signature Help")
 
-    --nmap("gs", vim.lsp.buf.declaration, "[G]oto [D]eclaration")-- INFO: not working/know more
+    -- nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation") -- TODO: not working/know more
+    -- nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition") -- TODO: not working/know more
+    --nmap("gs", vim.lsp.buf.declaration, "[G]oto [D]eclaration")-- TODO: not working/know more
     nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace: [A]dd this root")
     nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace: [R]emove this root")
     nmap("<leader>wl", function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, "[W]orkspace: [L]ist Folders")
-
-    -- SYMBOLS USING TELESCOPE
-    nmap("<leader>sr", require("telescope.builtin").lsp_references, "[s]earch [r]eferences -> cur @parameter")
-    nmap("<leader>ss", require("telescope.builtin").lsp_document_symbols, "[s]earch [s]ymbols -> buffer") --
-    nmap("<leader>sw", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[s]earch [S]ymbols -> workspace") --
 
     -- condition capabilities
     if client.name == "ruff_lsp" then
