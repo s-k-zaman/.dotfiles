@@ -81,9 +81,6 @@ return {
         { "<leader>sM", function() Snacks.picker.man() end, desc = "Man Pages" },
         { "<leader>sm", function() Snacks.picker.marks() end, desc = "Marks" },
         { "<leader>sR", function() Snacks.picker.resume() end, desc = "Resume" },
-
-
-        { "<leader>se", function() Snacks.explorer() end, desc = "File Explorer" },
     },
     -- stylua: ignore end
     init = function()
