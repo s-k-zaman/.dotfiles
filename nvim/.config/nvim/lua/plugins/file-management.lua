@@ -7,7 +7,7 @@ return {
             -- TODO: smart locate file explorer using nvimtree apis.
             vim.keymap.set(
                 "n",
-                "<leader>e",
+                "<leader>L",
                 "<cmd>NvimTreeToggle<CR>",
                 { noremap = true, silent = true, desc = "toggle file explorer" }
             )

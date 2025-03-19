@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 return {
     {
         "numToStr/Comment.nvim",
@@ -30,15 +31,13 @@ return {
             local map = require("utils.keymapper").keymap
             local keywords = { "TODO", "FIX", "FIXME" }
 
-            map("n", "<leader>ft", "TodoTelescope", { desc = "[F]ind all [T]odos Telescope" })
+            -- stylua: ignore start
+            map("n", "<leader>st", function() Snacks.picker.todo_comments() end, { desc = "Todo comments(all types)" })
+            map("n", "<leader>sT", function () Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } }) end, { desc = "Todo/Fix/Fixme" })
 
-            map("n", "]t", function()
-                todo_comments.jump_next({ keywords = keywords })
-            end, { desc = "Next todo comment(file)" })
-
-            map("n", "[t", function()
-                todo_comments.jump_prev({ keywords = keywords })
-            end, { desc = "Previous todo comment(file)" })
+            map("n", "]t", function() todo_comments.jump_next({ keywords = keywords }) end, { desc = "Next todo comment(buf)" })
+            map("n", "[t", function() todo_comments.jump_prev({ keywords = keywords }) end, { desc = "Previous todo comment(buf)" })
+            -- stylua: ignore end
         end,
     },
 }

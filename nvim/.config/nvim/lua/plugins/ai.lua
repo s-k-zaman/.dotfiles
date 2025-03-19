@@ -53,7 +53,7 @@ return {
                 position = "right",
             },
             behaviour = {
-                auto_suggestions = true, -- Experimental stage
+                auto_suggestions = false, -- Experimental stage
             },
             mappings = {
                 suggestions = suggestions,
