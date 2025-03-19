@@ -52,7 +52,7 @@ return {
         { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
         { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent files (all sessions)" },
         -- TODO: remove emoji-cmp from cmp-lists: emoji from typing `:`
-        { "<leader>si", function() Snacks.picker.icons() end, desc = "Icons" },
+        { "<leader>si", function() Snacks.picker.icons() end, desc = "Icons/emoji" },
         { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep search in Files" },
         { "<leader>sb", function() Snacks.picker.lines() end, desc = "Search Lines in Buffer" },
         { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },

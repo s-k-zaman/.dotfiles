@@ -26,6 +26,7 @@ opt.smartcase = true
 -- appearance
 opt.number = true
 opt.relativenumber = true
+opt.laststatus = 3
 opt.termguicolors = true
 opt.scrolloff = 8
 opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time.

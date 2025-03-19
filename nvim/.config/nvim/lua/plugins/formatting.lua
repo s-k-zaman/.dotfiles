@@ -86,6 +86,7 @@ return {
                     --   prepend_args = { "-i", "2", "-ci" },
                     -- },
                     prettier = {
+                        --ISSUE: not picking up default prettier-config-file from a workspace
                         -- prepend_args = { "--tab-width", "4" },
                     },
                 },
