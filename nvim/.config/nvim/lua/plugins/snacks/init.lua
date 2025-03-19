@@ -12,6 +12,7 @@ return {
         lazygit = require("plugins.snacks.git"),
         explorer = require("plugins.snacks.explorer"),
         picker = require("plugins.snacks.picker"),
+        image = { enabled = true },
         -- indent = { enabled = true },
         -- input = { enabled = true },
         quickfile = { enabled = true },

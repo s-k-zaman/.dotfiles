@@ -77,7 +77,7 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 # API KEYS
 # for NeoVim
-export ANTHROPIC_API_KEY=$(pass show ai/claude/asynq)
+export OPENAI_API_KEY=$(pass show ai/openai/asynq)
 
 #######################################################
 # MACHINE SPECIFIC ALIAS'S
