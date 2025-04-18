@@ -686,6 +686,10 @@ fi
 if [ -f ~/.docker_alias_bash ]; then
     . ~/.docker_alias_bash
 fi
+# epubs
+if [ -f ~/.epub-bash ]; then
+    . ~/.epub-bash
+fi
 
 ## nb notes
 alias todos="nb tasks open"

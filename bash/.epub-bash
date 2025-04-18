@@ -1,0 +1,4 @@
+#!/bin/bash
+
+alias epub="docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest mongod --replSet rs0"
+alias epu="docker start mongodb"

@@ -6,6 +6,8 @@
 ~/Drive/Work
 ~/Drive/Work/Dressme
 ~/Drive/Work/Rahul_Yadav
+~/Drive/Work/Deepak_Mangla
 ~/Drive/Work/Asynq
 ~/Drive/Work/Third-Party
 ~/Drive/Work/E-book-writings
+~/Drive/Docker

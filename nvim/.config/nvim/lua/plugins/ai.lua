@@ -41,6 +41,7 @@ return {
             windows = {
                 ---@type "right" | "left" | "top" | "bottom"
                 position = "right",
+                width = 37,
             },
             behaviour = {
                 auto_suggestions = false, -- Experimental stage

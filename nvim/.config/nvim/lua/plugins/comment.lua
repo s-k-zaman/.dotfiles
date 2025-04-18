@@ -32,7 +32,7 @@ return {
 
             -- stylua: ignore start
             map("n", "<leader>st", function() Snacks.picker.todo_comments() end, { desc = "Todo comments(all types)" })
-            map("n", "<leader>sT", function () Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } }) end, { desc = "Todo/Fix/Fixme" })
+            map("n", "<leader>sT", function () Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME", "BUG" } }) end, { desc = "Todo/Fix/Fixme" })
 
             map("n", "]t", function() todo_comments.jump_next({ keywords = keywords }) end, { desc = "Next todo comment(buf)" })
             map("n", "[t", function() todo_comments.jump_prev({ keywords = keywords }) end, { desc = "Previous todo comment(buf)" })
