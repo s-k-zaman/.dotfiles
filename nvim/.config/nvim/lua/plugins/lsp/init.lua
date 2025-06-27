@@ -44,6 +44,7 @@ return {
             local formatters_linters_servers = {
                 "stylua",
                 "shfmt",
+                "prettierd",
                 "prettier",
                 "isort",
                 "black",

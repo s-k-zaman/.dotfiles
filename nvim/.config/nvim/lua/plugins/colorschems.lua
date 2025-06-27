@@ -8,4 +8,10 @@ return {
         lazy = false,
         priority = 1000,
     },
+    {
+        "rebelot/kanagawa.nvim",
+        enabled = true,
+        lazy = false,
+        priority = 1000,
+    },
 }

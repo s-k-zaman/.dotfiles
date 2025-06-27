@@ -2,6 +2,7 @@
 -- COLORSCHEME = "nordfox"
 -- COLORSCHEME = "nightfox"
 -- COLORSCHEME = "onedark"
+-- COLORSCHEME = "kanagawa-wave" -- options: -dragon, -wave, -lotus
 COLORSCHEME = "rose-pine"
 TRANSPARENT = true
 Disable_Lsp_Server_Formatting = true

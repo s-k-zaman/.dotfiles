@@ -3,6 +3,7 @@ M.get_lsps = function()
     local lsps = {}
     local return_str = ""
     local is_null_ls = false
+    -- TODO: show formatter from conform.nvim
 
     if rawget(vim, "lsp") then
         local lsp_servers = (vim.lsp.get_clients or vim.lsp.get_active_clients)()
