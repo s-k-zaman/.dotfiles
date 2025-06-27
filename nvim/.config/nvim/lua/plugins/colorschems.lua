@@ -4,7 +4,7 @@ return {
     {
         "rose-pine/neovim",
         name = "rose-pine",
-        opts = { styles = { transparency = TRANSPARENT } },
+        opts = {  variant="moon", styles = { transparency = TRANSPARENT } },
         lazy = false,
         priority = 1000,
     },

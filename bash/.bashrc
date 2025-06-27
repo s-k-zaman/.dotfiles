@@ -15,6 +15,20 @@ if [ -t 1 ]; then
     bind -x '"\C-y":tmux-ssh-sessionizer'
 fi
 
+## GitHub 
+# copied from Titustech
+gitcommit() {
+    git add .
+    git commit -m "$1"
+}
+
+gitlazy() {
+    git add .
+    git commit -m "$1"
+    git push
+}
+alias lg="lazygit"
+
 # PASSWORDS / API KEYS / ENV VARIABLES
 # for NeoVim
 export OPENAI_API_KEY=$(pass show ai/openai/asynq)
@@ -61,6 +75,8 @@ alias todos="nb tasks open"
 alias dictkonsole="konsole -e dict"
 # api cli tool
 alias api="posting"
+# benchmark app/tool
+alias benchm="hyperfine"
 
 #######################################################
 # AUTO ADDS / AUTO GENERATED ---- BY APPS
