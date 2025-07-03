@@ -1,2 +1,3 @@
 readease_t2_micro_server cd ~/projects/personal/readease-important-files/ && kssh -i ./free-tier-readease.pem ubuntu@ec2-15-207-108-194.ap-south-1.compute.amazonaws.com
 asynq_emplyoee_assessment_prod cd ~/Drive/Work/Asynq/Documents/ && kssh -i ./vaibhav-asynq.pem ubuntu@ec2-34-202-149-23.compute-1.amazonaws.com
+new_asynq_emplyoee_assessment_prod cd ~/Drive/Work/Asynq/Documents/ && kssh -i ./vaibhav-asynq.pem ubuntu@ec2-3-89-131-71.compute-1.amazonaws.com
