@@ -22,6 +22,14 @@ return {
         },
         opts = {
             automatic_installation = true,
+            -- automatic_enable = false,
+            automatic_enable = {
+                exclude = {
+                    -- excluded in lspconfig.lus file [disabled by vim.lsp.enable]
+                    -- "tailwindcss",
+                    -- "ruff",
+                },
+            },
             ensure_installed = {
                 -- ONLY LSP HERE
                 "lua_ls",

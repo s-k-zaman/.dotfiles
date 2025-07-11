@@ -11,4 +11,3 @@
 ~/Drive/Work/Third-Party
 ~/Drive/Work/E-book-writings
 ~/Drive/Work/E-book-writings/Jean
-~/Drive/Docker

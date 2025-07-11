@@ -31,7 +31,7 @@ alias lg="lazygit"
 
 # PASSWORDS / API KEYS / ENV VARIABLES
 # for NeoVim
-export OPENAI_API_KEY=$(pass show ai/openai/asynq)
+# export OPENAI_API_KEY=$(pass show ai/openai/asynq)
 
 # paste clipboard content in x seconds...
 alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'

@@ -37,7 +37,7 @@ local server_settings = {
     cssls = require("plugins.lsp.LspServerSettings.cssls"),
     rust_analyzer = require("plugins.lsp.LspServerSettings.rust_analyzer"),
     eslint = require("plugins.lsp.LspServerSettings.eslint"),
-    tsserver = require("plugins.lsp.LspServerSettings.tsserver"),
+    ts_ls = require("plugins.lsp.LspServerSettings.tsserver"),
     yamlls = require("plugins.lsp.LspServerSettings.yamlls"),
     pyright = require("plugins.lsp.LspServerSettings.pyright"),
     lua_ls = require("plugins.lsp.LspServerSettings.lua_ls"),
@@ -48,164 +48,135 @@ local server_settings = {
 local mason_lspconfig = require("mason-lspconfig")
 local lspconfig = require("lspconfig")
 
--- looping through all the servers by setup_handlers and setting the lsp.
-mason_lspconfig.setup_handlers({
-    -- TODO: make better server handling
-    function(server_name)
-        if PluginUtil.has("tailwind-tools") and server_name == "tailwindcss" then
-            return
-        end
-        -- local util = require("lspconfig/util")
-        lspconfig[server_name].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = server_settings[server_name] or {},
-        })
-    end,
-
-    -- conditional settings can be done using server_name(eg: pyright, tsserver etc.)
-    ["ruff"] = function()
-        lspconfig["ruff"].setup({
-            enabled = false,
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = server_settings["ruff"] or {},
-        })
-    end,
-    ["lua_ls"] = function()
-        lspconfig["lua_ls"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = server_settings["lua_ls"] or {},
-            single_file_support = true,
-        })
-    end,
-    ["emmet_ls"] = function()
-        lspconfig["emmet_ls"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            filetypes = {
-                -- "css",
-                "eruby",
-                "html",
-                "xhtml",
-                "javascript",
-                "javascriptreact",
-                "less",
-                -- "sass",
-                -- "scss",
-                "svelte",
-                "pug",
-                "typescriptreact",
-                "vue",
-            },
-        })
-    end,
-    ["rust_analyzer"] = function()
-        lspconfig["rust_analyzer"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = server_settings["rust_analyzer"] or {},
-            filetypes = { "rust" },
-            root_dir = require("lspconfig.util").root_pattern("Cargo.toml"),
-        })
-    end,
-    ["pyright"] = function()
-        lspconfig["pyright"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = server_settings["pyright"] or {},
-            root_dir = function(...)
-                local root_patterns = {
-                    ".git",
-                    "main.py",
-                }
-                -- return require("lspconfig.util").root_pattern(table.unpack(root_patterns))(...) -- INFO: not working
-                return vim.loop.cwd()
-            end,
-            single_file_support = true,
-        })
-    end,
-    ["tailwindcss"] = function()
-        if PluginUtil.has("tailwind-tools") and not CONFIG_TAILWIND_IN_LSPCONFIG then
-            return
-        end
-        -- define filetypes to exclude
-        local filetypes_exclude = { "markdown" }
-        local filetypes = {}
-        local default_ft = {
-            -- got this from
-            -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#tailwindcss
-            "aspnetcorerazor",
-            "astro",
-            "astro-markdown",
-            "blade",
-            "clojure",
-            "django-html",
-            "htmldjango",
-            "edge",
-            "eelixir",
-            "elixir",
-            "ejs",
-            "erb",
-            "eruby",
-            "gohtml",
-            "gohtmltmpl",
-            "haml",
-            "handlebars",
-            "hbs",
-            "html",
-            -- "xhtml",
-            "xml",
-            "htmlangular",
-            "html-eex",
-            "heex",
-            "jade",
-            "leaf",
-            "liquid",
-            "markdown",
-            "mdx",
-            "mustache",
-            "njk",
-            "nunjucks",
-            "php",
-            "razor",
-            "slim",
-            "twig",
-            "css",
-            "less",
-            "postcss",
-            "sass",
-            "scss",
-            "stylus",
-            "sugarss",
-            "javascript",
-            "javascriptreact",
-            "reason",
-            "rescript",
-            "typescript",
-            "typescriptreact",
-            "vue",
-            "svelte",
-            "templ",
-        }
-        vim.list_extend(filetypes, default_ft)
-        filetypes = vim.tbl_filter(function(ft)
-            return not vim.tbl_contains(filetypes_exclude or {}, ft)
-        end, filetypes)
-
-        lspconfig["tailwindcss"].setup({
-            -- enabled = false,
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = server_settings["tailwindcss"] or {},
-            filetypes = filetypes,
-            -- root_dir = function(...) -- only enabled when it is a git repository
-            --     return require("lspconfig.util").root_pattern(".git")(...)
-            -- end,
-        })
-    end,
+vim.lsp.config("*", {
+    on_attach = on_attach,
+    capabilities = capabilities,
 })
+for server_name, settings in pairs(server_settings) do
+    if vim.lsp.config[server_name] then
+        vim.lsp.config(server_name, {
+            settings = settings or {},
+        })
+    end
+end
+--ruff
+vim.lsp.enable("ruff", false)
+-- lua_ls
+vim.lsp.config("lua_ls", {
+    single_file_support = true,
+})
+-- emmet_ls
+vim.lsp.config("emmet_ls", {
+    filetypes = {
+        -- "css",
+        "eruby",
+        "html",
+        "xhtml",
+        "javascript",
+        "javascriptreact",
+        "less",
+        -- "sass",
+        -- "scss",
+        "svelte",
+        "pug",
+        "typescriptreact",
+        "vue",
+    },
+})
+
+-- rust_analyzer
+vim.lsp.config("rust_analyzer", {
+    filetypes = { "rust" },
+    root_dir = require("lspconfig.util").root_pattern("Cargo.toml"),
+})
+------ pyright
+vim.lsp.config("pyright", {
+    -- root_dir = function(...) -- INFO: this was for lsp config, check vim.lsp.config api
+    --     local root_patterns = {
+    --         ".git",
+    --         "main.py",
+    --     }
+    --     -- return require("lspconfig.util").root_pattern(table.unpack(root_patterns))(...) -- INFO: not working
+    --     return vim.loop.cwd()
+    -- end,
+    single_file_support = true,
+})
+
+------ tailwindcss
+local enable_tailwind = not (PluginUtil.has("tailwind-tools") and not CONFIG_TAILWIND_IN_LSPCONFIG)
+if enable_tailwind then
+    vim.lsp.enable("tailwindcss", enable_tailwind)
+    -- setup
+    -- define filetypes to exclude
+    local filetypes_exclude = { "markdown" }
+    local filetypes = {}
+    local default_ft = {
+        -- got this from
+        -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#tailwindcss
+        "aspnetcorerazor",
+        "astro",
+        "astro-markdown",
+        "blade",
+        "clojure",
+        "django-html",
+        "htmldjango",
+        "edge",
+        "eelixir",
+        "elixir",
+        "ejs",
+        "erb",
+        "eruby",
+        "gohtml",
+        "gohtmltmpl",
+        "haml",
+        "handlebars",
+        "hbs",
+        "html",
+        -- "xhtml",
+        "xml",
+        "htmlangular",
+        "html-eex",
+        "heex",
+        "jade",
+        "leaf",
+        "liquid",
+        "markdown",
+        "mdx",
+        "mustache",
+        "njk",
+        "nunjucks",
+        "php",
+        "razor",
+        "slim",
+        "twig",
+        "css",
+        "less",
+        "postcss",
+        "sass",
+        "scss",
+        "stylus",
+        "sugarss",
+        "javascript",
+        "javascriptreact",
+        "reason",
+        "rescript",
+        "typescript",
+        "typescriptreact",
+        "vue",
+        "svelte",
+        "templ",
+    }
+    vim.list_extend(filetypes, default_ft)
+    filetypes = vim.tbl_filter(function(ft)
+        return not vim.tbl_contains(filetypes_exclude or {}, ft)
+    end, filetypes)
+    vim.lsp.config("tailwindcss", {
+        filetypes = filetypes,
+        -- root_dir = function(...) -- only enabled when it is a git repository
+        --     return require("lspconfig.util").root_pattern(".git")(...)
+        -- end,
+    })
+end
 
 -- INFO: there is a way to proiratize servers while conflicting
 -- refer to lazy-vnim: https://github.com/LazyVim/LazyVim/ (in lua/lsp/init.lua file)

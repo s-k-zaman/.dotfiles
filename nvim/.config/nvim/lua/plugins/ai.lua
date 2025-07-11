@@ -34,10 +34,12 @@ return {
         opts = {
             -- add any opts here
             provider = "openai",
-            openai = {
-                endpoint = "http://3.210.15.125:4000/",
-                -- model = "claude-3-7-sonnet",
-                model = "claude-sonnet-4",
+            providers = {
+                openai = {
+                    endpoint = "http://3.210.15.125:4000/",
+                    -- model = "claude-3-7-sonnet",
+                    model = "claude-sonnet-4",
+                },
             },
             windows = {
                 ---@type "right" | "left" | "top" | "bottom"
