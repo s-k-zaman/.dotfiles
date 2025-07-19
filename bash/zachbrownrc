@@ -53,7 +53,6 @@ export EDITOR=nvim
 export VISUAL=nvim
 export NVIM_CONFIG="~/.config/nvim/init.lua"
 alias vim='nvim'
-alias ed="nvim"
 alias pico='edit'
 alias spico='sedit'
 alias nano='edit'
