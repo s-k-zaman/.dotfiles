@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#TODO: install xbanish if not installed
+
 # Check if xbanish is running
 if pgrep -x "xbanish" >/dev/null; then
     echo "Stopping xbanish..."

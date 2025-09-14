@@ -30,8 +30,10 @@ gitlazy() {
 alias lg="lazygit"
 
 # PASSWORDS / API KEYS / ENV VARIABLES
-# for NeoVim
-# export OPENAI_API_KEY=$(pass show ai/openai/asynq)
+# Source keys file if it exists
+if [ -f "$HOME/keys" ]; then
+    . "$HOME/keys"
+fi
 
 # paste clipboard content in x seconds...
 alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
@@ -77,6 +79,8 @@ alias dictkonsole="konsole -e dict"
 alias api="posting"
 # benchmark app/tool
 alias benchm="hyperfine"
+# liveserver
+alias liveserve="live-server --ignorePattern='.*\\.(js|png|jpg|jpeg|gif|svg|json|md|log)$|node_modules|postcss2|postcss3|src'"
 
 #######################################################
 # AUTO ADDS / AUTO GENERATED ---- BY APPS

@@ -1,17 +1,16 @@
 local augroup = require("utils").augroup
 local venv_selctor_python = require("modules.venv_selector_python")
 
-vim.api.nvim_create_autocmd("BufWinEnter", {
-    group = augroup("python_venv"),
-    pattern = "*.py",
-    callback = function()
-        local current_venv = require("venv-selector").get_active_venv()
-        if current_venv == nil then
-            -- venv_selctor_python.try_set_in_folder_venv(false)
-            require("venv-selector").retrieve_from_cache()
-        end
-    end,
-})
+-- vim.api.nvim_create_autocmd("BufWinEnter", {
+--     group = augroup("python_venv"),
+--     pattern = "*.py",
+--     callback = function()
+--         local current_venv = require("venv-selector").venv()
+--         if current_venv == nil then
+--             require("venv-selector").retrieve_from_cache()
+--         end
+--     end,
+-- })
 
 -- vim.api.nvim_create_autocmd("VimEnter", {
 --     desc = "Auto select virtualenv Nvim open",
@@ -32,11 +31,14 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
     callback = function()
         --running program using F5
         vim.keymap.set("n", "<F5>", function()
+            -- TODO: find best way to handle terminal output
+            -- see `Run your own code on venv activation (on_venv_activate_callback)`
+            -- on: https://github.com/linux-cultist/venv-selector.nvim?tab=readme-ov-file
             --save file
             vim.cmd("w")
 
             -- local current_venv = venv_selctor_python.get_current_venv()
-            local current_venv = require("venv-selector").get_active_venv()
+            local current_venv = require("venv-selector").venv()
             local python_path
             if current_venv ~= nil then
                 python_path = venv_selctor_python.make_python_path(current_venv)
@@ -58,17 +60,18 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
         })
 
         vim.keymap.set("n", "<F6>", function()
-            -- TODO: this is not working properly for infinity loops, ctrl+c is not cancelling loop.
+            -- FIX: this is not working properly for infinity loops, ctrl+c is not cancelling loop.
             -- works if tmux is installed
+            -- TODO: find best way to handle tmux output
 
             --save file
             vim.cmd("w")
 
             local tmux_window_name = "python_code_output"
-            local tmux_command = "tmux-window-with-command " .. tmux_window_name .. ' "echo "";'
+            local tmux_command = "tmux-window-with-command " .. tmux_window_name .. ' "echo "OUTPUT:";'
 
             -- local current_venv = venv_selctor_python.get_current_venv()
-            local current_venv = require("venv-selector").get_active_venv()
+            local current_venv = require("venv-selector").venv()
             local python_path
             if current_venv ~= nil then
                 -- local venv_path = current_venv.path
@@ -92,42 +95,16 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
         end, {
             silent = true,
         })
-
-        -- vim.keymap.set("n", "<F7>", function()
-        --     -- get mimimal pickup options
-        --     venv_selctor_python.pick_venv()
-        -- end, {
-        --     silent = true,
-        -- })
-
-        vim.keymap.set(
-            "n",
-            "<F8>",
-            "<cmd>:VenvSelect<cr>",
-            --     function()
-            --     -- try to source vevn present inside folder
-            --     venv_selctor_python.try_set_in_folder_venv(true)
-            -- end,
-            {
-                silent = true,
-            }
-        )
-
-        -- vim.keymap.set("n", "<F9>", function()
-        --     -- get all pickup options
-        --     venv_selctor_python.pick_from_all_venvs()
-        -- end, {
-        --     silent = true,
-        -- })
     end,
 
     -- running program: in tmux new-window
+    -- TODO: remove on fixing F6 output shortcut
     vim.keymap.set("n", "<F10>", function()
         --save file
         vim.cmd("w")
         -- then run with available sources
         -- local current_venv = venv_selctor_python.get_current_venv()
-        local current_venv = require("venv-selector").get_active_venv()
+        local current_venv = require("venv-selector").venv()
         if current_venv ~= nil then
             -- source virtual environment then run
             -- local venv_path = current_venv.path
