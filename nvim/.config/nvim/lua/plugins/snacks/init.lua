@@ -52,7 +52,6 @@ return {
         { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
         { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
         { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent files (all sessions)" },
-        -- TODO: remove emoji-cmp from cmp-lists: emoji from typing `:`
         { "<leader>si", function() Snacks.picker.icons() end, desc = "Icons/emoji" },
         { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep search in Files" },
         { "<leader>sb", function() Snacks.picker.lines() end, desc = "Search Lines in Buffer" },
@@ -64,13 +63,13 @@ return {
         { "<leader>sD", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
 
         -- LSP
-        { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
-        { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },--TODO: not working/know more
-        { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
-        { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },--TODO: not working/know more
-        { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },--TODO: not working/know more
-        { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
-        { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+        { "gd", function() Snacks.picker.lsp_definitions() end, desc = "LSP: Goto Definition" },
+        { "gD", function() Snacks.picker.lsp_declarations() end, desc = "LSP: Goto Declaration" },--TODO: not working/know more
+        { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "LSP: References" },
+        { "gI", function() Snacks.picker.lsp_implementations() end, desc = "LSP: Goto Implementation" },--TODO: not working/know more
+        { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "LSP: Goto T[y]pe Definition" },--TODO: not working/know more
+        { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP: Symbols" },
+        { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP: Workspace Symbols" },
 
         -- miscs
         { '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" },

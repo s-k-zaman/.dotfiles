@@ -1,10 +1,10 @@
 return {
     {
-        "williamboman/mason-lspconfig.nvim",
+        "mason-org/mason-lspconfig.nvim",
         event = "BufReadPre",
         dependencies = {
             {
-                "williamboman/mason.nvim",
+                "mason-org/mason.nvim",
                 cmd = "Mason",
                 event = "BufReadPre",
                 build = ":MasonUpdate",
@@ -19,6 +19,7 @@ return {
                     max_concurrent_installers = 10,
                 },
             },
+            "neovim/nvim-lspconfig",
         },
         opts = {
             automatic_installation = true,
@@ -71,9 +72,7 @@ return {
         dependencies = {
             { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
             "hrsh7th/nvim-cmp",
-            "williamboman/mason-lspconfig.nvim",
             "nvimtools/none-ls.nvim",
-            "nvimdev/lspsaga.nvim",
         },
         config = function()
             require("plugins.lsp.lspconfig")
@@ -81,7 +80,8 @@ return {
     },
     {
         "nvimdev/lspsaga.nvim",
-        -- enabled = false,
+        enabled = USE_LSP_SAGA,
+        event = "LspAttach",
         config = function()
             require("lspsaga").setup({
                 ui = {
@@ -98,11 +98,20 @@ return {
         end,
     },
     {
-        "smjonas/inc-rename.nvim",
+        "saecki/live-rename.nvim",
         event = "BufReadPre",
-        cmd = "IncRename",
         config = function()
-            require("inc_rename").setup()
+            require("live-rename").setup({})
         end,
     },
+    -- TODO: trying live-rename instead inc-rename
+    -- {
+    --     "smjonas/inc-rename.nvim",
+    --     event = "BufReadPre",
+    --     cmd = "IncRename",
+    --     opts = {
+    --         input_buffer_type = "dressing",
+    --         save_in_cmdline_history = false,
+    --     },
+    -- },
 }

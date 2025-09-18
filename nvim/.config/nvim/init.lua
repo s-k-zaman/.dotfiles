@@ -8,5 +8,6 @@ TRANSPARENT = true
 Disable_Lsp_Server_Formatting = true
 USE_LSPKIND = true -- vs-Code like autocompletion
 USE_LAZYGIT = true -- vs-Code like autocompletion
+USE_LSP_SAGA = vim.fn.has("nvim-0.13") == 0 -- here ==0 implies less than specified version
 CONFIG_TAILWIND_IN_LSPCONFIG = true
 require("config")

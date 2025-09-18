@@ -16,7 +16,7 @@ M.on_attach = function(client, bufnr)
     end
 
     -- MAPPING FUNCTIONS
-    local use_saga = vim.fn.has("nvim-0.11") == 0
+    local use_saga = USE_LSP_SAGA
     local nmap = function(keys, func, desc)
         if desc then
             desc = desc .. " (lsp)"
@@ -42,12 +42,24 @@ M.on_attach = function(client, bufnr)
         desc = "Lsp: restart",
     })
     -- KEY MAPPINGS
-    if PluginUtil.has("inc-rename.nvim") then
+    -- Renaming
+    if PluginUtil.has("live-rename.nvim") then
+        local live_rename = require("live-rename")
+        vim.keymap.set("n", "<leader>rn", function()
+            live_rename.rename({ cursorpos = -1 })
+
+            -- put into append mode immediately, as insert-mode is placing cursor before
+            vim.schedule(function()
+                vim.api.nvim_feedkeys("A", "n", false)
+            end)
+        end, { desc = "LSP rename(live)" })
+    elseif PluginUtil.has("inc-rename.nvim") then
         vim.keymap.set("n", "<leader>rn", function()
             return ":IncRename " .. vim.fn.expand("<cword>")
         end, { desc = "[R]e[n]ame (inc_rename)", expr = true })
     else
         if PluginUtil.has("lspsaga.nvim") and use_saga then
+            -- FIX: here rename box is not good
             nmap_saga("<leader>rn", "<cmd>Lspsaga rename<cr>", "[R]e[n]ame -> c-k:quit")
         else
             nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame buffer")

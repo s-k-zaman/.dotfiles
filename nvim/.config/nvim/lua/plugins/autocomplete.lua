@@ -54,7 +54,7 @@ return {
                 "hrsh7th/cmp-nvim-lsp",
                 "hrsh7th/cmp-buffer",
                 "hrsh7th/cmp-path",
-                "hrsh7th/cmp-emoji",
+                -- "hrsh7th/cmp-emoji", -- USING sancks emoji
 
                 "onsails/lspkind-nvim", --vscode like
             },
@@ -161,7 +161,7 @@ return {
                     { name = "nvim_lua" },
                     { name = "path" },
                     { name = "crates" },
-                    { name = "emoji" },
+                    -- { name = "emoji" }, -- USING Snacks emoji 
                 }, {
                     { name = "buffer" },
                 }),
