@@ -27,6 +27,11 @@ local capabilities = vim.tbl_deep_extend(
     }
 )
 
+-- INFO: add LSP autocompletion capability for blink.cmp
+if vim.fn.has("nvim-0.11") == 0 and PluginUtil.has("blink.cmp") then
+    capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+end
+
 ------ Manage LSP server -----
 local mason_lspconfig = require("mason-lspconfig")
 local mason_registry = require("mason-registry")

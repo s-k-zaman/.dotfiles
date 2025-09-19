@@ -1,182 +1,126 @@
 local PluginUtils = require("utils.plugins")
 return {
     {
-        "hrsh7th/nvim-cmp",
-        version = false, -- last release is way too old
+        -- TODO: need to check this
+        -- "kdheepak/cmp-latex-symbols",
+    },
+    {
+        -- inspired from: https://github.com/vimichael/my-nvim-config/blob/main/lua/plugins/completions.lua
+        "saghen/blink.cmp",
+        version = "1.*",
         event = "InsertEnter",
         dependencies = {
+            "rafamadriz/friendly-snippets",
             {
-                -- snippet engine plugin
                 "L3MON4D3/LuaSnip",
                 version = "v2.*",
-                build = "make install_jsregexp",
-                dependencies = "rafamadriz/friendly-snippets", -- adds many extra snippets.
                 config = function()
-                    require("luasnip").config.set_config({
-                        history = true,
-                        updateevents = "TextChanged,TextChangedI",
-                    })
+                    local luasnip = require("luasnip")
 
-                    -- vscode format
-                    require("luasnip.loaders.from_vscode").lazy_load()
-                    require("luasnip.loaders.from_vscode").lazy_load({
-                        paths = vim.g.vscode_snippets_path or "",
-                    })
-
-                    -- snipmate format
-                    require("luasnip.loaders.from_snipmate").load()
-                    require("luasnip.loaders.from_snipmate").lazy_load({
-                        paths = vim.g.snipmate_snippets_path or "",
-                    })
-
-                    -- lua format
-                    require("luasnip.loaders.from_lua").load()
-                    require("luasnip.loaders.from_lua").lazy_load({
-                        paths = vim.g.lua_snippets_path or "",
-                    })
-
-                    vim.api.nvim_create_autocmd("InsertLeave", {
-                        callback = function()
-                            if
-                                require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
-                                and not require("luasnip").session.jump_active
-                            then
-                                require("luasnip").unlink_current()
-                            end
-                        end,
-                    })
+                    luasnip.add_snippets("markdown", require("snippets.notes"))
+                    luasnip.add_snippets("text", require("snippets.notes"))
+                    luasnip.add_snippets("tex", require("snippets.latex"))
                 end,
             },
-            -- cmp sources plugins
             {
-                "saadparwaiz1/cmp_luasnip",
-                "hrsh7th/cmp-nvim-lua",
-                "hrsh7th/cmp-nvim-lsp",
-                "hrsh7th/cmp-buffer",
-                "hrsh7th/cmp-path",
-                -- "hrsh7th/cmp-emoji", -- USING sancks emoji
-
-                "onsails/lspkind-nvim", --vscode like
+                "mikavilpas/blink-ripgrep.nvim",
+                version = "*", -- use the latest stable version
             },
         },
-        opts = function()
-            vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
-            local cmp = require("cmp")
-            local defaults = require("cmp.config.default")()
-            return {
-                completion = {
-                    completeopt = "menu,menuone,noinsert",
-                },
-                snippet = {
-                    expand = function(args)
-                        require("luasnip").lsp_expand(args.body)
+        -- TODO: add tailwind color support, tailwind-tools.cmp
+        ---@module 'blink.cmp'
+        opts = {
+            keymap = {
+                preset = "enter",
+                ["<Tab>"] = { -- this will fill text of selected item[helpful if just need the text, no auto-actions(like imports)]
+                    function(cmp)
+                        return cmp.select_next({ count = 0 })
                     end,
+                    "fallback",
                 },
-                mapping = cmp.mapping.preset.insert({
-                    ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-                    ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-                    ["<C-w>"] = cmp.mapping.scroll_docs(4),
-                    ["<C-s>"] = cmp.mapping.scroll_docs(-4),
-                    -- ["<C-Space>"] = cmp.mapping.complete(),
-                    ["<C-c>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-                    -- ["<S-CR>"] = cmp.mapping.confirm({
-                    --     behavior = cmp.ConfirmBehavior.Replace,
-                    --     select = true,
-                    -- }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-                    -- ["<C-CR>"] = function(fallback)
-                    --     cmp.abort()
-                    --     fallback()
-                    -- end,
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        elseif require("luasnip").expand_or_jumpable() then
-                            vim.fn.feedkeys(
-                                vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true),
-                                ""
-                            )
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        elseif require("luasnip").jumpable(-1) then
-                            vim.fn.feedkeys(
-                                vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true),
-                                ""
-                            )
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-                }),
-                formatting = {
-                    fields = { "abbr", "kind", "menu" },
-                    format = function(entry, item)
-                        -- VSCODE LIKE SETUP
-                        if PluginUtils.has("lspkind-nvim") and USE_LSPKIND then
-                            item = require("lspkind").cmp_format({
-                                mode = "symbol_text",
-                                before = function(kind_entry, kind_item)
-                                    if PluginUtils.has("tailwind-tools") then
-                                        kind_item = require("tailwind-tools.cmp").lspkind_format(kind_entry, kind_item)
-                                    elseif PluginUtils.has("tailwindcss-colorizer-cmp.nvim") then
-                                        kind_item = require("tailwindcss-colorizer-cmp").formatter(entry, item)
-                                    end
-                                    return kind_item
-                                end,
-                            })(entry, item)
-                            return item
-                        end
+                -- disable a keymap from the preset
+                ["<C-b>"] = false,
+                ["<C-f>"] = false,
+                ["<C-u>"] = { "scroll_documentation_up", "fallback" },
+                ["<C-d>"] = { "scroll_documentation_down", "fallback" },
+            },
 
-                        -- NORMAL SETUP
-                        local icons = require("utils.glyphs").icons.kinds
-                        local source_table_representation = {
-                            nvim_lsp = "LSP",
-                            path = "Path",
-                            buffer = "Buf",
-                        }
-                        if icons[item.kind] then
-                            item.kind = icons[item.kind] .. item.kind
-                        end
-                        item.menu = source_table_representation[entry.source.name] or entry.source.name
-                        if PluginUtils.has("tailwindcss-colorizer-cmp.nvim") then
-                            return require("tailwindcss-colorizer-cmp").formatter(entry, item)
-                        end
-                        return item
-                    end,
+            appearance = {
+                nerd_font_variant = "mono",
+            },
+            signature = {
+                enabled = true,
+                window = {
+                    show_documentation = false,
                 },
-                experimental = {
-                    ghost_text = {
-                        hl_group = "CmpGhostText",
+            },
+            completion = {
+                trigger = {
+                    -- INFO: need to explore this.....
+                    -- show_on_insert_on_trigger_character = false,
+                    -- show_on_accept_on_trigger_character = false,
+                    show_on_blocked_trigger_characters = { " ", "\n", "\t", "{", "(", "}", ")" },
+                },
+                documentation = {
+                    auto_show = true,
+                    auto_show_delay_ms = 0,
+                },
+                ghost_text = {
+                    enabled = true,
+                    show_with_menu = true,
+                },
+                menu = {
+                    auto_show = true,
+                    scrollbar = false,
+                    draw = {
+                        columns = {
+                            { "source_name", "kind_icon", gap = 1 },
+                            { "label", "label_description", gap = 1 },
+                            { "kind", gap = 1 },
+                        },
                     },
                 },
-                sorting = defaults.sorting,
-                sources = cmp.config.sources({
-                    { name = "nvim_lsp" },
-                    { name = "luasnip" },
-                    { name = "nvim_lua" },
-                    { name = "path" },
-                    { name = "crates" },
-                    -- { name = "emoji" }, -- USING Snacks emoji 
-                }, {
-                    { name = "buffer" },
-                }),
-            }
-        end,
-        config = function(_, opts)
-            local cmp = require("cmp")
-            for _, source in ipairs(opts.sources) do
-                source.group_index = source.group_index or 1
-            end
-            if PluginUtils.has("nvim-autopairs") then
-                local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-                cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-            end
-            cmp.setup(opts)
-        end,
+            },
+            snippets = {
+                preset = "luasnip",
+            },
+            sources = {
+                providers = {
+                    ripgrep = {
+                        module = "blink-ripgrep",
+                        name = "Ripgrep",
+                        score_offset = -100000,
+                        -- Disable per filetype/buffer
+                        enabled = function()
+                            return not vim.tbl_contains({ "txt", "markdown", "git" }, vim.bo.filetype)
+                        end,
+                        ---@module "blink-ripgrep"
+                        ---@type blink-ripgrep.Options
+                        opts = {
+                            prefix_min_len = 4,
+                            toggles = {
+                                -- The keymap to toggle the plugin on and off from blink
+                                on_off = "<leader>urg",
+                            },
+                            backend = {
+                                use = "gitgrep", --"gitgrep-or-ripgrep",
+                                ripgrep = {
+                                    ignore_paths = {},
+                                },
+                            },
+                        },
+                    },
+                },
+                default = {
+                    "lsp",
+                    "snippets",
+                    "path",
+                    "buffer",
+                    "ripgrep", -- searches whole project
+                },
+            },
+            fuzzy = { implementation = "prefer_rust_with_warning" },
+        },
+        opts_extend = { "sources.default" },
     },
 }
