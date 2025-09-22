@@ -1,0 +1,12 @@
+# A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
+# If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
+"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
+# Yazi selects the first matching key to run, prepend always has a higher priority than default, and append always has a lower priority than default:
+
+[mgr]
+prepend_keymap = [
+    # by default enter run 'open'
+	{ on = "<Enter>", run = "plugin smart-enter", desc = "Open selected folder/file" },
+
+    { on   = "!", for  = "unix", run  = 'shell "$SHELL" --block --confirm', desc = "Open $SHELL here" },
+]

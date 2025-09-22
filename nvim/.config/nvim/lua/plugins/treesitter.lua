@@ -33,6 +33,12 @@ local config = function()
             "vim",
             "vimdoc",
             "yaml",
+            "latex",
+            "norg",
+            "scss",
+            "svelte",
+            "typst",
+            "vue",
         },
         auto_install = true,
         highlight = {

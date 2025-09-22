@@ -64,6 +64,9 @@ return {
                 documentation = {
                     auto_show = true,
                     auto_show_delay_ms = 0,
+                    window = {
+                        border = "double", -- single, double
+                    },
                 },
                 ghost_text = {
                     enabled = true,
@@ -72,6 +75,7 @@ return {
                 menu = {
                     auto_show = true,
                     scrollbar = false,
+                    border = "single", -- single, double
                     draw = {
                         columns = {
                             { "source_name", "kind_icon", gap = 1 },

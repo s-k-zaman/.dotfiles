@@ -15,7 +15,22 @@ if [ -t 1 ]; then
     bind -x '"\C-y":tmux-ssh-sessionizer'
 fi
 
-## GitHub 
+# yazi file manager
+function y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d '' cwd <"$tmp"
+    [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+    rm -f -- "$tmp"
+}
+
+# if [ -t 1 ]; then
+    # "C-":ctrl, "e":alt
+    # bind -x '"\C-j":yazi'
+    # bind -x '"\C-j":y'
+# fi
+
+## GitHub
 # copied from Titustech
 gitcommit() {
     git add .

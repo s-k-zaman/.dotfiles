@@ -1,4 +1,7 @@
--- FIX: c-i is behaving strange, no mapping is Working
+-- INFO: although its basic
+-- c-i<same key-signal as Tab> is behaving strange, no mapping is Working.
+-- ANS: it is associated with jumplist just like-> c-o
+
 -- COLORSCHEME = "nordfox"
 -- COLORSCHEME = "nightfox"
 -- COLORSCHEME = "onedark"

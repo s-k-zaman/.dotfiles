@@ -1,5 +1,17 @@
 return {
     {
+        "sphamba/smear-cursor.nvim",
+        event = "VimEnter",
+        opts = {
+            enabled = true,
+            legacy_computing_symbols_support = TRANSPARENT,
+            smear_between_buffers = false,
+            stiffness = 0.8,
+            trailing_stiffness = 0.5,
+            distance_stop_animating = 0.5,
+        },
+    },
+    {
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
         event = "BufReadPre",

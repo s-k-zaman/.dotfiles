@@ -24,6 +24,7 @@ opt.ignorecase = true
 opt.smartcase = true
 
 -- appearance
+-- opt.winborder = "rounded" -- It feeling annoying for most UIs
 opt.number = true
 opt.relativenumber = true
 opt.laststatus = 3

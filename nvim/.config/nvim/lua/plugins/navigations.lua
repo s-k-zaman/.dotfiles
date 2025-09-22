@@ -11,7 +11,7 @@ return {
             modes = {
                 -- a regular search with `/` or `?`
                 search = {
-                    enabled = true,
+                    enabled = false,
                 },
                 -- `f`, `F`, `t`, `T`, `;` and `,` motions
                 char = {
@@ -22,8 +22,8 @@ return {
         },
         -- stylua: ignore
         keys = {
-            { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-            { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+            { "zk", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+            { "zK", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
             { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
             { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
             { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
@@ -46,7 +46,7 @@ return {
             map("n", "<leader>fa", function() harpoon:list():add() end, { desc = "harpoon: add this file" })
             map("n", "<leader>e", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,{ desc = "harpoon: toggle menu" } )
 
-            map("n", "<C-o>", function() harpoon:list():select(1) end, { desc = "harpoon: file 1" })
+            -- map("n", "<C-o>", function() harpoon:list():select(1) end, { desc = "harpoon: file 1" }) --c-o is jumplist shortcut
             map("n", "<C-p>", function() harpoon:list():select(2) end, { desc = "harpoon: file 2" })
             map("n", "<C-f>", function() harpoon:list():select(3) end, { desc = "harpoon: file 3" })
             map("n", "<C-e>", function() harpoon:list():select(4) end, { desc = "harpoon: file 4" })

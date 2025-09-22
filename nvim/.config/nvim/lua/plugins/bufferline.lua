@@ -12,8 +12,8 @@ return {
         },
     },
     config = function(_, opts)
-        map("n", "<tab>l", "BufferLineCycleNext", { desc = "Next Tab" })
-        map("n", "<tab>h", "BufferLineCyclePrev", { desc = "Prev Tab" })
+        -- map("n", "<tab>l", "BufferLineCycleNext", { desc = "Next Tab" })
+        -- map("n", "<tab>h", "BufferLineCyclePrev", { desc = "Prev Tab" })
         require("bufferline").setup(opts)
     end,
 }
