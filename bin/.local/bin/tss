@@ -66,7 +66,7 @@ zoxide_paths=$(zoxide query -l || true)
 mapfile -t folders < ~/.local/bin/tmux-session-folders.txt
 expanded_folders=()
 for folder in "${folders[@]}"; do
-    [[ -z "$folder" || "$folder" =~ ^# ]] && continue
+    [[ -z "$folder" || "$folder" =~ ^# ]] && continue # skip blank and comments(#)
     eval expanded_folders+=("$folder")
 done
 

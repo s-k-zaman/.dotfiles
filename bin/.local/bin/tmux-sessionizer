@@ -6,18 +6,25 @@ else
     mapfile -t folders < ~/.local/bin/tmux-session-folders.txt
     expanded_folders=()
     for folder in "${folders[@]}"; do
-        [[ -z "$folder" || "$folder" =~ ^# ]] && continue
+        [[ -z "$folder" || "$folder" =~ ^# ]] && continue # skip blank and comments(#)
         eval expanded_folders+=("$folder")
     done
 
     folders=$(printf "%s\n" "${expanded_folders[@]}" | sed ':a;N;$!ba;s/\n/ /g')
     folders=`echo $folders | sed "s/~/${HOME//\//\\\/}/g"`
-    selected=$(find $folders -mindepth 1 -maxdepth 1 -type d | fzf --prompt="Select a folder: ")
+    mapfile -t found_dirs < <(find $folders -mindepth 1 -maxdepth 1 -type d)
+    display_dirs=()
+    for dir in "${found_dirs[@]}"; do
+        if [[ "$dir" == "$HOME"* ]]; then
+            display_dirs+=("~${dir#$HOME}")
+        else
+            display_dirs+=("$dir")
+        fi
+    done
+    selected=$(printf "%s\n" "${display_dirs[@]}" | fzf --prompt="Select a folder: ")
 fi
 
-# display_path="~${selected#$HOME}" # relative path with $HOME
-# expanded_path="${selected_dir_clean/#\~/$HOME}" # create absolute path
-# exit 1
+selected="${selected/#\~/$HOME}" # create absolute path
 
 if [[ -z $selected ]]; then
     exit 0
