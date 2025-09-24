@@ -3,10 +3,21 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    folders=$(sed -e ':a;N;$!ba;s/\n/ /g' ~/.local/bin/tmux-session-folders.txt)
+    mapfile -t folders < ~/.local/bin/tmux-session-folders.txt
+    expanded_folders=()
+    for folder in "${folders[@]}"; do
+        [[ -z "$folder" || "$folder" =~ ^# ]] && continue
+        eval expanded_folders+=("$folder")
+    done
+
+    folders=$(printf "%s\n" "${expanded_folders[@]}" | sed ':a;N;$!ba;s/\n/ /g')
     folders=`echo $folders | sed "s/~/${HOME//\//\\\/}/g"`
     selected=$(find $folders -mindepth 1 -maxdepth 1 -type d | fzf --prompt="Select a folder: ")
 fi
+
+# display_path="~${selected#$HOME}" # relative path with $HOME
+# expanded_path="${selected_dir_clean/#\~/$HOME}" # create absolute path
+# exit 1
 
 if [[ -z $selected ]]; then
     exit 0

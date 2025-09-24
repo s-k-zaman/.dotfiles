@@ -69,6 +69,7 @@ local lsp_server_configs = {
             "vue",
         },
     },
+    harper_ls = { settings = require("plugins.lsp.LspServerSettings.harper_ls") },
     cssls = { settings = require("plugins.lsp.LspServerSettings.cssls") },
     tailwindcss = {
         enable = not (PluginUtil.has("tailwind-tools") and not CONFIG_TAILWIND_IN_LSPCONFIG),

@@ -1,0 +1,118 @@
+#!/usr/bin/bash
+
+# set -euo pipefail # safety line
+
+# -----------------------
+# Parse arguments
+# -----------------------
+selected=""   # arg if given, else empty
+CLEAR_CUSTOM=false
+for arg in "$@"; do
+    if [[ "$arg" == "-cc" ]]; then
+        CLEAR_CUSTOM=true
+        break
+    else
+        # treat first non-flag as session name
+        if [[ -z "$selected" ]]; then
+            selected="$arg"
+        fi
+    fi
+done
+#-----------------------
+
+# flags
+inside_tmux=false
+has_sesh=false
+
+# check if running inside tmux
+if [[ -n "${TMUX:-}" ]]; then
+    inside_tmux=true
+fi
+# check if sesh installed
+if command -v sesh >/dev/null 2>&1; then
+    has_sesh=true
+fi
+
+## ------------------
+
+if [[ -n "$selected" ]]; then
+    if $has_sesh; then
+        sesh connect "$selected"
+    else
+        if $inside_tmux; then
+            tmux neww ~/.local/bin/tmux-sessionizer "$selected"
+        else
+            exec ~/.local/bin/tmux-sessionizer "$selected"
+        fi
+    fi
+    echo "selected"
+    exit 0
+fi
+
+if ! $has_sesh; then
+    if $inside_tmux; then
+        tmux neww ~/.local/bin/tmux-sessionizer 
+    else
+        exec ~/.local/bin/tmux-sessionizer
+    fi
+    exit 0
+fi
+
+### SESH SCRIPT
+## add desired folders to zoxide
+zoxide_paths=$(zoxide query -l || true)
+
+# 1. CUSTOM FOLDERS
+mapfile -t folders < ~/.local/bin/tmux-session-folders.txt
+expanded_folders=()
+for folder in "${folders[@]}"; do
+    [[ -z "$folder" || "$folder" =~ ^# ]] && continue
+    eval expanded_folders+=("$folder")
+done
+
+missing=()
+clear_z_dirs=()
+while IFS= read -r f; do
+    if $CLEAR_CUSTOM; then
+        clear_z_dirs+=("$f")
+    else
+        if ! grep -Fxq "$f" <<< "$zoxide_paths"; then
+            missing+=("$f")
+        fi
+    fi
+done < <(find "${expanded_folders[@]}" -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
+# batch clear folders at once
+if ((${#clear_z_dirs[@]})); then
+    printf '%s\0' "${clear_z_dirs[@]}" | xargs -0 -n1 zoxide remove 2>/dev/null
+fi
+# batch add all missing folders at once
+if (( ${#missing[@]} )); then
+    printf '%s\0' "${missing[@]}" | xargs -0 zoxide add
+fi
+
+# Sesh execution
+# Run fzf-tmux picker
+# see author's config: https://github.com/joshmedeski/dotfiles/blob/main/.config/tmux/tmux.conf
+fzf_inputs=$({ 
+    sesh list --icons --hide-duplicates
+    ## Other folders if needed(Better to add to zoxide beforehand)
+    # Example: sesh -z --icons --hide-duplicates
+}) 
+selected=$(echo "$fzf_inputs" | fzf-tmux -p 100%,100% --no-border \
+    --no-sort --ansi --prompt '⚡  ' \
+    --input-border \
+    --header-border \
+    --bind 'tab:down,btab:up' \
+    --bind 'ctrl-b:abort' \
+    --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' \
+    --bind 'ctrl-t:change-prompt(  )+reload(sesh list -t --icons)' \
+    --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' \
+    --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' \
+    --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
+    --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
+    --preview-window 'right:70%' \
+    --preview 'sesh preview {}'
+)
+[[ -z $selected ]] && exit 0
+sesh connect "$selected"
+exit 0

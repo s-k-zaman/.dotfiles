@@ -1,3 +1,6 @@
+# comment 
+# Recommended: run `tss -cc` before changing in terminal
+
 ~/Drive/Projects
 ~/Drive/Projects/Open-source
 ~/Drive/Projects/Personal

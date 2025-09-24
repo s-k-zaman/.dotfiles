@@ -84,6 +84,41 @@ return {
     },
     -- stylua: ignore end
     init = function()
+        -- Utility for Session or file selection
+        vim.api.nvim_create_user_command("SessionOrFiles", function()
+            local persistence = require("persistence")
+            local file = persistence.current()
+
+            if vim.fn.filereadable(file) == 0 then
+                file = persistence.current({ branch = false })
+            end
+
+            if file and vim.fn.filereadable(file) ~= 0 then
+                --session exist
+                persistence.load()
+            else
+                -- no session → open snacks file picker
+                Snacks.picker.smart({ multi = { "files" } })
+            end
+        end, {})
+
+        vim.api.nvim_create_user_command("SessionOrAllFiles", function()
+            local persistence = require("persistence")
+            local file = persistence.current()
+
+            if vim.fn.filereadable(file) == 0 then
+                file = persistence.current({ branch = false })
+            end
+
+            if file and vim.fn.filereadable(file) ~= 0 then
+                --session exist
+                persistence.load()
+            else
+                -- no session → open snacks all file picker
+                Snacks.picker.files({ hidden = true, ignored = true, follow = true })
+            end
+        end, {})
+
         vim.api.nvim_create_autocmd("User", {
             pattern = "VeryLazy",
             callback = function()

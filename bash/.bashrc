@@ -7,12 +7,18 @@ if [ -f "$HOME/zachbrownrc" ]; then
 fi
 
 ## tmux-sessionizer
+# not using 'tmux-sessionizer' instead using sesh
+alias tk="tmux kill-server"
 if [ -t 1 ]; then
+    tmux_or_tss() {
+        if tmux has-session 2>/dev/null; then
+            tmux attach
+        else
+            tss
+        fi
+    }
     # "C-":ctrl, "e":alt
-    bind -x '"\C-n":tmux'
-    bind -x '"\C-o":tmux attach'
-    bind -x '"\C-f":tmux-sessionizer'
-    bind -x '"\C-y":tmux-ssh-sessionizer'
+    bind -x '"\C-o":tmux_or_tss'
 fi
 
 # yazi file manager
@@ -23,12 +29,6 @@ function y() {
     [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
     rm -f -- "$tmp"
 }
-
-# if [ -t 1 ]; then
-    # "C-":ctrl, "e":alt
-    # bind -x '"\C-j":yazi'
-    # bind -x '"\C-j":y'
-# fi
 
 ## GitHub
 # copied from Titustech
@@ -62,6 +62,8 @@ alias srve="source ./venv/bin/activate"
 srpe() {
     source $(poetry env info --path)/bin/activate
 }
+# AI Related
+alias ai="opencode"
 
 ### OTHER ALIASES
 ## loading other aliases in files
@@ -150,3 +152,15 @@ export PATH="$PATH:$ZVM_INSTALL/"
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+[[ -s "/home/zaman/.gvm/scripts/gvm" ]] && source "/home/zaman/.gvm/scripts/gvm"
+
+[ -s "${HOME}/.g/env" ] && \. "${HOME}/.g/env" # g shell setup
+
+# Check if the alias 'g' exists before trying to unalias it
+if [[ -n $(alias g 2>/dev/null) ]]; then
+    unalias g
+fi
+
+# opencode
+export PATH=/home/zaman/.opencode/bin:$PATH

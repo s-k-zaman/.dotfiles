@@ -45,6 +45,7 @@ return {
                 "emmet_ls",
                 "rust_analyzer",
                 "taplo",
+                "harper_ls", --grammer
             },
         },
         config = function(_, opts)
