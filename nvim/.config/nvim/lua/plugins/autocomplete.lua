@@ -30,6 +30,24 @@ return {
         -- TODO: add tailwind color support, tailwind-tools.cmp
         ---@module 'blink.cmp'
         opts = {
+            enabled = function()
+                local disabled = false
+                local buftype = vim.bo.buftype
+                local filetype = vim.bo.filetype
+
+                -- Disable blink.cmp conditionally
+                -- if buftype == "nofile" then
+                --     return disabled
+                -- end
+                if filetype == "DressingInput" then
+                    return disabled
+                end
+                if buftype == "NvimTree" then
+                    return disabled
+                end
+
+                return not disabled
+            end,
             keymap = {
                 preset = "enter",
                 ["<Tab>"] = { -- this will fill text of selected item[helpful if just need the text, no auto-actions(like imports)]
@@ -55,12 +73,12 @@ return {
                 },
             },
             completion = {
-                trigger = {
-                    -- INFO: need to explore this.....
-                    -- show_on_insert_on_trigger_character = false,
-                    -- show_on_accept_on_trigger_character = false,
-                    show_on_blocked_trigger_characters = { " ", "\n", "\t", "{", "(", "}", ")" },
-                },
+                -- trigger = {
+                -- INFO: need to explore this.....
+                -- show_on_insert_on_trigger_character = false,
+                -- show_on_accept_on_trigger_character = false,
+                -- show_on_blocked_trigger_characters = { " ", "\n", "\t", "{", "(", "}", ")" },
+                -- },
                 documentation = {
                     auto_show = true,
                     auto_show_delay_ms = 0,

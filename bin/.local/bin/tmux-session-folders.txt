@@ -1,5 +1,5 @@
 # comment 
-# Recommended: run `tss -cc` before changing in terminal
+# Recommended: before changing folder list -> run `tss -cc` in terminal
 
 ~/Drive/Projects
 ~/Drive/Projects/Open-source

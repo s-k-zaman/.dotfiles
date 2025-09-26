@@ -9,7 +9,7 @@ preview_command = "eza --all --git --icons --color=always {}"
 # COMMON
 
 [[session]]
-name = "Downloads 📥"
+name = "Downloads 📥(file manager)"
 path = "~/Downloads"
 startup_command = "y"
 

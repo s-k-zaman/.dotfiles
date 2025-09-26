@@ -164,3 +164,6 @@ fi
 
 # opencode
 export PATH=/home/zaman/.opencode/bin:$PATH
+
+#asdf
+. <(asdf completion bash)

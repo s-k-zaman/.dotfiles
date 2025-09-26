@@ -46,6 +46,7 @@ return {
                 "rust_analyzer",
                 "taplo",
                 "harper_ls", --grammer
+                "gopls" -- golang
             },
         },
         config = function(_, opts)

@@ -70,6 +70,7 @@ return {
                     -- ["markdown.mdx"] = { "prettierd", "prettier", stop_after_first = true },
                     graphql = { "prettierd", "prettier", stop_after_first = true },
                     handlebars = { "prettierd", "prettier", stop_after_first = true },
+                    go = { "gofmt", stop_after_first = true },
                 },
                 -- The options you set here will be merged with the builtin formatters.
                 -- You can also define any custom formatters here.
