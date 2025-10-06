@@ -50,6 +50,7 @@ return {
             end,
             keymap = {
                 preset = "enter",
+                ["<CR>"] = { "select_and_accept", "fallback" },
                 ["<Tab>"] = { -- this will fill text of selected item[helpful if just need the text, no auto-actions(like imports)]
                     function(cmp)
                         return cmp.select_next({ count = 0 })

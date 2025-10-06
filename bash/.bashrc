@@ -89,7 +89,7 @@ alias rofi-apps="~/.config/rofi/launchers/type-2/launcher.sh"
 alias linutil="curl -fsSL https://christitus.com/linux | sh"
 alias linutil-dev="curl -fsSL https://christitus.com/linuxdev | sh"
 # nb notes
-alias todos="nb tasks open"
+# alias todos="nb tasks open"
 # dictionary
 alias dictkonsole="konsole -e dict"
 # api cli tool

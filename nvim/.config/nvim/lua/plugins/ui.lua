@@ -102,12 +102,21 @@ return {
             })
         end,
     },
-    -- notif
+    -- notify
     {
         "j-hui/fidget.nvim",
         lazy = false,
         opts = {
             -- options
+            notification = {
+                window = {
+                    avoid = {
+                        "aerial",
+                        "NvimTree",
+                        "neotest-summary",
+                    },
+                },
+            },
         },
     },
 }

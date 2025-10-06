@@ -13,4 +13,6 @@ USE_LSPKIND = true -- vs-Code like autocompletion
 USE_LAZYGIT = true -- vs-Code like autocompletion
 USE_LSP_SAGA = vim.fn.has("nvim-0.13") == 0 -- here ==0 implies less than specified version
 CONFIG_TAILWIND_IN_LSPCONFIG = true
+-- TODO:use mini ai text-objects
+USE_MINI_TEXT_OBJECTS = false
 require("config")

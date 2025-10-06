@@ -13,6 +13,10 @@ name = "Downloads 📥(file manager)"
 path = "~/Downloads"
 startup_command = "y"
 
+[[session]]
+name = "Notes"
+path = "~/Drive/Notes"
+
 # CONFIGS
 
 [[session]]
