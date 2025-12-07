@@ -28,7 +28,39 @@ return {
         end,
     },
     {
+        "NickvanDyke/opencode.nvim",
+        lazy = false,
+        dependencies = {
+            -- Recommended for `ask()` and `select()`.
+            -- Required for `toggle()`.
+            { "folke/snacks.nvim", opts = { input = {}, picker = {} } },
+        },
+        config = function()
+            vim.g.opencode_opts = {
+                -- Your configuration, if any — see `lua/opencode/config.lua`, or "goto definition" on `opencode_opts`.
+            }
+
+            -- Required for `vim.g.opencode_opts.auto_reload`.
+            vim.o.autoread = true
+
+            -- stylua: ignore start
+            -- Recommended/example keymaps.
+            vim.keymap.set({ "n", "x" }, "<leader>at", function() require("opencode").ask("@this: ", { submit = true }) end, { desc = "Ask about this" })
+            vim.keymap.set({ "n", "x" }, "<leader>as", function() require("opencode").select() end, { desc = "Select prompt" })
+            vim.keymap.set({ "n", "x" }, "<leader>a+", function() require("opencode").prompt("@this") end, { desc = "Add this" })
+            vim.keymap.set("n", "<leader>aa", function() require("opencode").toggle() end, { desc = "Toggle embedded" })
+            vim.keymap.set("n", "<leader>ac", function() require("opencode").command() end, { desc = "Select command" })
+            vim.keymap.set("n", "<leader>an", function() require("opencode").command("session_new") end, { desc = "New session" })
+            vim.keymap.set("n", "<leader>ai", function() require("opencode").command("session_interrupt") end, { desc = "Interrupt session" })
+            vim.keymap.set("n", "<leader>am", function() require("opencode").command("agent_cycle") end, { desc = "Cycle selected agent" })
+            vim.keymap.set("n", "<S-C-u>",    function() require("opencode").command("messages_half_page_up") end, { desc = "Messages half page up" })
+            vim.keymap.set("n", "<S-C-d>",    function() require("opencode").command("messages_half_page_down") end, { desc = "Messages half page down" })
+            -- stylua: ignore end
+        end,
+    },
+    {
         "yetone/avante.nvim",
+        enabled = false,
         -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
         -- ⚠️ must add this setting! ! !
         build = vim.fn.has("win32") ~= 0

@@ -4,7 +4,7 @@
 ~/Drive/Projects
 ~/Drive/Projects/Open-source
 ~/Drive/Projects/Personal
-~/Drive/Projects/Personal/Prac+misc
+~/Drive/Projects/Personal/Practice+misc
 ~/Drive/Projects/Personal/LuaPlugins
 ~/Drive/Work
 ~/Drive/Work/Dressme
