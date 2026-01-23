@@ -104,13 +104,48 @@ prompt_zip_and_remove_options() {
 # Function to create a zip file
 create_zip_file() {
     if [ "$zip_option" = true ]; then
-        echo "Creating zip file..."
+        # Define absolute paths
+        local output_zip="$(pwd)/${build_dir}.zip"
+        local output_epub="$(pwd)/${build_dir}.epub"
+
+        echo -n "Zip folder contents only? for (N)o it will zip Full folder (Y/n, default: Y): "
+        read -r zip_method_input
+
         if [ -f "${build_dir}.zip" ]; then
             echo "removing existing zip file: ${build_dir}.zip"
             rm -f "${build_dir}.zip"
         fi
-        zip -r "${build_dir}.zip" "$build_dir"
-        echo "✔️  Zip file created: ${build_dir}.zip"
+
+        echo "Creating zip file..."
+        # Execute Zipping based on choice
+        if [[ -z "$zip_method_input" || "$zip_method_input" =~ ^[Yy]$ ]]; then
+            echo "Zipping contents of $build_dir..."
+            (cd "$build_dir" && zip -r "$output_zip" .)
+            echo "✔️  Zip created: Contents only."
+        else
+            echo "Zipping folder $build_dir itself..."
+            zip -r "$output_zip" "$build_dir"
+            echo "✔️  Zip created: Full folder included."
+        fi
+
+        # Ask to create EPUB
+        echo -n "Would you like to create an .epub file? (y/N, default: N): "
+        read -r epub_input
+        if [[ "$epub_input" =~ ^[Yy]$ ]]; then
+            # Ask to remove original ZIP (Default is Yes)
+            echo -n "Remove the original .zip file? (Y/n, default: Y): "
+            read -r remove_zip_input
+            # If user enters nothing (default) or Y/y, we move the file
+            if [[ -z "$remove_zip_input" || "$remove_zip_input" =~ ^[Yy]$ ]]; then
+                mv "$output_zip" "$output_epub"
+                echo "✔️  Converted to EPUB: ${build_dir}.epub (Zip removed)"
+            else
+                cp "$output_zip" "$output_epub"
+                echo "✔️  EPUB created: ${build_dir}.epub (Zip retained)"
+            fi
+        else
+            echo ""
+        fi
     else
         echo "Skipped making zip file."
     fi
