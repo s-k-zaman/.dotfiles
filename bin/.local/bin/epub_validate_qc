@@ -1,0 +1,223 @@
+#!/bin/bash
+
+# EPUB Validation Script
+# Validates EPUB files with structure and accessibility checks
+
+set -euo pipefail
+
+# Color codes for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Function to print colored messages
+print_info() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+print_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+print_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+print_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+# Function to get project name from current folder
+get_project_name() {
+    basename "$(pwd)"
+}
+
+# Function to get absolute path
+get_abs_path() {
+    pwd
+}
+
+# Function to check if EPUB exists and create if needed
+check_and_create_epub() {
+    local project_name="$1"
+    local epub_file="${project_name}.epub"
+
+    if [[ ! -f "$epub_file" ]]; then
+        print_info "EPUB file '$epub_file' not found. Creating with bundleit command..."
+        if ! command -v bundleit &>/dev/null; then
+            print_error "bundleit command not found. Please install it first."
+            exit 1
+        fi
+        bundleit
+    else
+        print_warning "EPUB file '$epub_file' already exists."
+        read -p "Do you want to recreate it? (Y/n): " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]] || [[ -z $REPLY ]]; then
+            print_info "Recreating EPUB with bundleit command..."
+            if ! command -v bundleit &>/dev/null; then
+                print_error "bundleit command not found. Please install it first."
+                exit 1
+            fi
+            bundleit
+        else
+            print_info "Using existing EPUB file."
+        fi
+    fi
+}
+
+# Function to ensure EPUB exists (with retry loop)
+ensure_epub_exists() {
+    local project_name="$1"
+    local epub_file="${project_name}.epub"
+    local max_attempts=3
+    local attempt=1
+
+    while [[ $attempt -le $max_attempts ]]; do
+        if [[ -f "$epub_file" && -s "$epub_file" ]]; then
+            print_success "EPUB file '$epub_file' found and is not empty."
+            return 0
+        fi
+
+        if [[ $attempt -eq $max_attempts ]]; then
+            print_error "Failed to create EPUB file after $max_attempts attempts."
+            exit 1
+        fi
+
+        print_warning "EPUB file not found or empty. Attempting to create (Attempt $attempt/$max_attempts)..."
+        if command -v bundleit &>/dev/null; then
+            bundleit
+        else
+            print_error "bundleit command not found."
+            exit 1
+        fi
+        ((attempt++))
+    done
+}
+
+# Function to create validation reports folder
+create_validation_reports_folder() {
+    local base_folder="validation_reports"
+    local folder="$base_folder"
+    local counter=1
+
+    # Find the next available folder name
+    while [[ -d "$folder" ]]; do
+        folder="${base_folder}-${counter}"
+        ((counter++))
+    done
+
+    mkdir -p "$folder"
+    print_success "Created validation reports folder: '$folder'" >&2
+    echo "$folder"
+}
+
+# Functions to run epubcheck
+epubcheck() {
+    java -jar ~/Drive/Tools/epubcheck-5.2.1/epubcheck.jar "$@"
+}
+run_epubcheck() {
+    local epub_file="$1"
+    local reports_folder="$2"
+    local report_file="$reports_folder/epubcheck-report.txt"
+
+    print_info "Running epubcheck on '$epub_file'..."
+
+    if ! command -v epubcheck &>/dev/null; then
+        print_error "epubcheck command not found. Please install it first."
+        return 1
+    fi
+
+    # Get epubcheck version
+    local version
+    version=$(epubcheck --version 2>/dev/null | head -n1 || echo "epubcheck version unknown")
+    # Run epubcheck and save report
+    echo ""
+    {
+        echo "$version - Report"
+        echo "================================"
+        echo
+        epubcheck "$epub_file" 2>&1 || true
+    } | tee "$report_file" # shows + saves file
+    # } >"$report_file" # saves file
+    echo ""
+
+    if [[ -f "$report_file" && -s "$report_file" ]]; then
+        print_success "epubcheck report saved to '$report_file'"
+    else
+        print_error "Failed to generate epubcheck report."
+        return 1
+    fi
+}
+
+# Function to run daisy-ace accessibility check
+run_accessibility_check() {
+    local epub_file="$1"
+    local reports_folder="$2"
+    local accessibility_folder="$reports_folder/accessibility_reports"
+
+    print_info "Running accessibility check with ace-puppeteer..."
+
+    if ! command -v ace-puppeteer &>/dev/null; then
+        print_error "ace-puppeteer command not found. Please install it first."
+        return 1
+    fi
+
+    # Create accessibility reports folder
+    mkdir -p "$accessibility_folder"
+
+    # Run ace-puppeteer command
+    if ace-puppeteer --subdir --outdir "$accessibility_folder" --verbose "$epub_file"; then
+        print_success "Accessibility report saved to '$accessibility_folder'"
+    else
+        print_error "Failed to generate accessibility report."
+        return 1
+    fi
+}
+
+# Main function
+main() {
+    print_info "Starting EPUB validation process..."
+
+    local epub_file=""
+    local project_name
+
+    # Check if an EPUB file was passed as argument
+    if [[ $# -ge 1 && -f "$1" && "$1" == *.epub ]]; then
+        epub_file="$1"
+        project_name=$(basename "$epub_file" .epub)
+        print_info "Using provided EPUB file: $epub_file"
+    else
+        project_name=$(get_project_name)
+        epub_file="${project_name}.epub"
+        print_info "Project name: $project_name"
+
+        local abs_path
+        abs_path=$(get_abs_path)
+        print_info "Working directory: $abs_path"
+
+        # Check if EPUB exists and create if needed
+        check_and_create_epub "$project_name"
+
+        # Ensure EPUB exists (with retry loop)
+        ensure_epub_exists "$project_name"
+    fi
+
+    # Create validation reports folder
+    local reports_folder
+    reports_folder=$(create_validation_reports_folder)
+
+    # Run epubcheck
+    run_epubcheck "$epub_file" "$reports_folder"
+
+    # Run accessibility check
+    run_accessibility_check "$epub_file" "$reports_folder"
+
+    print_success "EPUB validation completed successfully!"
+    print_info "Reports are available in: '$reports_folder'"
+}
+
+# Run main function
+main "$@"
