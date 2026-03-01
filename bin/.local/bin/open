@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# This runs the opener and sends all the annoying GNOME errors to the void
+nohup xdg-open "$@" >/dev/null 2>&1 &

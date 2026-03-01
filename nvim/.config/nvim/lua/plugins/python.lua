@@ -37,7 +37,7 @@ return {
             },
         },
         keys = {
-            { "<F8>", "<cmd>VenvSelect<cr>" }, -- Open picker on keymap
+            { "<F4>", "<cmd>VenvSelect<cr>" }, -- Open picker on keymap
         },
     },
 }

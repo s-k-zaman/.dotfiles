@@ -99,7 +99,7 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 
     -- running program: in tmux new-window
     -- TODO: remove on fixing F6 output shortcut
-    vim.keymap.set("n", "<F10>", function()
+    vim.keymap.set("n", "<F12>", function()
         --save file
         vim.cmd("w")
         -- then run with available sources

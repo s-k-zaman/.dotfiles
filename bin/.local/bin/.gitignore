@@ -10,3 +10,7 @@ jp.py
 normalizer
 dictionary_words_*
 lazydocker
+env
+env.fish
+uv
+uvx
