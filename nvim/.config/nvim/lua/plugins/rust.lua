@@ -13,13 +13,10 @@ return {
         ft = "rust",
         lazy = false,
         -- enabled = false,
+        -- NOTE: on_attach keymaps handled by LspAttach autocmd in lsp/init.lua
         config = function()
-            local rt = require("rust-tools")
-
-            rt.setup({
+            require("rust-tools").setup({
                 server = {
-                    -- rust tools commands are controlled in on_attach of lsp_mappings
-                    on_attach = require("plugins.lsp.lsp_mappings").on_attach,
                     standalone = true,
                 },
                 tools = {

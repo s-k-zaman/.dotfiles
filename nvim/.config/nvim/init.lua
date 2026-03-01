@@ -1,7 +1,3 @@
--- INFO: although its basic
--- c-i<same key-signal as Tab> is behaving strange, no mapping is Working.
--- ANS: it is associated with jumplist just like-> c-o
-
 -- COLORSCHEME = "nordfox"
 -- COLORSCHEME = "nightfox"
 -- COLORSCHEME = "onedark"
@@ -15,4 +11,4 @@ USE_LSP_SAGA = vim.fn.has("nvim-0.13") == 0 -- here ==0 implies less than specif
 CONFIG_TAILWIND_IN_LSPCONFIG = true
 -- TODO:use mini ai text-objects
 USE_MINI_TEXT_OBJECTS = false
-require("config")
+require("core")
