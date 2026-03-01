@@ -1,4 +1,20 @@
 #!/bin/bash
 
-# This runs the opener and sends all the annoying GNOME errors to the void
-nohup xdg-open "$@" >/dev/null 2>&1 &
+# INFO: this is fix for TilingWM, running `open` command inside of Neovim
+silent_desktops=("Hyprland" "sway")
+cur_desktop=$(echo $XDG_CURRENT_DESKTOP)
+
+is_silent=false
+for desktop in "${silent_desktops[@]}"; do
+    if [ "$cur_desktop" = "$desktop" ]; then
+        is_silent=true
+        break
+    fi
+done
+
+if [ "$is_silent" = true ]; then
+    # Runs xdg-open in the background and sends all errors to the void
+    nohup xdg-open "$@" >/dev/null 2>&1 &
+else
+    xdg-open "$@"
+fi
