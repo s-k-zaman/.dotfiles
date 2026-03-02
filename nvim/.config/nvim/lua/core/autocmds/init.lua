@@ -1,12 +1,12 @@
 local augroup = require("utils").augroup
 
------ Initiate Other Autocmds
-require("config.autocmds.bash")
-require("config.autocmds.python")
-require("config.autocmds.html")
-require("config.autocmds.markdown")
+require("core.autocmds.bash")
+require("core.autocmds.python")
+require("core.autocmds.html")
+require("core.autocmds.markdown")
+require("core.autocmds.filetypes")
 
--- Highlight on yank
+-- highlight yanked text briefly
 vim.api.nvim_create_autocmd("TextYankPost", {
     group = augroup("highlight_yank"),
     callback = function()
@@ -14,31 +14,35 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
--- Check if we need to reload the file when it changed
-vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-    group = augroup("checktime"),
-    command = "checktime",
-})
+-- reload file when it changes externally
+if AUTO_RELOAD then
+    vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+        group = augroup("checktime"),
+        command = "checktime",
+    })
+end
 
--- go to last loc when opening a buffer
-vim.api.nvim_create_autocmd("BufReadPost", {
-    group = augroup("last_loc"),
-    callback = function(event)
-        local exclude = { "gitcommit" }
-        local buf = event.buf
-        if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
-            return
-        end
-        vim.b[buf].lazyvim_last_loc = true
-        local mark = vim.api.nvim_buf_get_mark(buf, '"')
-        local lcount = vim.api.nvim_buf_line_count(buf)
-        if mark[1] > 0 and mark[1] <= lcount then
-            pcall(vim.api.nvim_win_set_cursor, 0, mark)
-        end
-    end,
-})
+-- restore cursor to last known position when opening a buffer
+if RESTORE_CURSOR then
+    vim.api.nvim_create_autocmd("BufReadPost", {
+        group = augroup("last_loc"),
+        callback = function(event)
+            local exclude = { "gitcommit" }
+            local buf = event.buf
+            if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
+                return
+            end
+            vim.b[buf].lazyvim_last_loc = true
+            local mark = vim.api.nvim_buf_get_mark(buf, '"')
+            local lcount = vim.api.nvim_buf_line_count(buf)
+            if mark[1] > 0 and mark[1] <= lcount then
+                pcall(vim.api.nvim_win_set_cursor, 0, mark)
+            end
+        end,
+    })
+end
 
--- close some filetypes with <q>
+-- close utility windows with <q>
 vim.api.nvim_create_autocmd("FileType", {
     group = augroup("close_with_q"),
     pattern = {
@@ -63,28 +67,28 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
--- wrap in text filetypes
+-- enable wrap for prose filetypes
 vim.api.nvim_create_autocmd("FileType", {
-    group = augroup("wrap_spell"),
+    group = augroup("wrap_prose"),
     pattern = { "gitcommit", "markdown" },
     callback = function()
         vim.opt_local.wrap = true
     end,
 })
 
--- Auto create dir when saving a file, in case some intermediate directory does not exist
+-- auto-create intermediate directories on save
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     group = augroup("auto_create_dir"),
     callback = function(event)
         if event.match:match("^%w%w+://") then
             return
         end
-        local file = vim.loop.fs_realpath(event.match) or event.match
+        local file = vim.uv.fs_realpath(event.match) or event.match
         vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
     end,
 })
 
--- resize splits if window got resized
+-- equalize splits on window resize
 vim.api.nvim_create_autocmd({ "VimResized" }, {
     group = augroup("resize_splits"),
     callback = function()

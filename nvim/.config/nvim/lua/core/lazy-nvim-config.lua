@@ -1,6 +1,5 @@
 return {
     defaults = {
-        -- TODO: need to remove this
         -- lazy = false,
     },
     spec = {

@@ -4,12 +4,13 @@ return {
     {
         "rose-pine/neovim",
         name = "rose-pine",
-        opts = {  variant="main", styles = { transparency = TRANSPARENT } },
+        opts = { variant = "main", styles = { transparency = TRANSPARENT } },
         lazy = false,
         priority = 1000,
     },
     {
         "rebelot/kanagawa.nvim",
+        -- "kanagawa-wave" -- options: -dragon, -wave, -lotus
         enabled = true,
         lazy = false,
         priority = 1000,

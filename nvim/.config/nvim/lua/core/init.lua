@@ -15,7 +15,7 @@ vim.opt.rtp:prepend(lazypath)
 -- initiating settings, autocmds, keymaps....
 require("core.options")
 require("core.keymaps")
--- require("config.autocmds")
+require("core.autocmds")
 
 -- starting lazy-nvim
 local opts = require("core.lazy-nvim-config")

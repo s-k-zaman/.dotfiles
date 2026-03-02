@@ -40,8 +40,8 @@ return {
         opts = function()
             ---@class ConformOpts
             local opts = {
-                format = {
-                    timeout_ms = 5000,
+                default_format_opts = {
+                    timeout_ms = 8000,
                     async = false, -- not recommended to change
                     quiet = false, -- not recommended to change
                 },
@@ -74,16 +74,23 @@ return {
                 -- You can also define any custom formatters here.
                 formatters = {
                     -- injected = { options = { ignore_errors = true } },
-                    --
-                    -- # Example of using shfmt with extra args
-                    -- shfmt = {
-                    --   prepend_args = { "-i", "2", "-ci" },
-                    -- },
-                    -- prettier = {
-                    --    -- TODO: fix it. Helpful video: https://www.youtube.com/watch?v=b17g20II6SQ&list=PLy68GuC77sURrnMNi2XR1h58m674KOvLG&index=4
-                    --     --ISSUE: not picking up default prettier-config-file from a workspace
-                    --     -- prepend_args = { "--tab-width", "4" },
-                    -- },
+                    -- shfmt = { prepend_args = { "-i", "2", "-ci" } },
+                    prettier = {
+                        cwd = require("conform.util").root_file({
+                            ".prettierrc",
+                            ".prettierrc.json",
+                            ".prettierrc.js",
+                            ".prettierrc.cjs",
+                            ".prettierrc.mjs",
+                            ".prettierrc.yml",
+                            ".prettierrc.yaml",
+                            ".prettierrc.toml",
+                            "prettier.config.js",
+                            "prettier.config.cjs",
+                            "prettier.config.mjs",
+                            "package.json",
+                        }),
+                    },
                 },
             }
             return opts
@@ -92,27 +99,4 @@ return {
             require("conform").setup(opts)
         end,
     },
-    -- {
-    --     "nvimtools/none-ls.nvim",
-    --     -- enabled = false,
-    --     event = { "BufReadPre", "BufNewFile" },
-    --     config = function()
-    --         local null_ls = require("null-ls")
-    --         local formatting = null_ls.builtins.formatting
-    --         local diagnostics = null_ls.builtins.diagnostics
-    --         local sources = {
-    --             --Example:
-    --             -- formatting.prettier.with { filetypes = { "html", "markdown", "css" } }, -- so prettier works only on these filetypes
-    --
-    --             -- Python
-    --             -- diagnostics.mypy, -- for type checking in python.
-    --             formatting.black,
-    --             formatting.isort, -- for sorting imports alphabetically
-    --         }
-    --         null_ls.setup({
-    --             debug = true,
-    --             sources = sources,
-    --         })
-    --     end,
-    -- },
 }
