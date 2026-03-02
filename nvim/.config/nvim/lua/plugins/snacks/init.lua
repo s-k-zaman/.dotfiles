@@ -147,6 +147,11 @@ return {
                 Snacks.toggle.inlay_hints():map("<leader>uh")
                 Snacks.toggle.indent():map("<leader>ug")
                 Snacks.toggle.dim():map("<leader>uD")
+                Snacks.toggle.new({
+                    name = "Auto Lint",
+                    get = function() return vim.g.autolint == true end,
+                    set = function(state) vim.g.autolint = state end,
+                }):map("<leader>ux")
             end,
         })
     end,

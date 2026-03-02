@@ -2,13 +2,10 @@
 return {
     "mason-org/mason-lspconfig.nvim",
     -- automatically enable LSP servers and make Commands available :LspInstall
-    event = "BufReadPre",
+    -- event = "BufReadPre",
     dependencies = {
         {
             "mason-org/mason.nvim",
-            -- cmd = "Mason",
-            -- event = "BufReadPre",
-            -- build = ":MasonUpdate",
             opts = {
                 ui = {
                     icons = {
@@ -25,14 +22,8 @@ return {
         "neovim/nvim-lspconfig",
     },
     opts = {
-        -- automatic_enable = false,
-        automatic_enable = {
-            exclude = {
-                -- excluded in lspconfig.lus file [disabled by vim.lsp.enable]
-                -- "tailwindcss",
-                -- "ruff",
-            },
-        },
+        -- for config refer: https://github.com/mason-org/mason-lspconfig.nvim
+        -- better manage LSP in one place: `./lsp.lua`
         ensure_installed = {
             -- INFO: Do not add servers here manually.
             -- HACK: ensure_installed is overwritten in config below for better control.
@@ -41,31 +32,42 @@ return {
     },
     config = function(_, opts)
         require("mason-lspconfig").setup(opts)
-        local master_list = {
+        local lsp_linter_formatter_daps = {
             -- LSP Servers
             "lua_ls",
-            "cssls",
-            "marksman",
+            "stylua",
+
+            "shfmt",
+            "shellcheck",
+
             "pyright",
             "ruff",
-            "eslint",
-            "ts_ls",
-            "jsonls",
-            "tailwindcss",
-            "emmet_ls",
-            "rust_analyzer",
-            "taplo",
-            "harper_ls", --grammar
-            "gopls", -- golang
-
-            -- Formatters / Linters / Tools
-            "stylua",
-            "shfmt",
-            "prettierd",
-            "prettier",
             "isort",
             "black",
+
+            "prettierd",
+            "cssls",
+            "tailwindcss",
+            "emmet_ls",
+
+            "ts_ls",
+            "eslint_d",
+            -- "eslint", -- eslint_d is faster
+
+            "rust_analyzer",
+
+            "gopls",
+
+            "jsonls",
+            "marksman",
+            "taplo",
+
+            "harper_ls", --grammar
             "tree-sitter-cli",
+
+            -- Linters (driven by nvim-lint in plugins/linting.lua)
+            "markdownlint-cli2",
+            -- "stylelint", -- uncomment for CSS/SCSS linting
         }
 
         vim.api.nvim_create_user_command("MasonInstallAll", function()
@@ -87,7 +89,7 @@ return {
                 end
 
                 local resolved = {}
-                for _, name in ipairs(master_list) do
+                for _, name in ipairs(lsp_linter_formatter_daps) do
                     table.insert(resolved, resolve(name))
                 end
                 vim.g.mason_binaries_list = resolved
@@ -97,7 +99,7 @@ return {
                 local already_installed = {}
                 local unknown = {}
 
-                for _, name in ipairs(master_list) do
+                for _, name in ipairs(lsp_linter_formatter_daps) do
                     local pkg_name = resolve(name)
                     if registry.has_package(pkg_name) then
                         local pkg = registry.get_package(pkg_name)

@@ -4,19 +4,17 @@ local PluginUtils = require("utils.plugins")
 local function format(bufnr)
     local msg = "❌[Formatter]: enable lsp.capabilities.(formattings) OR setup formatter for this filetype..."
     if PluginUtils.has("conform.nvim") then
-        local res = require("conform").format({ bufnr = bufnr, lsp_format = "fallback" })
-        if not res then
-            print(msg)
+        local ok = require("conform").format({ bufnr = bufnr, lsp_format = "fallback" })
+        if not ok then
+            vim.notify(msg, vim.log.levels.WARN)
         end
         return
     end
-    local res = vim.lsp.buf.format()
-    if not res then
-        print(msg)
-    end
+    -- NOTE: vim.lsp.buf.format() always returns nil — cannot check success
+    vim.lsp.buf.format({ bufnr = bufnr })
 end
-vim.api.nvim_create_user_command("Format", function(args)
-    format(args.buf)
+vim.api.nvim_create_user_command("Format", function()
+    format(vim.api.nvim_get_current_buf())
 end, {
     desc = "Format command (conform|lsp)",
 })

@@ -72,7 +72,8 @@ opt.spell = true
 opt.lazyredraw = false
 opt.isfname:append("@-@")
 opt.updatetime = 50
-vim.g.autoformat = false
+vim.g.autoformat = false -- auto-format on save (toggle: <leader>I or :Format to run manually)
+vim.g.autolint = true -- auto-lint on save/read (toggle: <leader>ux)
 
 -- disable some default providers
 for _, provider in ipairs({ "node", "perl", "python3", "ruby" }) do
