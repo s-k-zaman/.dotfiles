@@ -22,7 +22,7 @@ return {
             vue = { "eslint_d" },
 
             -- Markup / Config
-            markdown = { "markdownlint-cli2" },
+            -- markdown = { "markdownlint-cli2" },
 
             -- CSS / SCSS — commented out: cssls LSP covers most diagnostics.
             -- Uncomment and install stylelint via :MasonInstallAll if needed.

@@ -42,6 +42,11 @@ vim.api.nvim_create_autocmd("TermOpen", {
         vim.opt_local.relativenumber = false
         vim.opt_local.signcolumn = "no"
         vim.opt_local.scrolloff = 0
+        -- skip startinsert for read-only terminal previews
+        local readonly_terminal_fts = { "glowpreview" }
+        if vim.tbl_contains(readonly_terminal_fts, vim.bo.filetype) then
+            return
+        end
         -- snacks dashboard renders terminal sections (gh notify, git diff, etc.)
         -- as real terminal buffers, triggering this autocmd and landing in insert
         -- mode on the dashboard. Skip startinsert when the dashboard is visible.

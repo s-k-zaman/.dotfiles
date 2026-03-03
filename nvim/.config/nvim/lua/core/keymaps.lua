@@ -43,7 +43,8 @@ end
 
 -- editing
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste (keep register)" })
-vim.keymap.set("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word (buffer)" })
+-- stylua: ignore
+vim.keymap.set( "n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word (buffer)" })
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("n", "J", "mzJ`z") -- keep cursor in place on J
@@ -100,7 +101,9 @@ map("n", "<leader><tab>d", "tabclose", { desc = "Close tab" })
 -- buffers
 map("n", "<leader>bl", "bnext", { desc = "Next buffer", noremap = false, remap = true })
 map("n", "<leader>bh", "bprevious", { desc = "Prev buffer", noremap = false, remap = true })
-map("n", "<tab><tab>", "e #", { desc = "Alternate buffer" })
+-- INFO: dont use tab mapping like tab + tab... as it will colide with c+o, c+o sends signal of Tab to terminals
+map("n", "<leader>bb", "e #", { desc = "Alternate buffer" })
+map("n", "<leader>`", "e #", { desc = "Alternate buffer" })
 
 -- format
 map("n", "<leader>I", "Format", { desc = "Format file (conform|lsp)" })
