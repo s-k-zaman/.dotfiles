@@ -1,3 +1,4 @@
+local map = require("utils.keymapper").keymap
 return {
     {
         "nvim-tree/nvim-tree.lua",
@@ -68,6 +69,27 @@ return {
             local opts = {}
             require("oil").setup()
             vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+        end,
+    },
+    {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        event = "BufReadPre",
+
+        config = function()
+            local harpoon = require("harpoon")
+            harpoon:setup()
+
+            -- stylua: ignore start
+            map("n", "<leader>fa", function() harpoon:list():add() end, { desc = "harpoon: add this file" })
+            map("n", "<leader>e", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,{ desc = "harpoon: toggle menu" } )
+
+            map("n", "<C-;>", function() harpoon:list():select(1) end, { desc = "harpoon: file 1" }) 
+            map("n", "<C-'>", function() harpoon:list():select(2) end, { desc = "harpoon: file 2" })
+            map("n", "<C-m>", function() harpoon:list():select(3) end, { desc = "harpoon: file 3" })
+            map("n", "<C-p>", function() harpoon:list():select(4) end, { desc = "harpoon: file 4" })
+            -- stylua: ignore end
         end,
     },
 }
