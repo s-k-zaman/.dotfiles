@@ -107,9 +107,20 @@ return {
         "j-hui/fidget.nvim",
         lazy = false,
         opts = {
-            -- options
+            progress = {
+                suppress_on_insert = true,
+                ignore_empty_message = true,
+                display = {
+                    render_limit = 4,
+                    done_ttl = 3,
+                    done_icon = "✓",
+                    progress_icon = { pattern = "meter", period = 1 },
+                },
+            },
             notification = {
                 window = {
+                    winblend = 0,
+                    border = "none",
                     avoid = {
                         "aerial",
                         "NvimTree",

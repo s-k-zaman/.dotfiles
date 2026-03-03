@@ -17,7 +17,7 @@ return {
         notes_subdir = "inbox",
         new_notes_location = "notes_subdir",
 
-        disable_frontmatter = true,
+        frontmatter = { enabled = true },
         templates = {
             subdir = "templates",
             time_format = "%H:%M:%S",

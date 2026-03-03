@@ -3,6 +3,7 @@ return {
         "nvim-mini/mini.nvim",
         version = false,
         lazy = false,
+        dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
         config = function()
             -- Here call what plugins you need in setup
             -- IMPORTANT: check if not used, before adding setup here

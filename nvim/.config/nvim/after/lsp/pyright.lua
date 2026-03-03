@@ -4,7 +4,7 @@ return {
             analysis = {
                 autoSearchPaths = true,
                 typeCheckingMode = "off",
-                diagnosticMode = "workspace",
+                diagnosticMode = "openFilesOnly",
                 inlayHints = {
                     variableTypes = true,
                     functionReturnTypes = true,
