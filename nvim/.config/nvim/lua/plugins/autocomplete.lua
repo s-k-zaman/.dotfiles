@@ -14,12 +14,31 @@ return {
             {
                 "L3MON4D3/LuaSnip",
                 version = "v2.*",
+                build = "make install_jsregexp",
                 config = function()
                     local luasnip = require("luasnip")
 
+                    luasnip.config.setup({
+                        history = true,
+                        updateevents = "TextChanged,TextChangedI",
+                        enable_autosnippets = true,
+                    })
+
+                    -- Load friendly-snippets (html !, react rfce/rafce, etc.)
+                    require("luasnip.loaders.from_vscode").lazy_load()
+
+                    -- Custom snippets
+                    luasnip.add_snippets("all", require("snippets.global"))
                     luasnip.add_snippets("markdown", require("snippets.notes"))
                     luasnip.add_snippets("text", require("snippets.notes"))
                     luasnip.add_snippets("tex", require("snippets.latex"))
+                    luasnip.add_snippets("html", require("snippets.html"))
+                    luasnip.add_snippets("python", require("snippets.python"))
+                    luasnip.add_snippets("javascript", require("snippets.javascript"))
+                    luasnip.add_snippets("typescript", require("snippets.javascript"))
+                    luasnip.add_snippets("javascriptreact", require("snippets.javascript"))
+                    luasnip.add_snippets("typescriptreact", require("snippets.javascript"))
+                    luasnip.add_snippets("lua", require("snippets.lua_snips"))
                 end,
             },
             {
@@ -51,15 +70,16 @@ return {
             keymap = {
                 preset = "enter",
                 ["<CR>"] = { "select_and_accept", "fallback" },
-                ["<Tab>"] = { -- this will fill text of selected item[helpful if just need the text, no auto-actions(like imports)]
+                ["<Tab>"] = { "snippet_forward", "select_next", "fallback" },
+                ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
+                ["<C-b>"] = false,
+                -- fill text of selected item without triggering LSP auto-actions
+                ["<C-f>"] = {
                     function(cmp)
-                        return cmp.select_next({ count = 0 })
+                        return cmp.select_next({ count = 0, auto_insert = true })
                     end,
                     "fallback",
                 },
-                -- disable a keymap from the preset
-                ["<C-b>"] = false,
-                ["<C-f>"] = false,
                 ["<C-u>"] = { "scroll_documentation_up", "fallback" },
                 ["<C-d>"] = { "scroll_documentation_down", "fallback" },
             },
@@ -74,6 +94,12 @@ return {
                 },
             },
             completion = {
+                list = {
+                    selection = {
+                        preselect = true,
+                        auto_insert = false,
+                    },
+                },
                 -- trigger = {
                 -- INFO: need to explore this.....
                 -- show_on_insert_on_trigger_character = false,
@@ -109,6 +135,9 @@ return {
             },
             sources = {
                 providers = {
+                    snippets = {
+                        name = "LuaSnip",
+                    },
                     ripgrep = {
                         module = "blink-ripgrep",
                         name = "Ripgrep",
@@ -136,14 +165,24 @@ return {
                 },
                 default = {
                     "lsp",
-                    "snippets",
                     "path",
                     "buffer",
+                    "snippets",
                     "ripgrep", -- searches whole project
                 },
             },
             fuzzy = { implementation = "prefer_rust_with_warning" },
         },
         opts_extend = { "sources.default" },
+        keys = {
+            {
+                "<leader>la",
+                function()
+                    vim.cmd("Lazy reload blink.cmp")
+                    vim.notify("blink.cmp reloaded", vim.log.levels.INFO)
+                end,
+                desc = "Reload autocomplete (blink.cmp)",
+            },
+        },
     },
 }

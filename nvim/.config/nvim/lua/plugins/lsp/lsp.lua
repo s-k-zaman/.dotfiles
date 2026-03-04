@@ -94,7 +94,15 @@ return {
                     end
 
                     -- universal keymaps
-                    nmap("<leader>ll", "<cmd>LspRestart<CR>", "Restart")
+                    nmap("<leader>ll", function()
+                        local clients = vim.lsp.get_clients({ bufnr = bufnr })
+                        local names = vim.tbl_map(function(c) return c.name end, clients)
+                        vim.cmd("LspRestart")
+                        vim.notify(
+                            "Restarted: " .. (#names > 0 and table.concat(names, ", ") or "none"),
+                            vim.log.levels.INFO
+                        )
+                    end, "Restart")
                     nmap("<leader>d", vim.lsp.buf.code_action, "Code Action")
                     nmap("K", vim.lsp.buf.hover, "Hover Doc")
                     nmap("<leader>p", vim.diagnostic.open_float, "Show Diagnostics")
