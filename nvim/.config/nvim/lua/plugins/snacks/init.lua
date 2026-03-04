@@ -16,7 +16,7 @@ return {
         -- indent = { enabled = true },
         -- input = { enabled = true },
         quickfile = { enabled = true },
-        scratch = { ft = "markdown" },
+        scratch = { ft = "markdown", win = { wo = { wrap = true } } },
         scroll = { enabled = true },
         statuscolumn = { enabled = true },
         -- words = { enabled = true },
