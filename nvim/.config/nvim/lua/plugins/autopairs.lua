@@ -1,19 +1,14 @@
 return {
     {
-        -- autoclose and autorename html tag
         "windwp/nvim-ts-autotag",
-        lazy = false,
+        ft = { "html", "xml", "javascript", "typescript", "javascriptreact", "typescriptreact", "svelte", "astro", "vue" },
         config = function()
             require("nvim-ts-autotag").setup({
                 opts = {
-                    -- Defaults
-                    enable_close = true, -- Auto close tags
-                    enable_rename = true, -- Auto rename pairs of tags
-                    enable_close_on_slash = false, -- Auto close on trailing </
+                    enable_close = true,
+                    enable_rename = true,
+                    enable_close_on_slash = false,
                 },
-                -- Also override individual filetype configs, these take priority.
-                -- Empty by default, useful if one of the "opts" global settings
-                -- doesn't work well in a specific filetype
                 per_filetype = {
                     ["html"] = {
                         enable_close = true,
@@ -27,7 +22,7 @@ return {
         "windwp/nvim-autopairs",
         enabled = false,
         event = "InsertEnter",
-        opts = {}, -- this is equalent to setup({}) function
+        opts = {},
     },
     {
         "echasnovski/mini.surround",
@@ -36,16 +31,16 @@ return {
             custom_surroundings = nil,
             highlight_duration = 500,
             mappings = {
-                add = "sa", -- Add surrounding in Normal and Visual modes
-                delete = "sd", -- Delete surrounding
-                find = "sf", -- Find surrounding (to the right)
-                find_left = "sF", -- Find surrounding (to the left)
-                highlight = "sh", -- Highlight surrounding
-                replace = "sr", -- Replace surrounding
-                update_n_lines = "sn", -- Update `n_lines`
+                add = "sa",
+                delete = "sd",
+                find = "sf",
+                find_left = "sF",
+                highlight = "sh",
+                replace = "sr",
+                update_n_lines = "sn",
 
-                suffix_last = "l", -- Suffix to search with "prev" method
-                suffix_next = "n", -- Suffix to search with "next" method
+                suffix_last = "l",
+                suffix_next = "n",
             },
             n_lines = 20,
             respect_selection_type = false,

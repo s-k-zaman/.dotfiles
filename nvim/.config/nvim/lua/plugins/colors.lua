@@ -3,7 +3,7 @@ local PluginUtils = require("utils.plugins")
 return {
     {
         "NvChad/nvim-colorizer.lua",
-        lazy = false,
+        event = "BufReadPost",
         config = function()
             local enable_tailwind = true
             if PluginUtils.has("tailwind-tools") and USE_LSPKIND then
@@ -14,14 +14,16 @@ return {
                     tailwind = enable_tailwind,
                 },
             })
-            -- execute colorizer as soon as possible
-            vim.defer_fn(function()
-                require("colorizer").attach_to_buffer(0)
-            end, 0)
+            -- Attach to the buffer that triggered our load (BufReadPost has already fired for it)
+            vim.schedule(function()
+                if vim.bo.buftype == "" then
+                    require("colorizer").attach_to_buffer(0)
+                end
+            end)
         end,
     },
     {
         "amadeus/vim-convert-color-to",
-        lazy = false,
+        event = "VeryLazy",
     },
 }

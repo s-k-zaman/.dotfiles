@@ -28,10 +28,8 @@ local function fold_virt_handler(virtText, lnum, endLnum, width, truncate)
         end
     end
 
-    -- info label
     table.insert(newVirtText, { info, "MoreMsg" })
 
-    -- fill dashes to window edge
     local fillWidth = width - curWidth - infoWidth
     if fillWidth > 0 then
         table.insert(newVirtText, { fillChar:rep(fillWidth), "Comment" })
@@ -44,17 +42,18 @@ end
 return {
     {
         "kevinhwang91/nvim-ufo",
-        lazy = false,
+        event = "BufReadPost",
         dependencies = { "kevinhwang91/promise-async" },
-        config = function()
+        init = function()
+            -- Must be set before the first buffer opens; ufo requires foldlevel=99 to keep folds open
             vim.o.foldcolumn = "0"
             vim.o.foldlevel = 99
             vim.o.foldlevelstart = 99
             vim.o.foldenable = true
             vim.o.fillchars = "eob: ,fold: ,foldopen:,foldsep: ,foldclose:"
-
+        end,
+        config = function()
             local ftFoldProviderMap = {
-                -- this can be a list with two items: {"lsp" or "treesitter", "indent"}
                 vim = "indent",
                 git = "",
             }

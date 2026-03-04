@@ -10,8 +10,7 @@ return {
     },
     {
         "simrat39/rust-tools.nvim",
-        ft = "rust",
-        lazy = false,
+        ft = "rust", -- lazy = false was here before and overrode this — removed
         -- enabled = false,
         -- NOTE: on_attach keymaps handled by LspAttach autocmd in lsp/init.lua
         config = function()

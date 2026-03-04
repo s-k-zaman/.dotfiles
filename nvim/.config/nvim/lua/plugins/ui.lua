@@ -105,7 +105,7 @@ return {
     -- notify
     {
         "j-hui/fidget.nvim",
-        lazy = false,
+        event = "LspAttach",
         opts = {
             progress = {
                 suppress_on_insert = true,

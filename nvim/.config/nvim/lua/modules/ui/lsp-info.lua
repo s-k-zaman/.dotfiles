@@ -117,7 +117,7 @@ M.get_lsps = function()
     local parts = {}
 
     if #lsps > 0 then
-        table.insert(parts, hl.lsp .. "󰧑 " .. render_list(lsps, limits.lsp))
+        table.insert(parts, hl.lsp .. " " .. render_list(lsps, limits.lsp))
     end
     if #fmts > 0 then
         table.insert(parts, hl.fmt .. "󰅩 " .. render_list(fmts, limits.fmt))
