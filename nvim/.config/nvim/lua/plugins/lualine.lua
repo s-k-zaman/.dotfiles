@@ -61,11 +61,6 @@ return {
 
 						{
 							function()
-								return require("modules.ui").python_venv(false, false)
-							end,
-						},
-						{
-							function()
 								return require("modules.ui").python_venv_selector(false, false)
 							end,
 						},

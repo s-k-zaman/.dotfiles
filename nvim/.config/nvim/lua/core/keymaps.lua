@@ -42,6 +42,8 @@ if CENTER_SCROLL then
 end
 
 -- editing
+vim.keymap.set("n", "<leader>x", '"_x', { desc = "Delete char (no yank)" })
+vim.keymap.set("v", "<leader>x", '"_d', { desc = "Delete selection (no yank)" })
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste (keep register)" })
 -- stylua: ignore
 vim.keymap.set( "n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word (buffer)" })
@@ -107,16 +109,3 @@ map("n", "<leader>`", "e #", { desc = "Alternate buffer" })
 
 -- format
 map("n", "<leader>I", "Format", { desc = "Format file (conform|lsp)" })
-
--- toggles
-vim.api.nvim_set_keymap("n", "<leader>tz", ":set wrap!<CR>", { desc = "Toggle word wrap", noremap = true })
-
--- nb notes
-map("n", "<leader>nr", "<cmd>!nb sync<cr>", { desc = "nb sync" })
--- TODO: escape # symbol in note title
-map(
-    "n",
-    "<leader>na",
-    '<cmd>!tmux neww -c "#{pane_current_path}" "note-accessor"<cr>',
-    { desc = "Note accessor", silent = true }
-)

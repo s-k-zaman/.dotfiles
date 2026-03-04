@@ -78,6 +78,17 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+-- Prose filetypes: soft wrap at word boundaries
+vim.api.nvim_create_autocmd("FileType", {
+    group = augroup("prose_wrap"),
+    pattern = { "markdown", "text", "gitcommit" },
+    callback = function()
+        vim.opt_local.wrap = true
+        vim.opt_local.linebreak = true   -- break at word boundaries, not mid-word
+        vim.opt_local.breakindent = true -- preserve indent on wrapped lines
+    end,
+})
+
 -- Disable spell in code filetypes (spell is on globally; not useful in code)
 vim.api.nvim_create_autocmd("FileType", {
     group = augroup("nospell_code"),
