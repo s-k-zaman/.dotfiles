@@ -27,16 +27,25 @@ if RESTORE_CURSOR then
     vim.api.nvim_create_autocmd("BufReadPost", {
         group = augroup("last_loc"),
         callback = function(event)
-            local exclude = { "gitcommit" }
             local buf = event.buf
-            if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
+            if not vim.api.nvim_buf_is_valid(buf) or vim.b[buf].zaman_last_loc then
                 return
             end
-            vim.b[buf].lazyvim_last_loc = true
-            local mark = vim.api.nvim_buf_get_mark(buf, '"')
+            local ft = vim.bo[buf].filetype
+            if ft == "gitcommit" or ft == "gitrebase" then
+                return
+            end
+            vim.b[buf].zaman_last_loc = true
+            local ok, mark = pcall(vim.api.nvim_buf_get_mark, buf, '"')
+            if not ok then
+                return
+            end
             local lcount = vim.api.nvim_buf_line_count(buf)
             if mark[1] > 0 and mark[1] <= lcount then
-                pcall(vim.api.nvim_win_set_cursor, 0, mark)
+                local winid = vim.fn.bufwinid(buf)
+                if winid ~= -1 then
+                    pcall(vim.api.nvim_win_set_cursor, winid, mark)
+                end
             end
         end,
     })

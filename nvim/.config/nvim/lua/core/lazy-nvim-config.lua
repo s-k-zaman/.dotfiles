@@ -13,7 +13,7 @@ return {
         disabled_plugins = {
             "netrwPlugin", -- default file manager
             "gzip",
-            -- "matchit",
+            "matchit",
             "matchparen",
             "tarPlugin",
             "tohtml",
