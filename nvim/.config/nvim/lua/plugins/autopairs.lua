@@ -26,7 +26,7 @@ return {
     },
     {
         "echasnovski/mini.surround",
-        event = "BufEnter",
+        event = "VeryLazy",
         opts = {
             custom_surroundings = nil,
             highlight_duration = 500,

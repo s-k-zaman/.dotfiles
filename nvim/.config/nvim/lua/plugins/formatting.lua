@@ -35,7 +35,6 @@ return {
         "stevearc/conform.nvim",
         -- enabled = false,
         event = { "BufReadPre", "BufNewFile" },
-        dependencies = { "mason.nvim" },
         cmd = "ConformInfo",
         opts = function()
             ---@class ConformOpts
@@ -69,6 +68,7 @@ return {
                     graphql = { "prettierd", "prettier", stop_after_first = true },
                     handlebars = { "prettierd", "prettier", stop_after_first = true },
                     go = { "gofmt", stop_after_first = true },
+                    rust = { "rustfmt", stop_after_first = true },
                 },
                 -- The options you set here will be merged with the builtin formatters.
                 -- You can also define any custom formatters here.

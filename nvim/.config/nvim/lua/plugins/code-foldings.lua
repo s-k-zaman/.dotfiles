@@ -37,7 +37,6 @@ local function fold_virt_handler(virtText, lnum, endLnum, width, truncate)
 
     return newVirtText
 end
--- stylua: ignore end
 
 return {
     {

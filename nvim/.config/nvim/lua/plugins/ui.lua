@@ -1,7 +1,7 @@
 return {
     {
         "sphamba/smear-cursor.nvim",
-        event = "VimEnter",
+        event = "VeryLazy",
         opts = {
             enabled = true,
             legacy_computing_symbols_support = TRANSPARENT,

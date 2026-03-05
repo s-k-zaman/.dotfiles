@@ -1,19 +1,26 @@
 return {
     "RRethy/vim-illuminate",
     event = "LspAttach",
-    config = function()
-        require("illuminate").configure({
-            delay = 200,
-            providers = { "lsp" },
-        })
-
-        -- These are global keymaps; they register after LspAttach fires (first LSP client)
-        local function map(key, dir)
-            vim.keymap.set("n", key, function()
-                require("illuminate")["goto_" .. dir .. "_reference"](true)
-            end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference (illuminate)" })
-        end
-        map("[[", "next")
-        map("]]", "prev")
+    opts = {
+        delay = 200,
+        providers = { "lsp", "treesitter", "regex" },
+        filetypes_denylist = {
+            "dirbuf",
+            "dirvish",
+            "fugitive",
+            "snacks_dashboard",
+            "NvimTree",
+            "neo-tree",
+            "lazy",
+            "mason",
+            "help",
+            "toggleterm",
+            "qf",
+        },
+        min_count_to_highlight = 2,
+        large_file_cutoff = 10000,
+    },
+    config = function(_, opts)
+        require("illuminate").configure(opts)
     end,
 }

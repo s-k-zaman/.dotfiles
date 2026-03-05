@@ -10,7 +10,7 @@ local function setup()
         return
     end
     _setup_done = true
-    vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach", "BufEnter", "BufWritePost" }, {
+    vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach", "BufWritePost" }, {
         group = vim.api.nvim_create_augroup("zaman_nvim_lsp_info_cache", { clear = true }),
         callback = function(ev)
             _cache[ev.buf] = nil
@@ -43,9 +43,14 @@ local function render_list(items, limit)
 end
 
 M.get_lsps = function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    -- Skip non-file buffers (dashboard, help, terminals, etc.)
+    if vim.bo[bufnr].buftype ~= "" then
+        return ""
+    end
+
     setup()
 
-    local bufnr = vim.api.nvim_get_current_buf()
     if _cache[bufnr] then
         return _cache[bufnr]
     end

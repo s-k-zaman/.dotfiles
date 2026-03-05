@@ -1,8 +1,7 @@
 -- IMPORTANT: dependencies order is important in this file
 return {
     "mason-org/mason-lspconfig.nvim",
-    -- automatically enable LSP servers and make Commands available :LspInstall
-    -- event = "BufReadPre",
+    event = "BufReadPre",
     dependencies = {
         {
             "mason-org/mason.nvim",
