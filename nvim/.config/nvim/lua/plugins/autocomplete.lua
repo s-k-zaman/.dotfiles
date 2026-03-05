@@ -51,17 +51,12 @@ return {
         opts = {
             enabled = function()
                 local disabled = false
-                local buftype = vim.bo.buftype
                 local filetype = vim.bo.filetype
 
-                -- Disable blink.cmp conditionally
-                -- if buftype == "nofile" then
-                --     return disabled
-                -- end
                 if filetype == "DressingInput" then
                     return disabled
                 end
-                if buftype == "NvimTree" then
+                if filetype == "NvimTree" then
                     return disabled
                 end
 

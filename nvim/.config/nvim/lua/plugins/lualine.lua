@@ -54,14 +54,11 @@ return {
                             },
                         },
                         {
-                            -- Shows linters actively running right now (dynamic feedback).
-                            -- Complements lsp-info which shows statically configured tools.
                             function()
-                                local ok, lint = pcall(require, "lint")
-                                if not ok then
+                                if not package.loaded["lint"] then
                                     return ""
                                 end
-                                local running = lint.get_running()
+                                local running = require("lint").get_running()
                                 if #running == 0 then
                                     return ""
                                 end

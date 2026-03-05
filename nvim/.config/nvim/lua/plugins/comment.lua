@@ -2,7 +2,7 @@
 return {
     {
         "numToStr/Comment.nvim",
-        event = "VeryLazy",
+        event = "BufReadPost",
         dependencies = {
             {
                 "JoosepAlviste/nvim-ts-context-commentstring",

@@ -8,10 +8,8 @@ return {
             { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
         },
         config = function()
-            -- neoconf must run before any LSP server starts
             if PluginUtil.has("neoconf.nvim") then
-                local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
-                require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
+                require("neoconf").setup({})
             end
 
             local capabilities = vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(), {
@@ -125,12 +123,6 @@ return {
                         end
                     end
 
-                    if client.name == "rust_analyzer" then
-                        vim.keymap.set("n", "<F5>", "<cmd>RustRun<cr>", {
-                            buffer = bufnr,
-                            desc = "Run program (rust)",
-                        })
-                    end
                 end,
             })
 

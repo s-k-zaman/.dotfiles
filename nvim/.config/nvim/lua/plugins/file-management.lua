@@ -2,15 +2,9 @@ local map = require("utils.keymapper").keymap
 return {
     {
         "nvim-tree/nvim-tree.lua",
-        lazy = false,
+        cmd = "NvimTreeToggle",
+        keys = { { "<leader>L", "<cmd>NvimTreeToggle<CR>", desc = "toggle file explorer" } },
         config = function()
-            vim.keymap.set(
-                "n",
-                "<leader>L",
-                "<cmd>NvimTreeToggle<CR>",
-                { noremap = true, silent = true, desc = "toggle file explorer" }
-            )
-
             local function my_on_attach(bufnr)
                 local api = require("nvim-tree.api")
                 local function opts(desc)

@@ -12,24 +12,7 @@ return {
                 -- FIX: auto for picker is not working[telescope is not working]
                 picker = "snacks", -- the picker to use. Valid options are "telescope", "fzf-lua", "snacks", "native", "mini-pick" or "auto"
                 on_venv_activate_callback = function()
-                    local lsp_reloaded = false
-
-                    local function reload_lsp()
-                        if lsp_reloaded then
-                            return
-                        end
-                        vim.cmd("LspRestart")
-                        lsp_reloaded = true
-                    end
-
-                    -- Create a unique augroup
-                    local group = vim.api.nvim_create_augroup("VenvLspReload", { clear = true })
-
-                    vim.api.nvim_create_autocmd("User", {
-                        group = group,
-                        pattern = "VenvActivated", -- ← depends on your venv plugin
-                        callback = reload_lsp,
-                    })
+                    vim.cmd("LspRestart")
                 end,
             },
         },

@@ -1,11 +1,8 @@
 COLORSCHEME = "rose-pine"
 TRANSPARENT = true
 Disable_Lsp_Server_Formatting = true
-USE_LSPKIND = true -- vs-Code like autocompletion
-USE_LAZYGIT = true -- vs-Code like autocompletion
-USE_LSP_SAGA = vim.fn.has("nvim-0.13") == 0 -- here ==0 implies less than specified version
+USE_LAZYGIT = true
 CONFIG_TAILWIND_IN_LSPCONFIG = true
-USE_MINI_TEXT_OBJECTS = true
 
 -- editor behaviour
 AUTO_RELOAD = true -- reload buffer when file changes externally (autoread + checktime)

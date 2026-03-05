@@ -4,7 +4,7 @@ local M = {}
 local _cache = {}
 
 local function get_mtime(path)
-    local stat = (vim.uv or vim.loop).fs_stat(path)
+    local stat = vim.uv.fs_stat(path)
     return stat and stat.mtime.sec or 0
 end
 
@@ -54,7 +54,7 @@ M.python_venv_selector = function()
     -- This runs once per venv and is then cached alongside mtime.
     local py_ver = ""
     local py_bin = venv_path .. "/bin/python"
-    local py_stat = (vim.uv or vim.loop).fs_stat(py_bin)
+    local py_stat = vim.uv.fs_stat(py_bin)
     if py_stat then
         local fh = io.popen(py_bin .. " --version 2>&1")
         if fh then

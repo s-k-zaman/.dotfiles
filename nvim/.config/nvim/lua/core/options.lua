@@ -38,7 +38,6 @@ if TRANSPARENT then
 end
 
 -- behavior
-opt.hidden = true
 opt.errorbells = false
 opt.swapfile = false
 opt.backup = false

@@ -5,10 +5,7 @@ return {
         "NvChad/nvim-colorizer.lua",
         event = "BufReadPost",
         config = function()
-            local enable_tailwind = true
-            if PluginUtils.has("tailwind-tools") and USE_LSPKIND then
-                enable_tailwind = false
-            end
+            local enable_tailwind = not PluginUtils.has("tailwind-tools")
             require("colorizer").setup({
                 user_default_options = {
                     tailwind = enable_tailwind,
@@ -23,6 +20,7 @@ return {
         end,
     },
     {
+        -- TODO: very old plugin- not maintained, need to check better replacement, or keep using if working.
         "amadeus/vim-convert-color-to",
         event = "VeryLazy",
     },

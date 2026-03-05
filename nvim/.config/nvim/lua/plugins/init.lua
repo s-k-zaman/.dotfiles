@@ -23,7 +23,7 @@ return {
     { "folke/neoconf.nvim", cmd = "Neoconf" },
     {
         "nvim-tree/nvim-web-devicons",
-        lazy = false,
+        lazy = true,
         config = true,
     },
     { "echasnovski/mini.icons", version = "*" },
