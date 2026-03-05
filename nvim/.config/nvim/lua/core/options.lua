@@ -57,7 +57,6 @@ opt.fillchars = { eob = " " }
 if SYNC_CLIPBOARD then
     opt.clipboard:append("unnamedplus")
 end
-opt.modifiable = true
 opt.spell = SPELL_CHECK
 opt.isfname:append("@-@")
 opt.updatetime = 50

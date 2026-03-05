@@ -1,4 +1,4 @@
 return {
-    enables = USE_LAZYGIT,
+    enabled = USE_LAZYGIT,
     configure = true,
 }
