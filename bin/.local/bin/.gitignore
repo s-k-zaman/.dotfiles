@@ -14,3 +14,10 @@ env
 env.fish
 uv
 uvx
+ttx
+httpx
+fonttools
+pyftmerge
+pyftsubset
+pymupdf
+weasyprint

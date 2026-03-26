@@ -4,6 +4,8 @@
 ~/Drive/Projects
 ~/Drive/Projects/Open-source
 ~/Drive/Projects/Personal
+~/Drive/Projects/HOI
+~/Drive/Projects/HOI/project-remediation
 ~/Drive/Projects/Personal/Practice+misc
 ~/Drive/Projects/Personal/LuaPlugins
 ~/Drive/Work
